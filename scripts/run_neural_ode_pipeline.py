@@ -173,6 +173,7 @@ def compute_losses(
     prediction: torch.Tensor,
     target: torch.Tensor,
     target_slice_count: int,
+    flow_smoothness: torch.Tensor,
 ) -> dict[str, torch.Tensor]:
     mse_loss = F.mse_loss(prediction, target)
     l1_loss = F.l1_loss(prediction, target)
@@ -183,13 +184,16 @@ def compute_losses(
     focus_weights = focus_weights.repeat(1, prediction.shape[1], 1, 1)
     focus_l1 = (focus_weights * (prediction - target).abs()).mean()
 
-    total_loss = mse_loss + 0.15 * l1_loss + 0.10 * edge_loss + 0.20 * focus_l1
+    # Small weight: this only discourages non-smooth (physically implausible) warps, it
+    # should not dominate the reconstruction terms above.
+    total_loss = mse_loss + 0.15 * l1_loss + 0.10 * edge_loss + 0.20 * focus_l1 + 0.05 * flow_smoothness
     return {
         "total_loss": total_loss,
         "mse_loss": mse_loss,
         "l1_loss": l1_loss,
         "edge_loss": edge_loss,
         "focus_l1_loss": focus_l1,
+        "flow_smoothness_loss": flow_smoothness,
     }
 
 
@@ -622,6 +626,46 @@ class TemporalEncoder(nn.Module):
         return self.week_embed(week_numbers.long())
 
 
+def warp_baseline(baseline: torch.Tensor, flow: torch.Tensor, slice_count: int) -> torch.Tensor:
+    """Warp each target slice's modality stack by its own predicted 2D displacement field.
+
+    `baseline`/output: (B, MODALITIES*slice_count, H, W), channel layout matches
+    reshape_stacked_modalities (modality-major, slice-minor). `flow`: (B, 2*slice_count, H, W),
+    channel layout (slice-major, [dx, dy] per slice). All 4 modalities of a given target slice
+    share one flow field, since they are co-registered scans of the same anatomy at that
+    timepoint -- deformation is a property of anatomy, not of imaging modality.
+    """
+    batch, channels, height, width = baseline.shape
+    modalities = channels // slice_count
+    baseline_by_slice = (
+        baseline.reshape(batch, modalities, slice_count, height, width)
+        .permute(0, 2, 1, 3, 4)
+        .reshape(batch * slice_count, modalities, height, width)
+    )
+    flow_by_slice = flow.reshape(batch * slice_count, 2, height, width)
+
+    base_y, base_x = torch.meshgrid(
+        torch.linspace(-1.0, 1.0, height, device=baseline.device, dtype=flow.dtype),
+        torch.linspace(-1.0, 1.0, width, device=baseline.device, dtype=flow.dtype),
+        indexing="ij",
+    )
+    base_grid = torch.stack([base_x, base_y], dim=-1).unsqueeze(0)
+    sampling_grid = base_grid + flow_by_slice.permute(0, 2, 3, 1)
+
+    warped = F.grid_sample(
+        baseline_by_slice, sampling_grid, mode="bilinear", padding_mode="border", align_corners=True
+    )
+    return warped.reshape(batch, slice_count, modalities, height, width).permute(0, 2, 1, 3, 4).reshape(
+        batch, channels, height, width
+    )
+
+
+def flow_smoothness_penalty(flow: torch.Tensor) -> torch.Tensor:
+    dx = flow[:, :, :, 1:] - flow[:, :, :, :-1]
+    dy = flow[:, :, 1:, :] - flow[:, :, :-1, :]
+    return dx.abs().mean() + dy.abs().mean()
+
+
 class HistoryConditionedGliomaNeuralODEModel(nn.Module):
     def __init__(
         self,
@@ -630,9 +674,12 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
         hidden_dim: int,
         features: list[int],
         max_weeks: int,
+        max_displacement: float = 0.15,
     ) -> None:
         super().__init__()
         self.hidden_dim = hidden_dim
+        self.slice_count = output_channels // len(MODALITIES)
+        self.max_displacement = max_displacement
         self.unet = AttentionUNet(week_input_channels, hidden_dim, features=features)
         self.temporal_encoder = TemporalEncoder(max_weeks=max_weeks, hidden_dim=hidden_dim)
         self.ode_func = TimeAwareODEFunc(hidden_dim)
@@ -643,12 +690,20 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
             nn.SiLU(),
             nn.Conv2d(hidden_dim, output_channels, 1),
         )
-        # Zero-init the final layer so the model starts out exactly at the persistence
-        # baseline (delta = 0) and only has to learn the *change*, not reconstruct the
-        # whole slice stack from scratch. This is what actually fixes the "persistence
-        # baseline is nearly unbeatable" problem, not the choice of temporal backbone.
+        self.flow_head = nn.Sequential(
+            nn.Conv2d(hidden_dim, hidden_dim, 3, padding=1),
+            nn.GroupNorm(groups, hidden_dim),
+            nn.SiLU(),
+            nn.Conv2d(hidden_dim, 2 * self.slice_count, 1),
+        )
+        # Zero-init both final layers so the model starts out exactly at the persistence
+        # baseline (identity warp, delta = 0) and only has to learn the *change*, not
+        # reconstruct the whole slice stack from scratch. This is what actually fixes the
+        # "persistence baseline is nearly unbeatable" problem, not the temporal backbone.
         nn.init.zeros_(self.decoder[-1].weight)
         nn.init.zeros_(self.decoder[-1].bias)
+        nn.init.zeros_(self.flow_head[-1].weight)
+        nn.init.zeros_(self.flow_head[-1].bias)
 
     def forward(
         self,
@@ -657,7 +712,7 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
         history_weeks: torch.Tensor,
         history_mask: torch.Tensor,
         baseline: torch.Tensor,
-    ) -> torch.Tensor:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         batch_size, history_len, _, _, _ = history.shape
         week_features = history.reshape(
             batch_size * history_len,
@@ -676,6 +731,7 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
         hidden = encoded.sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
 
         deltas = []
+        raw_flows = []
         for batch_idx in range(batch_size):
             t_span = torch.linspace(
                 0.0,
@@ -685,9 +741,18 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
                 device=history.device,
             )
             evolved = odeint(self.ode_func, hidden[batch_idx : batch_idx + 1], t_span, method="midpoint")
-            deltas.append(self.decoder(evolved[-1]))
+            evolved_features = evolved[-1]
+            deltas.append(self.decoder(evolved_features))
+            raw_flows.append(self.flow_head(evolved_features))
         delta = torch.cat(deltas, dim=0)
-        return torch.clamp(baseline.to(delta.dtype) + delta, 0.0, 1.0)
+        # tanh-bounded so displacement can never exceed max_displacement (a fraction of the
+        # image half-extent), keeping predicted warps physically plausible even early in
+        # training before the smoothness penalty has had much effect.
+        flow = torch.tanh(torch.cat(raw_flows, dim=0)) * self.max_displacement
+
+        warped_baseline = warp_baseline(baseline.to(delta.dtype), flow, self.slice_count)
+        prediction = torch.clamp(warped_baseline + delta, 0.0, 1.0)
+        return prediction, flow_smoothness_penalty(flow)
 
 
 GliomaNeuralODEModel = HistoryConditionedGliomaNeuralODEModel
@@ -766,6 +831,21 @@ def binary_dice(pred_region: torch.Tensor, true_region: torch.Tensor) -> float:
     return float((2.0 * (pred_region & true_region).sum()) / denom)
 
 
+def adaptive_flair_mask(flair_slices: np.ndarray, fraction_of_max: float = 0.45) -> np.ndarray:
+    """Binary tumor-hyperintensity proxy mask, thresholded relative to this volume's own
+    peak intensity (matching flair_focus_mask's convention), not a fixed absolute cutoff.
+
+    A fixed threshold (the previous `> 0.5` on per-volume min-max-normalized FLAIR) turned
+    out to essentially never fire in this dataset: verified against real ground-truth masks
+    that even the persistence baseline's own thresholded volume came out ~0 pixels while its
+    real-mask Dice was clearly nonzero. Peak-relative thresholding avoids that miscalibration.
+    """
+    peak = float(flair_slices.max())
+    if peak <= 0:
+        return np.zeros_like(flair_slices, dtype=bool)
+    return flair_slices >= peak * fraction_of_max
+
+
 def evaluate_model(
     model: GliomaNeuralODEModel,
     dataset: NeuralODEDataset,
@@ -787,7 +867,7 @@ def evaluate_model(
             time_delta = sample["time_delta"].unsqueeze(0).to(device)
             history_weeks = sample["history_weeks"].unsqueeze(0).to(device)
             history_mask = torch.ones((1, history.shape[1]), dtype=torch.bool, device=device)
-            prediction = model(history, time_delta, history_weeks, history_mask, baseline)
+            prediction, _ = model(history, time_delta, history_weeks, history_mask, baseline)
             mse = float(mse_crit(prediction, target).item())
             mae = float(mae_crit(prediction, target).item())
             per_modality_mse = modality_metric_dict(prediction, target, mse_crit, len(dataset.target_slice_offsets))
@@ -797,8 +877,10 @@ def evaluate_model(
             pred_flair_tensor = reshape_stacked_modalities(prediction, len(dataset.target_slice_offsets))[0, 0].detach().cpu()
             pred_flair = pred_flair_tensor.numpy()
             true_flair = reshape_stacked_modalities(target, len(dataset.target_slice_offsets))[0, 0].detach().cpu().numpy()
-            pred_volume = float((pred_flair > 0.5).sum())
-            true_volume = float((true_flair > 0.5).sum())
+            pred_mask_proxy = adaptive_flair_mask(pred_flair)
+            true_mask_proxy = adaptive_flair_mask(true_flair)
+            pred_volume = float(pred_mask_proxy.sum())
+            true_volume = float(true_mask_proxy.sum())
             volume_diff = abs(pred_volume - true_volume) / max(true_volume, 1.0)
 
             # wt_dice compares a thresholded-FLAIR proxy prediction against the *real*
@@ -811,7 +893,7 @@ def evaluate_model(
             if target_mask is not None:
                 target_wt_region = mask_region(target_mask, WHOLE_TUMOR_LABELS)
                 true_tumor_voxels = float(target_wt_region.sum().item())
-                wt_dice = binary_dice(pred_flair_tensor > 0.5, target_wt_region)
+                wt_dice = binary_dice(torch.from_numpy(pred_mask_proxy), target_wt_region)
 
             metrics.append(
                 {
@@ -864,8 +946,8 @@ def evaluate_persistence_baseline(
         focal_mse, focal_mae = focal_error_metrics(baseline_prediction, target, len(dataset.target_slice_offsets))
         pred_flair = reshape_stacked_modalities(baseline_prediction, len(dataset.target_slice_offsets))[0, 0].numpy()
         true_flair = reshape_stacked_modalities(target, len(dataset.target_slice_offsets))[0, 0].numpy()
-        pred_volume = float((pred_flair > 0.5).sum())
-        true_volume = float((true_flair > 0.5).sum())
+        pred_volume = float(adaptive_flair_mask(pred_flair).sum())
+        true_volume = float(adaptive_flair_mask(true_flair).sum())
         volume_diff = abs(pred_volume - true_volume) / max(true_volume, 1.0)
 
         # Both sides here are real DeepBraTumIA masks (no intensity thresholding), so unlike
@@ -1227,7 +1309,14 @@ def train_model(
 
     for epoch in range(epochs):
         model.train()
-        running = {"total_loss": 0.0, "mse_loss": 0.0, "l1_loss": 0.0, "edge_loss": 0.0, "focus_l1_loss": 0.0}
+        running = {
+            "total_loss": 0.0,
+            "mse_loss": 0.0,
+            "l1_loss": 0.0,
+            "edge_loss": 0.0,
+            "focus_l1_loss": 0.0,
+            "flow_smoothness_loss": 0.0,
+        }
         for batch in dataloader:
             history = batch["history"].to(device)
             target = batch["target"].to(device)
@@ -1237,8 +1326,8 @@ def train_model(
             history_mask = batch["history_mask"].to(device)
 
             optimizer.zero_grad()
-            prediction = model(history, time_delta, history_weeks, history_mask, baseline)
-            loss_dict = compute_losses(prediction, target, target_slice_count)
+            prediction, flow_smoothness = model(history, time_delta, history_weeks, history_mask, baseline)
+            loss_dict = compute_losses(prediction, target, target_slice_count, flow_smoothness)
             loss_dict["total_loss"].backward()
             optimizer.step()
 
@@ -1253,7 +1342,8 @@ def train_model(
             f"Epoch {epoch + 1:03d}/{epochs} | "
             f"loss={averaged['total_loss']:.6f} | "
             f"mse={averaged['mse_loss']:.6f} | "
-            f"edge={averaged['edge_loss']:.6f}"
+            f"edge={averaged['edge_loss']:.6f} | "
+            f"flow_smooth={averaged['flow_smoothness_loss']:.6f}"
         )
 
     return epoch_losses, epoch_details
@@ -1431,7 +1521,7 @@ def run_experiment(
             history_weeks = sample["history_weeks"].unsqueeze(0).to(device)
             history_mask = torch.ones((1, history.shape[1]), dtype=torch.bool, device=device)
             baseline_prediction = sample["latest_history_target"].unsqueeze(0).to(device)
-            prediction = model(history, time_delta, history_weeks, history_mask, baseline_prediction)
+            prediction, _ = model(history, time_delta, history_weeks, history_mask, baseline_prediction)
             model_mse = float(mse_crit(prediction, target).item())
             baseline_mse = float(mse_crit(baseline_prediction.to(device), target).item())
             output_path = patient_run_dir / f"prediction_to_week_{int(sample['target_week'])}.png"

@@ -5,13 +5,17 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
 import torch
 
 from scripts.run_neural_ode_pipeline import (
+    adaptive_flair_mask,
     binary_dice,
     flatten_metric_row,
+    flow_smoothness_penalty,
     get_device,
     mask_region,
+    warp_baseline,
     write_metric_rows,
 )
 
@@ -94,6 +98,46 @@ class RunNeuralODEPipelineMetricsTest(unittest.TestCase):
         pred = torch.tensor([True, True, False])
         true = torch.tensor([False, True, True])
         self.assertAlmostEqual(binary_dice(pred, true), 2 * 1 / (2 + 2))
+
+    def test_adaptive_flair_mask_thresholds_relative_to_peak(self) -> None:
+        # A fixed absolute cutoff (the old `> 0.5`) never fires on a volume whose peak
+        # intensity is below it, even though it clearly has a bright "hyperintense" region
+        # relative to its own scale. This is exactly what real LUMIERE volumes looked like.
+        flair = np.array([0.05, 0.1, 0.4, 0.42, 0.05])
+        mask = adaptive_flair_mask(flair, fraction_of_max=0.45)
+        # peak=0.42, threshold=0.189 -> indices 2,3 qualify, nothing would under a fixed >0.5.
+        self.assertTrue(np.array_equal(mask, np.array([False, False, True, True, False])))
+        self.assertEqual(int((flair > 0.5).sum()), 0)
+
+        # An all-zero volume has no peak to threshold against; must not divide by zero.
+        empty = np.zeros(4, dtype=np.float32)
+        self.assertFalse(adaptive_flair_mask(empty).any())
+
+    def test_warp_baseline_identity_flow_reproduces_input(self) -> None:
+        # slice_count=2, MODALITIES=4 -> 8 channels; a zero flow field must be a no-op.
+        baseline = torch.rand(1, 8, 16, 16)
+        zero_flow = torch.zeros(1, 4, 16, 16)
+        warped = warp_baseline(baseline, zero_flow, slice_count=2)
+        self.assertTrue(torch.allclose(warped, baseline, atol=1e-5))
+
+    def test_warp_baseline_shifts_content_in_expected_direction(self) -> None:
+        # slice_count=1, MODALITIES=4 -> 4 channels sharing one flow field.
+        img = torch.zeros(1, 4, 16, 16)
+        img[0, :, 8, 8] = 1.0
+        flow = torch.zeros(1, 2, 16, 16)
+        flow[:, 0, :, :] = 0.25  # shift the sampling grid in +x -> content appears to move -x
+        warped = warp_baseline(img, flow, slice_count=1)
+        peak_row, peak_col = divmod(int(warped[0, 0].argmax()), 16)
+        self.assertEqual(peak_row, 8)
+        self.assertLess(peak_col, 8)
+
+    def test_flow_smoothness_penalty_zero_for_constant_field(self) -> None:
+        const_flow = torch.full((1, 2, 16, 16), 0.1)
+        self.assertAlmostEqual(flow_smoothness_penalty(const_flow).item(), 0.0, places=6)
+
+        step_flow = torch.zeros(1, 2, 16, 16)
+        step_flow[:, :, :, 8:] = 1.0  # a hard discontinuity halfway across
+        self.assertGreater(flow_smoothness_penalty(step_flow).item(), 0.0)
 
 
 if __name__ == "__main__":
