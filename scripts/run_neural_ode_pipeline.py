@@ -227,6 +227,7 @@ class HistoryForecastDataset(Dataset):
         self.patient_weeks: dict[str, list[int]] = {}
         self.patient_files: dict[str, dict[int, dict[str, Path]]] = {}
         self.slice_cache: dict[tuple[str, int, int | None], torch.Tensor] = {}
+        self.mask_slice_cache: dict[tuple[str, int], torch.Tensor | None] = {}
         self.samples: list[ForecastSample] = []
 
         for patient_dir in self.patient_dirs:
@@ -287,6 +288,10 @@ class HistoryForecastDataset(Dataset):
                     matches = list(skull_strip_path.glob(f"{mod_file_prefix}_skull_strip.nii*"))
                     if matches:
                         paths[mod_key] = matches[0]
+
+                seg_mask_path = week_dir / "DeepBraTumIA-segmentation" / "atlas" / "segmentation" / "seg_mask.nii.gz"
+                if seg_mask_path.exists():
+                    paths["SEG_MASK"] = seg_mask_path
 
                 if all(mod in paths for mod in MODALITIES):
                     week_to_paths[week_num] = paths
@@ -389,6 +394,39 @@ class HistoryForecastDataset(Dataset):
         self.slice_cache[cache_key] = week_tensor
         return week_tensor
 
+    def _load_week_mask_slices(self, patient_id: str, week: int) -> torch.Tensor | None:
+        """Load the real DeepBraTumIA tumor segmentation mask for a week, if one exists.
+
+        Only ~94% of LUMIERE weeks ship a mask, so this returns None rather than raising
+        when it's missing. The mask is already atlas-registered (same affine/shape as the
+        skull-stripped intensity volumes), so it is sliced with identical crop/offset logic
+        and needs no additional registration. Never resampled/interpolated, since the labels
+        are categorical.
+        """
+        cache_key = (patient_id, week)
+        if cache_key in self.mask_slice_cache:
+            return self.mask_slice_cache[cache_key]
+
+        mask_path = self.patient_files[patient_id][week].get("SEG_MASK")
+        if mask_path is None:
+            self.mask_slice_cache[cache_key] = None
+            return None
+
+        volume = nib.load(mask_path).get_fdata().astype(np.float32)
+        height, width = volume.shape[:2]
+        height = (height // 16) * 16
+        width = (width // 16) * 16
+        volume = volume[:height, :width, :]
+
+        center_slice = volume.shape[2] // 2
+        selected_slices = []
+        for offset in self.all_slice_offsets:
+            slice_idx = min(max(center_slice + offset, 0), volume.shape[2] - 1)
+            selected_slices.append(torch.from_numpy(volume[:, :, slice_idx]))
+        mask_tensor = torch.stack(selected_slices)
+        self.mask_slice_cache[cache_key] = mask_tensor
+        return mask_tensor
+
     def _registered_week_dir(self, patient_id: str, moving_week: int, target_week: int) -> Path | None:
         if self.registered_data_dir is None:
             return None
@@ -438,11 +476,24 @@ class HistoryForecastDataset(Dataset):
             reference_week=sample.target_week,
         )
         latest_history_target = latest_history_full[:, self.target_slice_indices]
+        latest_history_target = latest_history_target.reshape(
+            -1, latest_history_target.shape[2], latest_history_target.shape[3]
+        )
+
+        target_mask_full = self._load_week_mask_slices(sample.patient_id, sample.target_week)
+        target_mask = target_mask_full[self.target_slice_indices] if target_mask_full is not None else None
+
+        latest_history_mask_full = self._load_week_mask_slices(sample.patient_id, sample.history_weeks[-1])
+        latest_history_mask = (
+            latest_history_mask_full[self.target_slice_indices] if latest_history_mask_full is not None else None
+        )
 
         return {
             "history": history_tensor,
             "target": target_view.reshape(-1, target_view.shape[2], target_view.shape[3]),
             "latest_history_target": latest_history_target,
+            "target_mask": target_mask,
+            "latest_history_mask": latest_history_mask,
             "time_delta": torch.tensor(sample.dt_years, dtype=torch.float32),
             "history_weeks": torch.tensor(sample.history_weeks, dtype=torch.long),
             "patient_id": sample.patient_id,
@@ -592,6 +643,12 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
             nn.SiLU(),
             nn.Conv2d(hidden_dim, output_channels, 1),
         )
+        # Zero-init the final layer so the model starts out exactly at the persistence
+        # baseline (delta = 0) and only has to learn the *change*, not reconstruct the
+        # whole slice stack from scratch. This is what actually fixes the "persistence
+        # baseline is nearly unbeatable" problem, not the choice of temporal backbone.
+        nn.init.zeros_(self.decoder[-1].weight)
+        nn.init.zeros_(self.decoder[-1].bias)
 
     def forward(
         self,
@@ -599,6 +656,7 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
         t_delta: torch.Tensor,
         history_weeks: torch.Tensor,
         history_mask: torch.Tensor,
+        baseline: torch.Tensor,
     ) -> torch.Tensor:
         batch_size, history_len, _, _, _ = history.shape
         week_features = history.reshape(
@@ -617,7 +675,7 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
         encoded = (encoded + temporal_emb) * mask
         hidden = encoded.sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
 
-        outputs = []
+        deltas = []
         for batch_idx in range(batch_size):
             t_span = torch.linspace(
                 0.0,
@@ -627,8 +685,9 @@ class HistoryConditionedGliomaNeuralODEModel(nn.Module):
                 device=history.device,
             )
             evolved = odeint(self.ode_func, hidden[batch_idx : batch_idx + 1], t_span, method="midpoint")
-            outputs.append(torch.sigmoid(self.decoder(evolved[-1])))
-        return torch.cat(outputs, dim=0)
+            deltas.append(self.decoder(evolved[-1]))
+        delta = torch.cat(deltas, dim=0)
+        return torch.clamp(baseline.to(delta.dtype) + delta, 0.0, 1.0)
 
 
 GliomaNeuralODEModel = HistoryConditionedGliomaNeuralODEModel
@@ -662,6 +721,51 @@ def modality_metric_dict(
     }
 
 
+def focal_error_metrics(
+    prediction: torch.Tensor,
+    target: torch.Tensor,
+    target_slice_count: int,
+) -> tuple[float, float]:
+    """MSE/MAE restricted to the FLAIR tumor-hyperintensity mask used to weight the training loss.
+
+    Whole-slice MSE is dominated by skull-stripped background, which is why the persistence
+    baseline is so hard to beat on that metric alone. Falls back to whole-slice error when the
+    mask is empty (e.g. a target with no hyperintense FLAIR signal).
+    """
+    focus = flair_focus_mask(target, target_slice_count)
+    focus = focus.repeat(1, prediction.shape[1], 1, 1) > 0
+    diff = prediction - target
+    if bool(focus.any()):
+        focal_mse = float(diff[focus].pow(2).mean().item())
+        focal_mae = float(diff[focus].abs().mean().item())
+    else:
+        focal_mse = float(diff.pow(2).mean().item())
+        focal_mae = float(diff.abs().mean().item())
+    return focal_mse, focal_mae
+
+
+# DeepBraTumIA atlas seg_mask.nii.gz label ids, verified against measured_volumes_in_mm3.json
+# voxel counts for this dataset (label 1 volume matched Enhancing_Core exactly, etc.) rather
+# than assumed from the generic BraTS convention, which uses different label numbers.
+WHOLE_TUMOR_LABELS = (1, 2, 3)
+TUMOR_CORE_LABELS = (1, 2)
+ENHANCING_TUMOR_LABELS = (1,)
+
+
+def mask_region(mask: torch.Tensor, labels: tuple[int, ...]) -> torch.Tensor:
+    region = torch.zeros_like(mask, dtype=torch.bool)
+    for label in labels:
+        region |= mask == label
+    return region
+
+
+def binary_dice(pred_region: torch.Tensor, true_region: torch.Tensor) -> float:
+    denom = float(pred_region.sum() + true_region.sum())
+    if denom == 0:
+        return 1.0
+    return float((2.0 * (pred_region & true_region).sum()) / denom)
+
+
 def evaluate_model(
     model: GliomaNeuralODEModel,
     dataset: NeuralODEDataset,
@@ -679,20 +783,35 @@ def evaluate_model(
             sample = dataset[idx]
             history = sample["history"].unsqueeze(0).to(device)
             target = sample["target"].unsqueeze(0).to(device)
+            baseline = sample["latest_history_target"].unsqueeze(0).to(device)
             time_delta = sample["time_delta"].unsqueeze(0).to(device)
             history_weeks = sample["history_weeks"].unsqueeze(0).to(device)
             history_mask = torch.ones((1, history.shape[1]), dtype=torch.bool, device=device)
-            prediction = model(history, time_delta, history_weeks, history_mask)
+            prediction = model(history, time_delta, history_weeks, history_mask, baseline)
             mse = float(mse_crit(prediction, target).item())
             mae = float(mae_crit(prediction, target).item())
             per_modality_mse = modality_metric_dict(prediction, target, mse_crit, len(dataset.target_slice_offsets))
             per_modality_mae = modality_metric_dict(prediction, target, mae_crit, len(dataset.target_slice_offsets))
+            focal_mse, focal_mae = focal_error_metrics(prediction, target, len(dataset.target_slice_offsets))
 
-            pred_flair = reshape_stacked_modalities(prediction, len(dataset.target_slice_offsets))[0, 0].detach().cpu().numpy()
+            pred_flair_tensor = reshape_stacked_modalities(prediction, len(dataset.target_slice_offsets))[0, 0].detach().cpu()
+            pred_flair = pred_flair_tensor.numpy()
             true_flair = reshape_stacked_modalities(target, len(dataset.target_slice_offsets))[0, 0].detach().cpu().numpy()
             pred_volume = float((pred_flair > 0.5).sum())
             true_volume = float((true_flair > 0.5).sum())
             volume_diff = abs(pred_volume - true_volume) / max(true_volume, 1.0)
+
+            # wt_dice compares a thresholded-FLAIR proxy prediction against the *real*
+            # ground-truth tumor mask (not another proxy). tc/et are left None here: a plain
+            # intensity threshold can't distinguish enhancing/necrotic/edema sub-compartments,
+            # only evaluate_persistence_baseline (real mask vs real mask) can report those.
+            target_mask = sample.get("target_mask")
+            wt_dice = None
+            true_tumor_voxels = None
+            if target_mask is not None:
+                target_wt_region = mask_region(target_mask, WHOLE_TUMOR_LABELS)
+                true_tumor_voxels = float(target_wt_region.sum().item())
+                wt_dice = binary_dice(pred_flair_tensor > 0.5, target_wt_region)
 
             metrics.append(
                 {
@@ -701,9 +820,15 @@ def evaluate_model(
                     "target_week": sample_meta.target_week,
                     "mse": mse,
                     "mae": mae,
+                    "focal_mse": focal_mse,
+                    "focal_mae": focal_mae,
                     "per_modality_mse": per_modality_mse,
                     "per_modality_mae": per_modality_mae,
                     "relative_flair_volume_diff": volume_diff,
+                    "wt_dice": wt_dice,
+                    "tc_dice": None,
+                    "et_dice": None,
+                    "true_tumor_voxels": true_tumor_voxels,
                 }
             )
     return metrics
@@ -720,12 +845,7 @@ def evaluate_persistence_baseline(
     for idx in indices:
         sample_meta = dataset.samples[idx]
         sample = dataset[idx]
-        baseline_prediction = sample["latest_history_target"].reshape(
-            1,
-            len(MODALITIES) * len(dataset.target_slice_offsets),
-            sample["target"].shape[1],
-            sample["target"].shape[2],
-        )
+        baseline_prediction = sample["latest_history_target"].unsqueeze(0)
         target = sample["target"].unsqueeze(0)
         mse = float(mse_crit(baseline_prediction, target).item())
         mae = float(mae_crit(baseline_prediction, target).item())
@@ -741,11 +861,33 @@ def evaluate_persistence_baseline(
             mae_crit,
             len(dataset.target_slice_offsets),
         )
+        focal_mse, focal_mae = focal_error_metrics(baseline_prediction, target, len(dataset.target_slice_offsets))
         pred_flair = reshape_stacked_modalities(baseline_prediction, len(dataset.target_slice_offsets))[0, 0].numpy()
         true_flair = reshape_stacked_modalities(target, len(dataset.target_slice_offsets))[0, 0].numpy()
         pred_volume = float((pred_flair > 0.5).sum())
         true_volume = float((true_flair > 0.5).sum())
         volume_diff = abs(pred_volume - true_volume) / max(true_volume, 1.0)
+
+        # Both sides here are real DeepBraTumIA masks (no intensity thresholding), so unlike
+        # evaluate_model this can report the full WT/TC/ET breakdown: does the tumor shape
+        # actually stay the same between the latest known scan and the future scan?
+        target_mask = sample.get("target_mask")
+        latest_history_mask = sample.get("latest_history_mask")
+        wt_dice = tc_dice = et_dice = true_tumor_voxels = None
+        if target_mask is not None:
+            target_wt_region = mask_region(target_mask, WHOLE_TUMOR_LABELS)
+            true_tumor_voxels = float(target_wt_region.sum().item())
+            if latest_history_mask is not None:
+                wt_dice = binary_dice(mask_region(latest_history_mask, WHOLE_TUMOR_LABELS), target_wt_region)
+                tc_dice = binary_dice(
+                    mask_region(latest_history_mask, TUMOR_CORE_LABELS),
+                    mask_region(target_mask, TUMOR_CORE_LABELS),
+                )
+                et_dice = binary_dice(
+                    mask_region(latest_history_mask, ENHANCING_TUMOR_LABELS),
+                    mask_region(target_mask, ENHANCING_TUMOR_LABELS),
+                )
+
         metrics.append(
             {
                 "patient_id": sample_meta.patient_id,
@@ -753,12 +895,24 @@ def evaluate_persistence_baseline(
                 "target_week": sample_meta.target_week,
                 "mse": mse,
                 "mae": mae,
+                "focal_mse": focal_mse,
+                "focal_mae": focal_mae,
                 "per_modality_mse": per_modality_mse,
                 "per_modality_mae": per_modality_mae,
                 "relative_flair_volume_diff": volume_diff,
+                "wt_dice": wt_dice,
+                "tc_dice": tc_dice,
+                "et_dice": et_dice,
+                "true_tumor_voxels": true_tumor_voxels,
             }
         )
     return metrics
+
+
+def _average_optional(rows: list[dict[str, object]], key: str) -> tuple[float | None, int]:
+    """Average a metric that can be None per-row (e.g. Dice on weeks with no ground-truth mask)."""
+    values = [float(row[key]) for row in rows if row.get(key) is not None]
+    return (sum(values) / len(values) if values else None), len(values)
 
 
 def summarize_metric_rows(rows: list[dict[str, float | int | str]]) -> dict[str, object]:
@@ -767,7 +921,14 @@ def summarize_metric_rows(rows: list[dict[str, float | int | str]]) -> dict[str,
             "count": 0,
             "avg_mse": None,
             "avg_mae": None,
+            "avg_focal_mse": None,
+            "avg_focal_mae": None,
             "avg_relative_flair_volume_diff": None,
+            "avg_wt_dice": None,
+            "avg_tc_dice": None,
+            "avg_et_dice": None,
+            "avg_true_tumor_voxels": None,
+            "mask_sample_count": 0,
             "avg_per_modality_mse": {},
             "avg_per_modality_mae": {},
             "by_patient": {},
@@ -785,13 +946,24 @@ def summarize_metric_rows(rows: list[dict[str, float | int | str]]) -> dict[str,
             mod: float(sum(float(row["per_modality_mae"][mod]) for row in patient_rows) / len(patient_rows))
             for mod in MODALITIES
         }
+        avg_wt_dice, wt_dice_count = _average_optional(patient_rows, "wt_dice")
+        avg_tc_dice, _ = _average_optional(patient_rows, "tc_dice")
+        avg_et_dice, _ = _average_optional(patient_rows, "et_dice")
+        avg_true_tumor_voxels, _ = _average_optional(patient_rows, "true_tumor_voxels")
         patient_summary[patient_id] = {
             "count": len(patient_rows),
             "avg_mse": float(sum(float(row["mse"]) for row in patient_rows) / len(patient_rows)),
             "avg_mae": float(sum(float(row["mae"]) for row in patient_rows) / len(patient_rows)),
+            "avg_focal_mse": float(sum(float(row["focal_mse"]) for row in patient_rows) / len(patient_rows)),
+            "avg_focal_mae": float(sum(float(row["focal_mae"]) for row in patient_rows) / len(patient_rows)),
             "avg_relative_flair_volume_diff": float(
                 sum(float(row["relative_flair_volume_diff"]) for row in patient_rows) / len(patient_rows)
             ),
+            "avg_wt_dice": avg_wt_dice,
+            "avg_tc_dice": avg_tc_dice,
+            "avg_et_dice": avg_et_dice,
+            "avg_true_tumor_voxels": avg_true_tumor_voxels,
+            "mask_sample_count": wt_dice_count,
             "avg_per_modality_mse": avg_per_modality_mse,
             "avg_per_modality_mae": avg_per_modality_mae,
         }
@@ -803,13 +975,24 @@ def summarize_metric_rows(rows: list[dict[str, float | int | str]]) -> dict[str,
         mod: float(sum(float(row["per_modality_mae"][mod]) for row in rows) / len(rows))
         for mod in MODALITIES
     }
+    avg_wt_dice, wt_dice_count = _average_optional(rows, "wt_dice")
+    avg_tc_dice, _ = _average_optional(rows, "tc_dice")
+    avg_et_dice, _ = _average_optional(rows, "et_dice")
+    avg_true_tumor_voxels, _ = _average_optional(rows, "true_tumor_voxels")
     return {
         "count": len(rows),
         "avg_mse": float(sum(float(row["mse"]) for row in rows) / len(rows)),
         "avg_mae": float(sum(float(row["mae"]) for row in rows) / len(rows)),
+        "avg_focal_mse": float(sum(float(row["focal_mse"]) for row in rows) / len(rows)),
+        "avg_focal_mae": float(sum(float(row["focal_mae"]) for row in rows) / len(rows)),
         "avg_relative_flair_volume_diff": float(
             sum(float(row["relative_flair_volume_diff"]) for row in rows) / len(rows)
         ),
+        "avg_wt_dice": avg_wt_dice,
+        "avg_tc_dice": avg_tc_dice,
+        "avg_et_dice": avg_et_dice,
+        "avg_true_tumor_voxels": avg_true_tumor_voxels,
+        "mask_sample_count": wt_dice_count,
         "avg_per_modality_mse": avg_per_modality_mse,
         "avg_per_modality_mae": avg_per_modality_mae,
         "by_patient": patient_summary,
@@ -823,7 +1006,13 @@ def flatten_metric_row(row: dict[str, object]) -> dict[str, object]:
         "target_week": row["target_week"],
         "mse": row["mse"],
         "mae": row["mae"],
+        "focal_mse": row.get("focal_mse"),
+        "focal_mae": row.get("focal_mae"),
         "relative_flair_volume_diff": row["relative_flair_volume_diff"],
+        "wt_dice": row.get("wt_dice"),
+        "tc_dice": row.get("tc_dice"),
+        "et_dice": row.get("et_dice"),
+        "true_tumor_voxels": row.get("true_tumor_voxels"),
     }
     per_modality_mse = row.get("per_modality_mse") or {}
     per_modality_mae = row.get("per_modality_mae") or {}
@@ -840,7 +1029,13 @@ def write_metric_rows(rows: list[dict[str, object]], output_path: Path) -> None:
         "target_week",
         "mse",
         "mae",
+        "focal_mse",
+        "focal_mae",
         "relative_flair_volume_diff",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "true_tumor_voxels",
     ]
     for modality in MODALITIES:
         fieldnames.extend([f"{modality.lower()}_mse", f"{modality.lower()}_mae"])
@@ -973,6 +1168,7 @@ def collate_history_batch(batch: list[dict[str, object]]) -> dict[str, object]:
     history_weeks = []
     history_masks = []
     targets = []
+    baseline_targets = []
     time_deltas = []
     patient_ids = []
     target_weeks = []
@@ -996,6 +1192,7 @@ def collate_history_batch(batch: list[dict[str, object]]) -> dict[str, object]:
         history_weeks.append(weeks)
         history_masks.append(mask)
         targets.append(item["target"])
+        baseline_targets.append(item["latest_history_target"])
         time_deltas.append(item["time_delta"])
         patient_ids.append(item["patient_id"])
         target_weeks.append(item["target_week"])
@@ -1005,6 +1202,7 @@ def collate_history_batch(batch: list[dict[str, object]]) -> dict[str, object]:
         "history_weeks": torch.stack(history_weeks, dim=0),
         "history_mask": torch.stack(history_masks, dim=0),
         "target": torch.stack(targets, dim=0),
+        "latest_history_target": torch.stack(baseline_targets, dim=0),
         "time_delta": torch.stack(time_deltas, dim=0),
         "patient_id": patient_ids,
         "target_week": target_weeks,
@@ -1033,12 +1231,13 @@ def train_model(
         for batch in dataloader:
             history = batch["history"].to(device)
             target = batch["target"].to(device)
+            baseline = batch["latest_history_target"].to(device)
             time_delta = batch["time_delta"].to(device)
             history_weeks = batch["history_weeks"].to(device)
             history_mask = batch["history_mask"].to(device)
 
             optimizer.zero_grad()
-            prediction = model(history, time_delta, history_weeks, history_mask)
+            prediction = model(history, time_delta, history_weeks, history_mask, baseline)
             loss_dict = compute_losses(prediction, target, target_slice_count)
             loss_dict["total_loss"].backward()
             optimizer.step()
@@ -1231,13 +1430,8 @@ def run_experiment(
             time_delta = sample["time_delta"].unsqueeze(0).to(device)
             history_weeks = sample["history_weeks"].unsqueeze(0).to(device)
             history_mask = torch.ones((1, history.shape[1]), dtype=torch.bool, device=device)
-            prediction = model(history, time_delta, history_weeks, history_mask)
-            baseline_prediction = sample["latest_history_target"].reshape(
-                1,
-                len(MODALITIES) * len(dataset.target_slice_offsets),
-                sample["target"].shape[1],
-                sample["target"].shape[2],
-            )
+            baseline_prediction = sample["latest_history_target"].unsqueeze(0).to(device)
+            prediction = model(history, time_delta, history_weeks, history_mask, baseline_prediction)
             model_mse = float(mse_crit(prediction, target).item())
             baseline_mse = float(mse_crit(baseline_prediction.to(device), target).item())
             output_path = patient_run_dir / f"prediction_to_week_{int(sample['target_week'])}.png"

@@ -8,12 +8,13 @@ from pathlib import Path
 from scripts.summarize_run_metrics import aggregate_rows, collect_rows, flatten_run_summary
 
 
-def metric_summary(count: int, mse: float, mae: float = 0.1) -> dict[str, object]:
+def metric_summary(count: int, mse: float, mae: float = 0.1, wt_dice: float | None = None) -> dict[str, object]:
     return {
         "count": count,
         "avg_mse": mse,
         "avg_mae": mae,
         "avg_relative_flair_volume_diff": 0.0,
+        "avg_wt_dice": wt_dice,
         "avg_per_modality_mse": {"FLAIR": mse, "T1": mse, "T2": mse, "CT1": mse},
         "avg_per_modality_mae": {"FLAIR": mae, "T1": mae, "T2": mae, "CT1": mae},
         "by_patient": {},
@@ -37,8 +38,8 @@ class SummarizeRunMetricsTest(unittest.TestCase):
                     "run_name": "run_a",
                     "patients": ["Patient-001"],
                     "patient_weeks": {"Patient-001": [0, 4, 8]},
-                    "holdout_metric_summary": metric_summary(1, 0.2),
-                    "baseline_holdout_metric_summary": metric_summary(1, 0.5),
+                    "holdout_metric_summary": metric_summary(1, 0.2, wt_dice=0.7),
+                    "baseline_holdout_metric_summary": metric_summary(1, 0.5, wt_dice=0.6),
                     "all_metric_summary": metric_summary(2, 0.1),
                     "baseline_all_metric_summary": metric_summary(2, 0.2),
                 },
@@ -49,6 +50,8 @@ class SummarizeRunMetricsTest(unittest.TestCase):
         self.assertEqual(row["metric_split"], "holdout")
         self.assertEqual(row["history_timepoint_count"], 2)
         self.assertAlmostEqual(row["relative_improvement"], 0.6)
+        self.assertAlmostEqual(row["model_wt_dice"], 0.7)
+        self.assertAlmostEqual(row["baseline_wt_dice"], 0.6)
 
     def test_flatten_falls_back_to_all_split(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

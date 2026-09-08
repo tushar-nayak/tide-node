@@ -60,6 +60,8 @@ def flatten_run_summary(path: Path, split: str | None = None) -> dict[str, Any]:
     patient_weeks = summary.get("patient_weeks", {}).get(patient_id, [])
     model_mse = model_metrics.get("avg_mse")
     baseline_mse = baseline_metrics.get("avg_mse")
+    model_focal_mse = model_metrics.get("avg_focal_mse")
+    baseline_focal_mse = baseline_metrics.get("avg_focal_mse")
     row: dict[str, Any] = {
         "run_name": summary.get("run_name") or path.parent.name,
         "patient_id": patient_id,
@@ -71,8 +73,24 @@ def flatten_run_summary(path: Path, split: str | None = None) -> dict[str, Any]:
         "relative_improvement": relative_improvement(model_mse, baseline_mse),
         "model_mae": model_metrics.get("avg_mae"),
         "baseline_mae": baseline_metrics.get("avg_mae"),
+        "model_focal_mse": model_focal_mse,
+        "baseline_focal_mse": baseline_focal_mse,
+        "focal_relative_improvement": relative_improvement(model_focal_mse, baseline_focal_mse),
+        "model_focal_mae": model_metrics.get("avg_focal_mae"),
+        "baseline_focal_mae": baseline_metrics.get("avg_focal_mae"),
         "model_relative_flair_volume_diff": model_metrics.get("avg_relative_flair_volume_diff"),
         "baseline_relative_flair_volume_diff": baseline_metrics.get("avg_relative_flair_volume_diff"),
+        # Ground-truth DeepBraTumIA segmentation Dice, not a thresholded-intensity proxy.
+        # model_wt_dice is a coarse proxy prediction (thresholded FLAIR) vs the real mask;
+        # baseline_{wt,tc,et}_dice are real-mask-vs-real-mask (does the tumor shape change
+        # between the latest known scan and the future scan). model_tc/et_dice don't exist:
+        # a plain intensity threshold can't separate tumor sub-compartments.
+        "model_wt_dice": model_metrics.get("avg_wt_dice"),
+        "baseline_wt_dice": baseline_metrics.get("avg_wt_dice"),
+        "baseline_tc_dice": baseline_metrics.get("avg_tc_dice"),
+        "baseline_et_dice": baseline_metrics.get("avg_et_dice"),
+        "avg_true_tumor_voxels": model_metrics.get("avg_true_tumor_voxels"),
+        "mask_sample_count": model_metrics.get("mask_sample_count"),
         "epochs": summary.get("epochs"),
         "model_size": summary.get("model_size"),
         "history_mode": summary.get("history_mode"),
@@ -106,6 +124,13 @@ def aggregate_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     improvements = [row["relative_improvement"] for row in rows if row["relative_improvement"] is not None]
     model_mses = [row["model_mse"] for row in rows if row["model_mse"] is not None]
     baseline_mses = [row["baseline_mse"] for row in rows if row["baseline_mse"] is not None]
+    focal_improvements = [row["focal_relative_improvement"] for row in rows if row.get("focal_relative_improvement") is not None]
+    model_focal_mses = [row["model_focal_mse"] for row in rows if row.get("model_focal_mse") is not None]
+    baseline_focal_mses = [row["baseline_focal_mse"] for row in rows if row.get("baseline_focal_mse") is not None]
+    model_wt_dices = [row["model_wt_dice"] for row in rows if row.get("model_wt_dice") is not None]
+    baseline_wt_dices = [row["baseline_wt_dice"] for row in rows if row.get("baseline_wt_dice") is not None]
+    baseline_tc_dices = [row["baseline_tc_dice"] for row in rows if row.get("baseline_tc_dice") is not None]
+    baseline_et_dices = [row["baseline_et_dice"] for row in rows if row.get("baseline_et_dice") is not None]
     return {
         "run_count": len(rows),
         "mean_model_mse": sum(model_mses) / len(model_mses) if model_mses else None,
@@ -113,6 +138,14 @@ def aggregate_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "mean_relative_improvement": sum(improvements) / len(improvements) if improvements else None,
         "patients_with_positive_improvement": sum(1 for value in improvements if value > 0),
         "patients_with_nonpositive_improvement": sum(1 for value in improvements if value <= 0),
+        "mean_model_focal_mse": sum(model_focal_mses) / len(model_focal_mses) if model_focal_mses else None,
+        "mean_baseline_focal_mse": sum(baseline_focal_mses) / len(baseline_focal_mses) if baseline_focal_mses else None,
+        "mean_focal_relative_improvement": sum(focal_improvements) / len(focal_improvements) if focal_improvements else None,
+        "mean_model_wt_dice": sum(model_wt_dices) / len(model_wt_dices) if model_wt_dices else None,
+        "mean_baseline_wt_dice": sum(baseline_wt_dices) / len(baseline_wt_dices) if baseline_wt_dices else None,
+        "mean_baseline_tc_dice": sum(baseline_tc_dices) / len(baseline_tc_dices) if baseline_tc_dices else None,
+        "mean_baseline_et_dice": sum(baseline_et_dices) / len(baseline_et_dices) if baseline_et_dices else None,
+        "runs_with_mask_ground_truth": sum(1 for row in rows if row.get("model_wt_dice") is not None),
     }
 
 
@@ -148,6 +181,24 @@ def write_markdown(rows: list[dict[str, Any]], summary: dict[str, Any], output_p
         ),
         f"- Positive-improvement patients: {summary['patients_with_positive_improvement']}",
         f"- Nonpositive-improvement patients: {summary['patients_with_nonpositive_improvement']}",
+        (
+            f"- Mean tumor-focal relative improvement: {summary['mean_focal_relative_improvement']:+.1%}"
+            if summary.get("mean_focal_relative_improvement") is not None
+            else "- Mean tumor-focal relative improvement: n/a"
+        ),
+        (
+            f"- Ground-truth tumor Dice (whole tumor): model {summary['mean_model_wt_dice']:.3f} vs "
+            f"persistence baseline {summary['mean_baseline_wt_dice']:.3f} "
+            f"(n={summary['runs_with_mask_ground_truth']} runs with a real segmentation mask)"
+            if summary.get("mean_model_wt_dice") is not None and summary.get("mean_baseline_wt_dice") is not None
+            else "- Ground-truth tumor Dice: n/a (no runs had a real segmentation mask)"
+        ),
+        (
+            f"- Persistence-baseline Dice, real mask vs real mask (tumor core / enhancing): "
+            f"{summary['mean_baseline_tc_dice']:.3f} / {summary['mean_baseline_et_dice']:.3f}"
+            if summary.get("mean_baseline_tc_dice") is not None and summary.get("mean_baseline_et_dice") is not None
+            else "- Persistence-baseline tumor core / enhancing Dice: n/a"
+        ),
         "",
         f"## Top {min(top_n, len(rows))} Runs by Relative Improvement",
         "",
