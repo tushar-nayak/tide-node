@@ -1,4 +1,5 @@
-# glioblastoma-evolution
+# Tumor Interval Dynamics Estimation via Neural ODE Sequences
+## (previously glioblastoma-evolution)
 
 History-conditioned Neural ODE experiments for longitudinal glioblastoma MRI forecasting on LUMIERE-style multi-modal scans.
 
