@@ -6,3 +6,6 @@ torchdiffeq>=0.2.5
 scikit-image>=0.22
 scipy>=1.11
 SimpleITK>=2.3
+
+# Tabular volume-trajectory baselines
+scikit-learn>=1.4
