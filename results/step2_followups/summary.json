@@ -1,0 +1,1203 @@
+{
+  "ceiling": {
+    "dice_wt_dbt_roundtrip": {
+      "n": 399,
+      "mean": 0.9880675764788335,
+      "median": 0.9953582825645488,
+      "q25": 0.9917328901881157,
+      "q75": 0.9979717395920198,
+      "patient_mean": 0.9847188218432456,
+      "ci95": [
+        0.9757526717926658,
+        0.9914395861290087
+      ],
+      "patients": 79
+    },
+    "dice_wt_dbt_vs_hdg": {
+      "n": 399,
+      "mean": 0.6694157830226464,
+      "median": 0.7231147540983607,
+      "q25": 0.5767611855830144,
+      "q75": 0.8193831952250343,
+      "patient_mean": 0.6484087573433602,
+      "ci95": [
+        0.6116239612792207,
+        0.6803385955628151
+      ],
+      "patients": 79
+    },
+    "dice_wt_nonecrosis_dbt_vs_hdg": {
+      "n": 399,
+      "mean": 0.7098194621468383,
+      "median": 0.7635666347075744,
+      "q25": 0.6510079217299118,
+      "q75": 0.832152224127498,
+      "patient_mean": 0.6893193647194951,
+      "ci95": [
+        0.6552064954799209,
+        0.7214826412261112
+      ],
+      "patients": 79
+    },
+    "dice_et_dbt_vs_hdg_either_et": {
+      "n": 329,
+      "mean": 0.5087851084374548,
+      "median": 0.6320224719101124,
+      "q25": 0.13471502590673576,
+      "q75": 0.8,
+      "patient_mean": 0.5090781506207532,
+      "ci95": [
+        0.4630797922087135,
+        0.5571542903130997
+      ],
+      "patients": 79
+    },
+    "dice_wt_dbt_vs_hdg_qc_pass": {
+      "n": 396,
+      "mean": 0.669764075515857,
+      "median": 0.7230698017168927,
+      "q25": 0.5768166869963233,
+      "q75": 0.8193402959269832,
+      "patient_mean": 0.6533035175668335,
+      "ci95": [
+        0.6198820642362083,
+        0.6860888356159536
+      ],
+      "patients": 78
+    },
+    "dice_wt_nonecrosis_dbt_vs_hdg_qc_pass": {
+      "n": 396,
+      "mean": 0.7106273405781193,
+      "median": 0.7628405860762542,
+      "q25": 0.6511466767515742,
+      "q75": 0.8320552972395328,
+      "patient_mean": 0.695513795556836,
+      "ci95": [
+        0.6642030871283127,
+        0.7237577116763374
+      ],
+      "patients": 78
+    },
+    "dice_et_dbt_vs_hdg_qc_pass": {
+      "n": 326,
+      "mean": 0.5088388524062194,
+      "median": 0.6354556803995006,
+      "q25": 0.13487085589621722,
+      "q75": 0.7998676373262741,
+      "patient_mean": 0.5138784191472828,
+      "ci95": [
+        0.4668644900864998,
+        0.5576281291535063
+      ],
+      "patients": 78
+    },
+    "hdg_registration": {
+      "brain_dice_median": 0.9775367186351565,
+      "brain_dice_p10": 0.9705010785451705,
+      "below_0.9": 3,
+      "chosen_init": {
+        "as_header": 399
+      }
+    },
+    "median_wt_volume_ml": {
+      "deepbratumia": 47.792,
+      "hdglio": 28.68
+    }
+  },
+  "stable_pairs": {
+    "SD, interval <= 12 wk": {
+      "n": 32,
+      "mean": 0.5807727848438717,
+      "median": 0.6007678380559737,
+      "q25": 0.3943703501345068,
+      "q75": 0.8210726174446726,
+      "mean_wt": 0.5807727848438717,
+      "mean_tc": 0.4927081676943055,
+      "mean_et": 0.3843479886189574,
+      "patients": 20
+    },
+    "SD, any interval": {
+      "n": 92,
+      "mean": 0.5085077169591564,
+      "median": 0.5239985978138336,
+      "q25": 0.2993121661537956,
+      "q75": 0.7828442541144609,
+      "mean_wt": 0.5085077169591564,
+      "mean_tc": 0.44413814406741775,
+      "mean_et": 0.31442549935424396,
+      "patients": 50
+    },
+    "PD": {
+      "n": 236,
+      "mean": 0.5909848015278569,
+      "median": 0.6316354215149809,
+      "q25": 0.43707987565887285,
+      "q75": 0.7869694113865923,
+      "mean_wt": 0.5909848015278569,
+      "mean_tc": 0.4016663673907354,
+      "mean_et": 0.25371564319740636,
+      "patients": 72
+    },
+    "all step-2 transitions": {
+      "n": 399,
+      "mean": 0.5701483641222068,
+      "median": 0.6156047100253109,
+      "q25": 0.39431440318779,
+      "q75": 0.7885978596632992,
+      "mean_wt": 0.5701483641222068,
+      "mean_tc": 0.4063274819829636,
+      "mean_et": 0.27841317986360326,
+      "patients": 79
+    }
+  },
+  "strata": {
+    "registered_ode": {
+      "RANO rating of target|PD": {
+        "transitions": 236,
+        "patients": 72,
+        "model_dice_wt": 0.5958840284866841,
+        "persistence_dice_wt": 0.5909848015278569,
+        "dice_diff": 0.00734359196993959,
+        "dice_diff_ci95": [
+          0.0003932601915098813,
+          0.014241032290948027
+        ],
+        "change_dice_diff": 0.07002570853312935,
+        "change_dice_diff_ci95": [
+          0.05147529892400097,
+          0.09078673552714094
+        ],
+        "pred_dlogv": 0.07779803584187535,
+        "true_dlogv": 0.2609900515662286
+      },
+      "RANO rating of target|SD": {
+        "transitions": 92,
+        "patients": 50,
+        "model_dice_wt": 0.510534400119734,
+        "persistence_dice_wt": 0.5085077169591564,
+        "dice_diff": -0.0034514746518278807,
+        "dice_diff_ci95": [
+          -0.01715017899070671,
+          0.008387791611607822
+        ],
+        "change_dice_diff": 0.06515742807888612,
+        "change_dice_diff_ci95": [
+          0.03413307978706876,
+          0.09836382880462108
+        ],
+        "pred_dlogv": 0.035456174837363734,
+        "true_dlogv": -0.6247729260941525
+      },
+      "RANO rating of target|PR": {
+        "transitions": 20,
+        "patients": 12,
+        "model_dice_wt": 0.6204066906176494,
+        "persistence_dice_wt": 0.6245272844597406,
+        "dice_diff": -0.008772221501994169,
+        "dice_diff_ci95": [
+          -0.022374814237300217,
+          0.0016316031415484478
+        ],
+        "change_dice_diff": 0.029465010525656712,
+        "change_dice_diff_ci95": [
+          0.0057902397136865074,
+          0.06160410930584474
+        ],
+        "pred_dlogv": 0.05302851288379147,
+        "true_dlogv": -0.22955139434813968
+      },
+      "RANO rating of target|CR": {
+        "transitions": 26,
+        "patients": 8,
+        "model_dice_wt": 0.5668783207645736,
+        "persistence_dice_wt": 0.5676611814718824,
+        "dice_diff": -0.03391697792682381,
+        "dice_diff_ci95": [
+          -0.08532179900903637,
+          0.0
+        ],
+        "change_dice_diff": 0.06798641106960812,
+        "change_dice_diff_ci95": [
+          0.01274225886132977,
+          0.1451835860834505
+        ],
+        "pred_dlogv": 0.18489763615212212,
+        "true_dlogv": -0.189430669862094
+      },
+      "RANO rating of target|unrated": {
+        "transitions": 25,
+        "patients": 16,
+        "model_dice_wt": 0.5570402502742495,
+        "persistence_dice_wt": 0.5593735102592073,
+        "dice_diff": 0.005013005318776485,
+        "dice_diff_ci95": [
+          -0.005906860382287386,
+          0.016491031102105702
+        ],
+        "change_dice_diff": 0.06958811933972897,
+        "change_dice_diff_ci95": [
+          0.04250431912784671,
+          0.09931972427834711
+        ],
+        "pred_dlogv": 0.08355657668155902,
+        "true_dlogv": 0.1209869672519963
+      },
+      "whole-tumor volume change|shrank >20%": {
+        "transitions": 109,
+        "patients": 68,
+        "model_dice_wt": 0.4201968172529642,
+        "persistence_dice_wt": 0.42439642952179946,
+        "dice_diff": 0.00018381345247996868,
+        "dice_diff_ci95": [
+          -0.007615903924587551,
+          0.0077459218225244325
+        ],
+        "change_dice_diff": 0.07354125913280068,
+        "change_dice_diff_ci95": [
+          0.04816740573134914,
+          0.10432337204952258
+        ],
+        "pred_dlogv": 0.013837359728019312,
+        "true_dlogv": -1.1057438987816177
+      },
+      "whole-tumor volume change|within -20%/+25%": {
+        "transitions": 144,
+        "patients": 48,
+        "model_dice_wt": 0.7588603362326682,
+        "persistence_dice_wt": 0.7669688919659104,
+        "dice_diff": -0.014031248360003697,
+        "dice_diff_ci95": [
+          -0.033992754859918976,
+          0.0008509680180318416
+        ],
+        "change_dice_diff": 0.06833478249381764,
+        "change_dice_diff_ci95": [
+          0.03527649968006342,
+          0.09897401764888893
+        ],
+        "pred_dlogv": 0.07035080354173823,
+        "true_dlogv": -0.0013690032579598526
+      },
+      "whole-tumor volume change|grew >25%": {
+        "transitions": 146,
+        "patients": 60,
+        "model_dice_wt": 0.5040645920882451,
+        "persistence_dice_wt": 0.48483880838214577,
+        "dice_diff": 0.00944961136473473,
+        "dice_diff_ci95": [
+          -0.002562651143797986,
+          0.019757873911619768
+        ],
+        "change_dice_diff": 0.06555107494932995,
+        "change_dice_diff_ci95": [
+          0.043986467285807504,
+          0.0871849789643166
+        ],
+        "pred_dlogv": 0.12287903998647684,
+        "true_dlogv": 0.810590501939953
+      },
+      "overlap with last mask|low (<0.47)": {
+        "transitions": 133,
+        "patients": 62,
+        "model_dice_wt": 0.2762056991577863,
+        "persistence_dice_wt": 0.2646123398069406,
+        "dice_diff": 0.002996095391457382,
+        "dice_diff_ci95": [
+          -0.0053204463477498,
+          0.011885881017545742
+        ],
+        "change_dice_diff": 0.054171183821296494,
+        "change_dice_diff_ci95": [
+          0.03660287102477992,
+          0.0732779822888432
+        ],
+        "pred_dlogv": 0.09083897729789941,
+        "true_dlogv": -0.14996650416419685
+      },
+      "overlap with last mask|middle": {
+        "transitions": 133,
+        "patients": 60,
+        "model_dice_wt": 0.6152387031221481,
+        "persistence_dice_wt": 0.6070087525478653,
+        "dice_diff": 0.0034674703270488254,
+        "dice_diff_ci95": [
+          -0.00744758616593345,
+          0.013889915314345845
+        ],
+        "change_dice_diff": 0.08057270396759497,
+        "change_dice_diff_ci95": [
+          0.05448391125411984,
+          0.1080896485800883
+        ],
+        "pred_dlogv": 0.05867561006361061,
+        "true_dlogv": 0.10538027522573507
+      },
+      "overlap with last mask|high (>=0.74)": {
+        "transitions": 133,
+        "patients": 38,
+        "model_dice_wt": 0.8278847100731564,
+        "persistence_dice_wt": 0.8388240000118146,
+        "dice_diff": -0.014316254932353086,
+        "dice_diff_ci95": [
+          -0.028306836381787548,
+          -0.0029032425941800167
+        ],
+        "change_dice_diff": 0.07775007378622058,
+        "change_dice_diff_ci95": [
+          0.050414210874913046,
+          0.10685614484441866
+        ],
+        "pred_dlogv": 0.07288486946849017,
+        "true_dlogv": 0.026713987185759385
+      },
+      "interval|<=8 wk": {
+        "transitions": 88,
+        "patients": 38,
+        "model_dice_wt": 0.6350348069719524,
+        "persistence_dice_wt": 0.6292921225623715,
+        "dice_diff": 0.010925635242207873,
+        "dice_diff_ci95": [
+          -0.002240011096221867,
+          0.02292771264344753
+        ],
+        "change_dice_diff": 0.1046240427810165,
+        "change_dice_diff_ci95": [
+          0.06880792271395078,
+          0.14171540143656902
+        ],
+        "pred_dlogv": 0.07035906051628685,
+        "true_dlogv": 0.13940310184729818
+      },
+      "interval|9-16 wk": {
+        "transitions": 229,
+        "patients": 66,
+        "model_dice_wt": 0.5756995830890635,
+        "persistence_dice_wt": 0.5741027333723724,
+        "dice_diff": -0.008961273216280074,
+        "dice_diff_ci95": [
+          -0.019449608773810342,
+          -0.00045752530066076443
+        ],
+        "change_dice_diff": 0.04918008569512363,
+        "change_dice_diff_ci95": [
+          0.030692703021970934,
+          0.06767780360050303
+        ],
+        "pred_dlogv": 0.07678517538522253,
+        "true_dlogv": -0.041234030185204204
+      },
+      "interval|>16 wk": {
+        "transitions": 82,
+        "patients": 48,
+        "model_dice_wt": 0.49942078539065543,
+        "persistence_dice_wt": 0.49563371410973894,
+        "dice_diff": 0.006836083847289283,
+        "dice_diff_ci95": [
+          -0.004962984512472942,
+          0.018749383959588823
+        ],
+        "change_dice_diff": 0.07401108566840858,
+        "change_dice_diff_ci95": [
+          0.049750855845995624,
+          0.10141007577743537
+        ],
+        "pred_dlogv": 0.07077713743586368,
+        "true_dlogv": -0.06343766101536458
+      },
+      "direction": {
+        "transitions": 232,
+        "spearman_pred_vs_true_dlogv": 0.3832177885751956,
+        "spearman_small_last_volume_vs_true_dlogv": 0.47264065994176974,
+        "partial_spearman_given_last_volume": 0.112889006502526,
+        "frac_pred_growth": 0.7801724137931034,
+        "frac_true_growth": 0.5301724137931034
+      }
+    },
+    "registered_static": {
+      "RANO rating of target|PD": {
+        "transitions": 236,
+        "patients": 72,
+        "model_dice_wt": 0.5972522041170807,
+        "persistence_dice_wt": 0.5909848015278569,
+        "dice_diff": 0.010307748309301734,
+        "dice_diff_ci95": [
+          0.0033353253674227017,
+          0.017394159063545717
+        ],
+        "change_dice_diff": 0.0728720455153936,
+        "change_dice_diff_ci95": [
+          0.054070451536835554,
+          0.09192844769132488
+        ],
+        "pred_dlogv": 0.10662083338898926,
+        "true_dlogv": 0.2609900515662286
+      },
+      "RANO rating of target|SD": {
+        "transitions": 92,
+        "patients": 50,
+        "model_dice_wt": 0.5095148009735133,
+        "persistence_dice_wt": 0.5085077169591564,
+        "dice_diff": 0.001449826793574634,
+        "dice_diff_ci95": [
+          -0.008908130912080897,
+          0.011707142370166549
+        ],
+        "change_dice_diff": 0.07225727269655628,
+        "change_dice_diff_ci95": [
+          0.046826227249245164,
+          0.0997416390251954
+        ],
+        "pred_dlogv": 0.08791734129663471,
+        "true_dlogv": -0.6247729260941525
+      },
+      "RANO rating of target|PR": {
+        "transitions": 20,
+        "patients": 12,
+        "model_dice_wt": 0.6227783695260775,
+        "persistence_dice_wt": 0.6245272844597406,
+        "dice_diff": -0.010161882600233142,
+        "dice_diff_ci95": [
+          -0.025210978424788148,
+          0.001590345961676989
+        ],
+        "change_dice_diff": 0.03160454578668546,
+        "change_dice_diff_ci95": [
+          0.00874176119462918,
+          0.06001492329912422
+        ],
+        "pred_dlogv": 0.048428123342176936,
+        "true_dlogv": -0.22955139434813968
+      },
+      "RANO rating of target|CR": {
+        "transitions": 26,
+        "patients": 8,
+        "model_dice_wt": 0.5674439491158588,
+        "persistence_dice_wt": 0.5676611814718824,
+        "dice_diff": -0.030039671458187117,
+        "dice_diff_ci95": [
+          -0.07617155296717623,
+          -0.0013611604865244452
+        ],
+        "change_dice_diff": 0.06079048611918289,
+        "change_dice_diff_ci95": [
+          0.0,
+          0.14229642365231004
+        ],
+        "pred_dlogv": 0.2066869020554247,
+        "true_dlogv": -0.189430669862094
+      },
+      "RANO rating of target|unrated": {
+        "transitions": 25,
+        "patients": 16,
+        "model_dice_wt": 0.567206461745019,
+        "persistence_dice_wt": 0.5593735102592073,
+        "dice_diff": 0.014063277436146014,
+        "dice_diff_ci95": [
+          -0.0004418269900669767,
+          0.029781327344401778
+        ],
+        "change_dice_diff": 0.08788910544882617,
+        "change_dice_diff_ci95": [
+          0.05311609813232873,
+          0.12713319610241608
+        ],
+        "pred_dlogv": 0.09373002339102322,
+        "true_dlogv": 0.1209869672519963
+      },
+      "whole-tumor volume change|shrank >20%": {
+        "transitions": 109,
+        "patients": 68,
+        "model_dice_wt": 0.42125079418816974,
+        "persistence_dice_wt": 0.42439642952179946,
+        "dice_diff": 0.0009712886829189265,
+        "dice_diff_ci95": [
+          -0.007969433691477285,
+          0.009090185529320774
+        ],
+        "change_dice_diff": 0.0710422790086276,
+        "change_dice_diff_ci95": [
+          0.050862866980765836,
+          0.09337522605433465
+        ],
+        "pred_dlogv": 0.029078287296211806,
+        "true_dlogv": -1.1057438987816177
+      },
+      "whole-tumor volume change|within -20%/+25%": {
+        "transitions": 144,
+        "patients": 48,
+        "model_dice_wt": 0.7569528129515927,
+        "persistence_dice_wt": 0.7669688919659104,
+        "dice_diff": -0.015231997635321256,
+        "dice_diff_ci95": [
+          -0.03348118373997712,
+          -0.0001436941089194302
+        ],
+        "change_dice_diff": 0.0777594744017811,
+        "change_dice_diff_ci95": [
+          0.047026084435739156,
+          0.1074223930016274
+        ],
+        "pred_dlogv": 0.0910984330669792,
+        "true_dlogv": -0.0013690032579598526
+      },
+      "whole-tumor volume change|grew >25%": {
+        "transitions": 146,
+        "patients": 60,
+        "model_dice_wt": 0.5088946016494096,
+        "persistence_dice_wt": 0.48483880838214577,
+        "dice_diff": 0.0193138654898343,
+        "dice_diff_ci95": [
+          0.009908334249923873,
+          0.028677450900199453
+        ],
+        "change_dice_diff": 0.07544185583109322,
+        "change_dice_diff_ci95": [
+          0.05554931154057083,
+          0.09839909972037043
+        ],
+        "pred_dlogv": 0.17567723909054747,
+        "true_dlogv": 0.810590501939953
+      },
+      "overlap with last mask|low (<0.47)": {
+        "transitions": 133,
+        "patients": 62,
+        "model_dice_wt": 0.28324414603800396,
+        "persistence_dice_wt": 0.2646123398069406,
+        "dice_diff": 0.008231687608255328,
+        "dice_diff_ci95": [
+          0.00044917043306729213,
+          0.016107177336727913
+        ],
+        "change_dice_diff": 0.05990498481049924,
+        "change_dice_diff_ci95": [
+          0.04138483143373206,
+          0.07950260151721308
+        ],
+        "pred_dlogv": 0.1517218608040715,
+        "true_dlogv": -0.14996650416419685
+      },
+      "overlap with last mask|middle": {
+        "transitions": 133,
+        "patients": 60,
+        "model_dice_wt": 0.6128319177560126,
+        "persistence_dice_wt": 0.6070087525478653,
+        "dice_diff": 0.0075290956360098025,
+        "dice_diff_ci95": [
+          -0.0012641455059226826,
+          0.016889212914015322
+        ],
+        "change_dice_diff": 0.08745856290369419,
+        "change_dice_diff_ci95": [
+          0.06604464630677151,
+          0.11101916579157418
+        ],
+        "pred_dlogv": 0.08833189828295,
+        "true_dlogv": 0.10538027522573507
+      },
+      "overlap with last mask|high (>=0.74)": {
+        "transitions": 133,
+        "patients": 38,
+        "model_dice_wt": 0.8273536615620258,
+        "persistence_dice_wt": 0.8388240000118146,
+        "dice_diff": -0.011593602860609637,
+        "dice_diff_ci95": [
+          -0.02414870852720771,
+          -0.0021926415588529257
+        ],
+        "change_dice_diff": 0.0857606927581707,
+        "change_dice_diff_ci95": [
+          0.0586138241553203,
+          0.11338466684839818
+        ],
+        "pred_dlogv": 0.07525890695923428,
+        "true_dlogv": 0.026713987185759385
+      },
+      "interval|<=8 wk": {
+        "transitions": 88,
+        "patients": 38,
+        "model_dice_wt": 0.6351070745624853,
+        "persistence_dice_wt": 0.6292921225623715,
+        "dice_diff": 0.014468244832753838,
+        "dice_diff_ci95": [
+          0.002134739119106535,
+          0.02692459292362372
+        ],
+        "change_dice_diff": 0.10474300822009024,
+        "change_dice_diff_ci95": [
+          0.07381231822657679,
+          0.13796853880347748
+        ],
+        "pred_dlogv": 0.093138250331201,
+        "true_dlogv": 0.13940310184729818
+      },
+      "interval|9-16 wk": {
+        "transitions": 229,
+        "patients": 66,
+        "model_dice_wt": 0.5780289575375209,
+        "persistence_dice_wt": 0.5741027333723724,
+        "dice_diff": -0.0038120081478328132,
+        "dice_diff_ci95": [
+          -0.011434957362271219,
+          0.003506582219763878
+        ],
+        "change_dice_diff": 0.05863479400278793,
+        "change_dice_diff_ci95": [
+          0.04181948105718105,
+          0.07703301479125393
+        ],
+        "pred_dlogv": 0.11717391660514866,
+        "true_dlogv": -0.041234030185204204
+      },
+      "interval|>16 wk": {
+        "transitions": 82,
+        "patients": 48,
+        "model_dice_wt": 0.4994890199361298,
+        "persistence_dice_wt": 0.49563371410973894,
+        "dice_diff": 0.011830455161857954,
+        "dice_diff_ci95": [
+          -0.0005760426509345583,
+          0.024114847016328014
+        ],
+        "change_dice_diff": 0.07777409913076606,
+        "change_dice_diff_ci95": [
+          0.05468644073198271,
+          0.10236838798366096
+        ],
+        "pred_dlogv": 0.08423892259057664,
+        "true_dlogv": -0.06343766101536458
+      },
+      "direction": {
+        "transitions": 234,
+        "spearman_pred_vs_true_dlogv": 0.4559756865665003,
+        "spearman_small_last_volume_vs_true_dlogv": 0.4760319053238349,
+        "partial_spearman_given_last_volume": 0.08170503677869062,
+        "frac_pred_growth": 0.8205128205128205,
+        "frac_true_growth": 0.5341880341880342
+      }
+    },
+    "atlas_ode": {
+      "RANO rating of target|PD": {
+        "transitions": 236,
+        "patients": 72,
+        "model_dice_wt": 0.5432248885669747,
+        "persistence_dice_wt": 0.5236603723989302,
+        "dice_diff": 0.020951872032737098,
+        "dice_diff_ci95": [
+          0.00720678291983844,
+          0.035180594791421715
+        ],
+        "change_dice_diff": 0.13156382247169732,
+        "change_dice_diff_ci95": [
+          0.10770032335356314,
+          0.15545340832319107
+        ],
+        "pred_dlogv": 0.27420882888873993,
+        "true_dlogv": 0.27173020623247635
+      },
+      "RANO rating of target|SD": {
+        "transitions": 92,
+        "patients": 50,
+        "model_dice_wt": 0.46097569390610554,
+        "persistence_dice_wt": 0.4608056152724422,
+        "dice_diff": -0.004001607673846988,
+        "dice_diff_ci95": [
+          -0.018277641189098755,
+          0.008355516058490718
+        ],
+        "change_dice_diff": 0.11922309618988985,
+        "change_dice_diff_ci95": [
+          0.08878703702136458,
+          0.14890815440526262
+        ],
+        "pred_dlogv": 0.18873769954579,
+        "true_dlogv": -0.6125684295361555
+      },
+      "RANO rating of target|PR": {
+        "transitions": 20,
+        "patients": 12,
+        "model_dice_wt": 0.5349404965507022,
+        "persistence_dice_wt": 0.5332403003069561,
+        "dice_diff": -0.008359980413550933,
+        "dice_diff_ci95": [
+          -0.03293155871419853,
+          0.011443901997478294
+        ],
+        "change_dice_diff": 0.074814558533519,
+        "change_dice_diff_ci95": [
+          0.04206271944271741,
+          0.1071592625749694
+        ],
+        "pred_dlogv": 0.16171226303339092,
+        "true_dlogv": -0.2233133576017583
+      },
+      "RANO rating of target|CR": {
+        "transitions": 26,
+        "patients": 8,
+        "model_dice_wt": 0.5083500027875845,
+        "persistence_dice_wt": 0.47440929794477704,
+        "dice_diff": 0.005653161945077645,
+        "dice_diff_ci95": [
+          -0.026806676399852302,
+          0.03380916594848647
+        ],
+        "change_dice_diff": 0.12818140252127325,
+        "change_dice_diff_ci95": [
+          0.051273954492267224,
+          0.2006314194939253
+        ],
+        "pred_dlogv": 0.30571108348038256,
+        "true_dlogv": -0.18468795928436868
+      },
+      "RANO rating of target|unrated": {
+        "transitions": 25,
+        "patients": 16,
+        "model_dice_wt": 0.5261371474312192,
+        "persistence_dice_wt": 0.518904275327292,
+        "dice_diff": 0.013510910175668678,
+        "dice_diff_ci95": [
+          -0.007590380717281076,
+          0.036176645851914435
+        ],
+        "change_dice_diff": 0.1296342703701478,
+        "change_dice_diff_ci95": [
+          0.09480911157223373,
+          0.1647655235404324
+        ],
+        "pred_dlogv": 0.19657187609211288,
+        "true_dlogv": 0.12557736573285075
+      },
+      "whole-tumor volume change|shrank >20%": {
+        "transitions": 109,
+        "patients": 68,
+        "model_dice_wt": 0.3649517820668953,
+        "persistence_dice_wt": 0.37253210874191023,
+        "dice_diff": -2.62499395312026e-05,
+        "dice_diff_ci95": [
+          -0.012605126305177006,
+          0.01433795411728537
+        ],
+        "change_dice_diff": 0.12073505418541694,
+        "change_dice_diff_ci95": [
+          0.09712616552765548,
+          0.14553402654793782
+        ],
+        "pred_dlogv": 0.1256983296865506,
+        "true_dlogv": -1.094669355889479
+      },
+      "whole-tumor volume change|within -20%/+25%": {
+        "transitions": 144,
+        "patients": 48,
+        "model_dice_wt": 0.6782929451158015,
+        "persistence_dice_wt": 0.6869999181496489,
+        "dice_diff": -0.014446333350457516,
+        "dice_diff_ci95": [
+          -0.0300979576993707,
+          -0.0015901298097802012
+        ],
+        "change_dice_diff": 0.14743079002039394,
+        "change_dice_diff_ci95": [
+          0.11733237514805801,
+          0.17750647000180803
+        ],
+        "pred_dlogv": 0.2082804803979095,
+        "true_dlogv": 0.004203907987378973
+      },
+      "whole-tumor volume change|grew >25%": {
+        "transitions": 146,
+        "patients": 60,
+        "model_dice_wt": 0.4810016978662498,
+        "persistence_dice_wt": 0.42750706205945305,
+        "dice_diff": 0.04252327286643358,
+        "dice_diff_ci95": [
+          0.028967564878943534,
+          0.057162086922386474
+        ],
+        "change_dice_diff": 0.13202130591876535,
+        "change_dice_diff_ci95": [
+          0.1081004842637337,
+          0.15651085001475568
+        ],
+        "pred_dlogv": 0.3731553095635815,
+        "true_dlogv": 0.8243623989397344
+      },
+      "overlap with last mask|low (<0.47)": {
+        "transitions": 133,
+        "patients": 62,
+        "model_dice_wt": 0.2649586005862336,
+        "persistence_dice_wt": 0.23137233814101538,
+        "dice_diff": 0.01914080490835288,
+        "dice_diff_ci95": [
+          0.005499649136852927,
+          0.032483859305763495
+        ],
+        "change_dice_diff": 0.11060549113892562,
+        "change_dice_diff_ci95": [
+          0.09005685255391731,
+          0.1321802004221103
+        ],
+        "pred_dlogv": 0.3171631635065148,
+        "true_dlogv": -0.13844379442334362
+      },
+      "overlap with last mask|middle": {
+        "transitions": 133,
+        "patients": 60,
+        "model_dice_wt": 0.5564353456022754,
+        "persistence_dice_wt": 0.537961789711905,
+        "dice_diff": 0.013919065201079116,
+        "dice_diff_ci95": [
+          0.0008025650505496768,
+          0.026614456987126806
+        ],
+        "change_dice_diff": 0.13122331233224457,
+        "change_dice_diff_ci95": [
+          0.10697086285825622,
+          0.15585941979275325
+        ],
+        "pred_dlogv": 0.22209469079569838,
+        "true_dlogv": 0.1202741184888816
+      },
+      "overlap with last mask|high (>=0.74)": {
+        "transitions": 133,
+        "patients": 38,
+        "model_dice_wt": 0.7401111382508856,
+        "persistence_dice_wt": 0.749087068591424,
+        "dice_diff": -0.02233871363438964,
+        "dice_diff_ci95": [
+          -0.04187366696086708,
+          -0.007280676833863214
+        ],
+        "change_dice_diff": 0.1635895135598624,
+        "change_dice_diff_ci95": [
+          0.1273216540619313,
+          0.19487463903490135
+        ],
+        "pred_dlogv": 0.1988938923851242,
+        "true_dlogv": 0.030525414306120734
+      },
+      "interval|<=8 wk": {
+        "transitions": 88,
+        "patients": 38,
+        "model_dice_wt": 0.5839603454166004,
+        "persistence_dice_wt": 0.5697880411599471,
+        "dice_diff": 0.01879068368257263,
+        "dice_diff_ci95": [
+          0.0004303152946183494,
+          0.036057878406709445
+        ],
+        "change_dice_diff": 0.16417596847403887,
+        "change_dice_diff_ci95": [
+          0.12927628573462643,
+          0.20183231024431791
+        ],
+        "pred_dlogv": 0.21248584319086003,
+        "true_dlogv": 0.15114621102830975
+      },
+      "interval|9-16 wk": {
+        "transitions": 229,
+        "patients": 66,
+        "model_dice_wt": 0.518227382597671,
+        "persistence_dice_wt": 0.5075307883846175,
+        "dice_diff": -0.000671014494241835,
+        "dice_diff_ci95": [
+          -0.014974674363427363,
+          0.013011535197500528
+        ],
+        "change_dice_diff": 0.11716023022774,
+        "change_dice_diff_ci95": [
+          0.09296734762297258,
+          0.14079882578313258
+        ],
+        "pred_dlogv": 0.26278494098301175,
+        "true_dlogv": -0.03154522039566439
+      },
+      "interval|>16 wk": {
+        "transitions": 82,
+        "patients": 48,
+        "model_dice_wt": 0.45875116120624365,
+        "persistence_dice_wt": 0.43395269469445164,
+        "dice_diff": 0.014823213364988494,
+        "dice_diff_ci95": [
+          0.002013470409010602,
+          0.027554496444472908
+        ],
+        "change_dice_diff": 0.11490329504130627,
+        "change_dice_diff_ci95": [
+          0.08945324800478119,
+          0.14380782516819468
+        ],
+        "pred_dlogv": 0.23533751979890877,
+        "true_dlogv": -0.054069486542115935
+      },
+      "direction": {
+        "transitions": 317,
+        "spearman_pred_vs_true_dlogv": 0.43388277822522614,
+        "spearman_small_last_volume_vs_true_dlogv": 0.49558692760926726,
+        "partial_spearman_given_last_volume": 0.046601535772812556,
+        "frac_pred_growth": 0.9116719242902208,
+        "frac_true_growth": 0.5457413249211357
+      }
+    },
+    "atlas_static": {
+      "RANO rating of target|PD": {
+        "transitions": 236,
+        "patients": 72,
+        "model_dice_wt": 0.5441250982301815,
+        "persistence_dice_wt": 0.5236603723989302,
+        "dice_diff": 0.023453630284324196,
+        "dice_diff_ci95": [
+          0.014652571210885573,
+          0.033215855241327245
+        ],
+        "change_dice_diff": 0.1244472940444276,
+        "change_dice_diff_ci95": [
+          0.10370675606650033,
+          0.14488764709904955
+        ],
+        "pred_dlogv": 0.29448129855384203,
+        "true_dlogv": 0.27173020623247635
+      },
+      "RANO rating of target|SD": {
+        "transitions": 92,
+        "patients": 50,
+        "model_dice_wt": 0.46269079490351833,
+        "persistence_dice_wt": 0.4608056152724422,
+        "dice_diff": -0.002495022383775859,
+        "dice_diff_ci95": [
+          -0.011646504699522532,
+          0.005737062811431314
+        ],
+        "change_dice_diff": 0.10834532525354339,
+        "change_dice_diff_ci95": [
+          0.08499841723668256,
+          0.13385574529648875
+        ],
+        "pred_dlogv": 0.2089033004697042,
+        "true_dlogv": -0.6125684295361555
+      },
+      "RANO rating of target|PR": {
+        "transitions": 20,
+        "patients": 12,
+        "model_dice_wt": 0.5283534317970283,
+        "persistence_dice_wt": 0.5332403003069561,
+        "dice_diff": -0.008459289275880405,
+        "dice_diff_ci95": [
+          -0.02832376666073415,
+          0.008993145134112849
+        ],
+        "change_dice_diff": 0.0760473452286189,
+        "change_dice_diff_ci95": [
+          0.04004233677426745,
+          0.11421892949293082
+        ],
+        "pred_dlogv": 0.17141015171232463,
+        "true_dlogv": -0.2233133576017583
+      },
+      "RANO rating of target|CR": {
+        "transitions": 26,
+        "patients": 8,
+        "model_dice_wt": 0.49819459341597355,
+        "persistence_dice_wt": 0.47440929794477704,
+        "dice_diff": -0.011328408085004384,
+        "dice_diff_ci95": [
+          -0.04318985638507084,
+          0.011307949982323127
+        ],
+        "change_dice_diff": 0.11345899705605184,
+        "change_dice_diff_ci95": [
+          0.04198762287802206,
+          0.18904893386896773
+        ],
+        "pred_dlogv": 0.30078301163265303,
+        "true_dlogv": -0.18468795928436868
+      },
+      "RANO rating of target|unrated": {
+        "transitions": 25,
+        "patients": 16,
+        "model_dice_wt": 0.5315319495292408,
+        "persistence_dice_wt": 0.518904275327292,
+        "dice_diff": 0.014252659438127256,
+        "dice_diff_ci95": [
+          -0.009046996794248125,
+          0.0367697865041508
+        ],
+        "change_dice_diff": 0.12020891263712583,
+        "change_dice_diff_ci95": [
+          0.08334127041083261,
+          0.15753772271620362
+        ],
+        "pred_dlogv": 0.20320002413214905,
+        "true_dlogv": 0.12557736573285075
+      },
+      "whole-tumor volume change|shrank >20%": {
+        "transitions": 109,
+        "patients": 68,
+        "model_dice_wt": 0.36249842962345347,
+        "persistence_dice_wt": 0.37253210874191023,
+        "dice_diff": -0.007445401084529243,
+        "dice_diff_ci95": [
+          -0.015592343657268479,
+          -0.00032378117548257154
+        ],
+        "change_dice_diff": 0.10575236516072475,
+        "change_dice_diff_ci95": [
+          0.08602150964539931,
+          0.12683155999152168
+        ],
+        "pred_dlogv": 0.16500356298000968,
+        "true_dlogv": -1.094669355889479
+      },
+      "whole-tumor volume change|within -20%/+25%": {
+        "transitions": 144,
+        "patients": 48,
+        "model_dice_wt": 0.677889472841168,
+        "persistence_dice_wt": 0.6869999181496489,
+        "dice_diff": -0.00520337063381411,
+        "dice_diff_ci95": [
+          -0.016982060277196877,
+          0.005452251030143464
+        ],
+        "change_dice_diff": 0.14246465871308137,
+        "change_dice_diff_ci95": [
+          0.1159248848004049,
+          0.16987815513285462
+        ],
+        "pred_dlogv": 0.22402546160813383,
+        "true_dlogv": 0.004203907987378973
+      },
+      "whole-tumor volume change|grew >25%": {
+        "transitions": 146,
+        "patients": 60,
+        "model_dice_wt": 0.4839800698517041,
+        "persistence_dice_wt": 0.42750706205945305,
+        "dice_diff": 0.043177521363115576,
+        "dice_diff_ci95": [
+          0.033662685342519136,
+          0.05287842186378719
+        ],
+        "change_dice_diff": 0.12935410148192145,
+        "change_dice_diff_ci95": [
+          0.10721551313358178,
+          0.15031726074862198
+        ],
+        "pred_dlogv": 0.375343816476208,
+        "true_dlogv": 0.8243623989397344
+      },
+      "overlap with last mask|low (<0.47)": {
+        "transitions": 133,
+        "patients": 62,
+        "model_dice_wt": 0.26631787294665565,
+        "persistence_dice_wt": 0.23137233814101538,
+        "dice_diff": 0.016895462750589403,
+        "dice_diff_ci95": [
+          0.007087448805412747,
+          0.027275914139108744
+        ],
+        "change_dice_diff": 0.09580334218789194,
+        "change_dice_diff_ci95": [
+          0.0789662128710971,
+          0.11288135631101204
+        ],
+        "pred_dlogv": 0.3338100812271251,
+        "true_dlogv": -0.13844379442334362
+      },
+      "overlap with last mask|middle": {
+        "transitions": 133,
+        "patients": 60,
+        "model_dice_wt": 0.5557885467105804,
+        "persistence_dice_wt": 0.537961789711905,
+        "dice_diff": 0.015967634071542385,
+        "dice_diff_ci95": [
+          0.0050342637926841585,
+          0.027574367081205572
+        ],
+        "change_dice_diff": 0.12780233146555733,
+        "change_dice_diff_ci95": [
+          0.10686297303543799,
+          0.14906037789944815
+        ],
+        "pred_dlogv": 0.25000536049942323,
+        "true_dlogv": 0.1202741184888816
+      },
+      "overlap with last mask|high (>=0.74)": {
+        "transitions": 133,
+        "patients": 38,
+        "model_dice_wt": 0.7402206714437671,
+        "persistence_dice_wt": 0.749087068591424,
+        "dice_diff": -0.00904266963024005,
+        "dice_diff_ci95": [
+          -0.022047909148086395,
+          0.003431070586992532
+        ],
+        "change_dice_diff": 0.16593630738656226,
+        "change_dice_diff_ci95": [
+          0.13255944732555258,
+          0.1978883864678327
+        ],
+        "pred_dlogv": 0.20599848340065996,
+        "true_dlogv": 0.030525414306120734
+      },
+      "interval|<=8 wk": {
+        "transitions": 88,
+        "patients": 38,
+        "model_dice_wt": 0.5837173917165669,
+        "persistence_dice_wt": 0.5697880411599471,
+        "dice_diff": 0.022741180050763518,
+        "dice_diff_ci95": [
+          0.007155331594547408,
+          0.03791041607754364
+        ],
+        "change_dice_diff": 0.1617518859334193,
+        "change_dice_diff_ci95": [
+          0.12696052195508392,
+          0.19582211677093786
+        ],
+        "pred_dlogv": 0.2167721795281793,
+        "true_dlogv": 0.15114621102830975
+      },
+      "interval|9-16 wk": {
+        "transitions": 229,
+        "patients": 66,
+        "model_dice_wt": 0.5184955181136626,
+        "persistence_dice_wt": 0.5075307883846175,
+        "dice_diff": 0.0003369724103293263,
+        "dice_diff_ci95": [
+          -0.00882863991766397,
+          0.008782834005532819
+        ],
+        "change_dice_diff": 0.10727893489755934,
+        "change_dice_diff_ci95": [
+          0.08911253081901495,
+          0.12522793116319966
+        ],
+        "pred_dlogv": 0.2850965573349294,
+        "true_dlogv": -0.03154522039566439
+      },
+      "interval|>16 wk": {
+        "transitions": 82,
+        "patients": 48,
+        "model_dice_wt": 0.45959632923593663,
+        "persistence_dice_wt": 0.43395269469445164,
+        "dice_diff": 0.020234219124437798,
+        "dice_diff_ci95": [
+          0.009691155761161705,
+          0.031778043843830095
+        ],
+        "change_dice_diff": 0.1182632111854517,
+        "change_dice_diff_ci95": [
+          0.09476387073149983,
+          0.1401369204305482
+        ],
+        "pred_dlogv": 0.252221812362684,
+        "true_dlogv": -0.054069486542115935
+      },
+      "direction": {
+        "transitions": 317,
+        "spearman_pred_vs_true_dlogv": 0.470676850910773,
+        "spearman_small_last_volume_vs_true_dlogv": 0.49558692760926726,
+        "partial_spearman_given_last_volume": 0.06675269367222515,
+        "frac_pred_growth": 0.9589905362776026,
+        "frac_true_growth": 0.5457413249211357
+      }
+    }
+  }
+}

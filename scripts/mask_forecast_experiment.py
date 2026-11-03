@@ -18,9 +18,18 @@ Metrics on held-out patients, model vs persistence (copy last mask):
   Dice per region, change-Dice (Dice of predicted change vs real change, relative to the
   last mask), and region volume error in log1p(mL).
 
+Frames (--frame):
+  atlas       every scan as LUMIERE ships it in atlas space (original step 2). alignment_check.py
+              showed consecutive scans are then a median 2.5 mm apart, so part of the
+              "change" is misalignment.
+  registered  target and second-to-last scan registered into the last scan's frame with one
+              transform per pair, masks included (register_step2_pairs.py). The last scan is
+              untouched, so inputs carry no target information. Outputs go to
+              runs/mask_forecast_registered/ and results/mask_forecast_registered/.
+
 Usage (each fold is resumable; finished folds are skipped):
-  python scripts/mask_forecast_experiment.py train --variant ode --fold 0
-  python scripts/mask_forecast_experiment.py summarize
+  python scripts/mask_forecast_experiment.py train --variant ode --fold 0 [--frame registered]
+  python scripts/mask_forecast_experiment.py summarize [--frame registered]
 """
 
 from __future__ import annotations
@@ -64,11 +73,17 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-steps", type=int, default=0, help="Debug: stop each epoch after N steps.")
     p.add_argument("--data-dir", type=Path, default=REPO / "data/lumiere/extracted/Imaging")
     p.add_argument("--clinical-dir", type=Path, default=REPO / "data/lumiere/clinical")
+    p.add_argument("--frame", choices=("atlas", "registered"), default="atlas")
     p.add_argument("--cache-dir", type=Path, default=REPO / "data/lumiere_atlas2mm")
-    p.add_argument("--runs-dir", type=Path, default=REPO / "runs/mask_forecast")
-    p.add_argument("--results-dir", type=Path, default=REPO / "results/mask_forecast")
+    p.add_argument("--aligned-dir", type=Path, default=REPO / "data/lumiere_step2_aligned")
+    p.add_argument("--runs-dir", type=Path, default=None, help="Default: runs/mask_forecast[_registered]")
+    p.add_argument("--results-dir", type=Path, default=None, help="Default: results/mask_forecast[_registered]")
     p.add_argument("--bootstrap", type=int, default=2000)
-    return p.parse_args()
+    a = p.parse_args()
+    suffix = "" if a.frame == "atlas" else "_registered"
+    a.runs_dir = a.runs_dir or REPO / f"runs/mask_forecast{suffix}"
+    a.results_dir = a.results_dir or REPO / f"results/mask_forecast{suffix}"
+    return a
 
 
 # ----------------------------------------------------------------------------- data
@@ -86,29 +101,52 @@ def pad(x: np.ndarray) -> np.ndarray:
     return out
 
 
+def scan_path(cache_dir: Path, scan) -> Path:
+    return cache_dir / scan.patient_id / f"{scan.source_name}.npy"
+
+
+def in_last_frame_path(frame: str, cache_dir: Path, aligned_dir: Path, t: Transition, scan) -> Path:
+    """Cache file holding `scan` expressed in the frame of the transition's last scan."""
+    if frame == "atlas" or scan is t.last:
+        return scan_path(cache_dir, scan)
+    return aligned_dir / scan.patient_id / f"{scan.source_name}__in__{t.last.source_name}.npy"
+
+
 class MaskForecastDataset(Dataset):
-    def __init__(self, transitions: list[Transition], cache_dir: Path, augment: bool) -> None:
+    def __init__(self, transitions: list[Transition], cache_dir: Path, augment: bool,
+                 frame: str = "atlas", aligned_dir: Path | None = None) -> None:
         self.t = transitions
         self.cache_dir = cache_dir
         self.augment = augment
+        self.frame = frame
+        self.aligned_dir = aligned_dir
+        if frame == "registered":
+            missing = [str(self._path(t, s)) for t in transitions for s in ([t.target] + t.history[-2:-1])
+                       if not self._path(t, s).exists()]
+            if missing:
+                raise FileNotFoundError(f"{len(missing)} registered pairs missing (run register_step2_pairs.py), e.g. {missing[0]}")
 
     def __len__(self) -> int:
         return len(self.t)
 
-    def _load(self, scan) -> np.ndarray:
-        return np.load(self.cache_dir / scan.patient_id / f"{scan.source_name}.npy", mmap_mode="r")
+    def _path(self, t: Transition, scan) -> Path:
+        return in_last_frame_path(self.frame, self.cache_dir, self.aligned_dir, t, scan)
+
+    def _load(self, scan, t: Transition | None = None) -> np.ndarray:
+        path = scan_path(self.cache_dir, scan) if t is None else self._path(t, scan)
+        return np.load(path, mmap_mode="r")
 
     def __getitem__(self, idx: int):
         t = self.t[idx]
         last = np.asarray(self._load(t.last), dtype=np.float32)
         if len(t.history) >= 2:
-            prev = np.asarray(self._load(t.history[-2])[4:7], dtype=np.float32)
+            prev = np.asarray(self._load(t.history[-2], t)[4:7], dtype=np.float32)
             prev_flag = 1.0
             prev_gap = (t.last.week - t.history[-2].week) / 52.0
         else:
             prev = np.zeros_like(last[4:7])
             prev_flag, prev_gap = 0.0, 0.0
-        tgt = np.asarray(self._load(t.target)[4:7], dtype=np.float32)
+        tgt = np.asarray(self._load(t.target, t)[4:7], dtype=np.float32)
         const = np.ones((2,) + last.shape[1:], dtype=np.float32) * np.array([prev_flag, prev_gap], dtype=np.float32)[:, None, None, None]
         x = pad(np.concatenate([last, prev, const]))
         last_mask = pad(last[4:7])
@@ -306,10 +344,10 @@ def train(args) -> None:
 
     transitions, _ = load_cohort(args)
     fit, val, test = fold_split(transitions, args.folds, args.fold)
-    print(f"variant={args.variant} fold={args.fold}: fit {len(fit)}, val {len(val)}, test {len(test)} transitions", flush=True)
+    print(f"frame={args.frame} variant={args.variant} fold={args.fold}: fit {len(fit)}, val {len(val)}, test {len(test)} transitions", flush=True)
 
     mk = lambda ts, aug, shuf: DataLoader(  # noqa: E731
-        MaskForecastDataset(ts, args.cache_dir, aug), batch_size=args.batch_size, shuffle=shuf,
+        MaskForecastDataset(ts, args.cache_dir, aug, args.frame, args.aligned_dir), batch_size=args.batch_size, shuffle=shuf,
         num_workers=args.workers, pin_memory=True, persistent_workers=args.workers > 0,
     )
     fit_dl, val_dl, test_dl = mk(fit, True, True), mk(val, False, False), mk(test, False, False)
@@ -407,7 +445,7 @@ def summarize(args) -> None:
     args.results_dir.mkdir(parents=True, exist_ok=True)
     (args.results_dir / "metrics.json").write_text(json.dumps(out, indent=2))
     lines = [
-        "# Step 2: 3D next-visit tumor mask forecasting (LUMIERE, atlas space, 2 mm)",
+        f"# Step 2: 3D next-visit tumor mask forecasting (LUMIERE, 2 mm, frame: {args.frame})",
         "",
         "Patient-level 5-fold CV (same folds as step 1). Persistence = copy the last mask.",
         "change-Dice: Dice between predicted and real change relative to the last mask (persistence scores 0 unless nothing changed).",

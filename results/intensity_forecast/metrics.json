@@ -1,0 +1,77 @@
+{
+  "folds_done": 5,
+  "transitions": 399,
+  "patients": 79,
+  "metrics": {
+    "mse": {
+      "model": 0.005590324668519497,
+      "persistence": 0.00632551488090764,
+      "rel_improvement": 0.08729588307703726,
+      "rel_improvement_ci95": [
+        0.057383378602948586,
+        0.11656247566467572
+      ],
+      "patients_better": 64
+    },
+    "focal_mse": {
+      "model": 0.012786658545244103,
+      "persistence": 0.013470629556046188,
+      "rel_improvement": 0.02503608460278887,
+      "rel_improvement_ci95": [
+        -0.010043631089551888,
+        0.060338757880988726
+      ],
+      "patients_better": 50
+    },
+    "mae": {
+      "model": 0.036162505698924825,
+      "persistence": 0.03893115394106858,
+      "rel_improvement": 0.05441399943011071,
+      "rel_improvement_ci95": [
+        0.036309908566527466,
+        0.07243713331543787
+      ],
+      "patients_better": 64
+    },
+    "mse_FLAIR": {
+      "model": 0.005992783172179205,
+      "persistence": 0.006899966159762516,
+      "rel_improvement": 0.05856864536549898,
+      "rel_improvement_ci95": [
+        0.013240086078756808,
+        0.10060656838326303
+      ],
+      "patients_better": 66
+    },
+    "mse_T1": {
+      "model": 0.007163348152634238,
+      "persistence": 0.00822024914479224,
+      "rel_improvement": -0.09911662222565291,
+      "rel_improvement_ci95": [
+        -0.21724392691769925,
+        0.015130306064005752
+      ],
+      "patients_better": 55
+    },
+    "mse_T2": {
+      "model": 0.0064144859237498355,
+      "persistence": 0.006988923140202782,
+      "rel_improvement": 0.07304158126799457,
+      "rel_improvement_ci95": [
+        0.04883481585970574,
+        0.09462651972670542
+      ],
+      "patients_better": 69
+    },
+    "mse_CT1": {
+      "model": 0.002790681394259095,
+      "persistence": 0.003192921264145528,
+      "rel_improvement": 0.017256383599685756,
+      "rel_improvement_ci95": [
+        -0.036295449025598114,
+        0.0692633228019162
+      ],
+      "patients_better": 63
+    }
+  }
+}

@@ -40,6 +40,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--fold", type=int, default=0)
     p.add_argument("--weights", choices=("best", "final"), default="final")
     p.add_argument("--n", type=int, default=6, help="Transitions to show (largest real change first).")
+    p.add_argument("--frame", choices=("atlas", "registered"), default="atlas")
     p.add_argument("--region", type=int, default=0, help="0=whole tumor, 1=tumor core, 2=enhancing")
     p.add_argument("--out", type=Path, default=M.REPO / "results/figures")
     return p.parse_args()
@@ -50,7 +51,8 @@ def main() -> None:
     ns = argparse.Namespace(data_dir=M.REPO / "data/lumiere/extracted/Imaging", clinical_dir=M.REPO / "data/lumiere/clinical")
     transitions, _ = M.load_cohort(ns)
     _, _, test = M.fold_split(transitions, 5, a.fold)
-    weights = M.REPO / "runs/mask_forecast" / a.variant / f"fold{a.fold}" / f"{a.weights}.pt"
+    runs = M.REPO / ("runs/mask_forecast" if a.frame == "atlas" else "runs/mask_forecast_registered")
+    weights = runs / a.variant / f"fold{a.fold}" / f"{a.weights}.pt"
     if not weights.exists():
         raise SystemExit(f"missing {weights} (fold not trained yet, or trained before final.pt was saved)")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -58,13 +60,14 @@ def main() -> None:
     model.load_state_dict(torch.load(weights, map_location=device))
     model.eval()
 
-    cache = M.REPO / "data/lumiere_atlas2mm"
-    ds = M.MaskForecastDataset(test, cache, augment=False)
+    cache, aligned = M.REPO / "data/lumiere_atlas2mm", M.REPO / "data/lumiere_step2_aligned"
+    ds = M.MaskForecastDataset(test, cache, augment=False, frame=a.frame, aligned_dir=aligned)
+    tpath = lambda t: M.in_last_frame_path(a.frame, cache, aligned, t, t.target)  # noqa: E731
     k = a.region
     items = []
     for i, t in enumerate(test):
         last = np.load(cache / t.patient_id / f"{t.last.source_name}.npy", mmap_mode="r")
-        tgt = np.load(cache / t.patient_id / f"{t.target.source_name}.npy", mmap_mode="r")
+        tgt = np.load(tpath(t), mmap_mode="r")
         change = ((last[4 + k] > 0.5) ^ (tgt[4 + k] > 0.5)).sum()
         items.append((int(change), i))
     chosen = [i for _, i in sorted(items, reverse=True)[: a.n]]
@@ -78,7 +81,7 @@ def main() -> None:
         d, h, w = M.MaskForecastDataset._load(ds, t.last).shape[1:]
         pred = (logits[0, k] > 0).cpu().numpy()[:d, :h, :w]
         last_np = np.load(cache / t.patient_id / f"{t.last.source_name}.npy")
-        tgt_np = np.load(cache / t.patient_id / f"{t.target.source_name}.npy")
+        tgt_np = np.load(tpath(t))
         last_m, true_m = last_np[4 + k] > 0.5, tgt_np[4 + k] > 0.5
         union = last_m | true_m | pred
         z = int(np.argmax(union.sum(axis=(0, 1)))) if union.any() else union.shape[2] // 2
@@ -118,10 +121,11 @@ def main() -> None:
         loc="lower center", ncol=3, fontsize=8, frameon=False,
     )
     region = ("whole tumor", "tumor core", "enhancing")[k]
-    fig.suptitle(f"Step 2 forecasts - {a.variant} variant, fold {a.fold}, {a.weights} weights, {region} (held-out patients)", fontsize=10)
+    fig.suptitle(f"Step 2 forecasts - {a.frame} frame, {a.variant} variant, fold {a.fold}, {a.weights} weights, {region} (held-out patients)", fontsize=10)
     fig.tight_layout(rect=(0, 0.03, 1, 0.98))
     a.out.mkdir(parents=True, exist_ok=True)
-    out = a.out / f"step2_forecast_{a.variant}_fold{a.fold}_{a.weights}.png"
+    tag = "" if a.frame == "atlas" else "registered_"
+    out = a.out / f"step2_forecast_{tag}{a.variant}_fold{a.fold}_{a.weights}.png"
     fig.savefig(out)
     print(out)
 

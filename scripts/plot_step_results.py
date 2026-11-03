@@ -51,35 +51,42 @@ def step1(out: Path) -> None:
 
 
 def step2(out: Path) -> None:
-    path = REPO / "results/mask_forecast/metrics.json"
-    if not path.exists():
+    """One panel per (frame, variant) that has results: atlas frame and, once run, registered frame."""
+    panels = []
+    for frame, sub in (("atlas", "mask_forecast"), ("registered", "mask_forecast_registered")):
+        path = REPO / "results" / sub / "metrics.json"
+        if path.exists():
+            s = json.loads(path.read_text())
+            panels += [(frame, v, s[v]) for v in ("ode", "static") if v in s]
+    if not panels:
         return
-    s = json.loads(path.read_text())
-    variants = [v for v in ("ode", "static") if v in s]
     regions = ("wt", "tc", "et")
-    fig, axes = plt.subplots(1, len(variants), figsize=(3.4 * len(variants), 2.8), dpi=200, sharey=True, squeeze=False)
-    for ax, v in zip(axes[0], variants):
-        r = s[v]
-        y = list(range(len(regions)))
+    ncol = 2
+    nrow = (len(panels) + 1) // ncol
+    fig, axes = plt.subplots(nrow, ncol, figsize=(7.2, 2.6 * nrow + 0.4), dpi=200, sharey=True, squeeze=False)
+    for ax, (frame, v, r) in zip(axes.flat, panels):
         for i, reg in enumerate(regions):
             p, m = r[f"persistence_dice_{reg}"], r[f"model_dice_{reg}"]
             ax.plot([p, m], [i, i], color=GRID, linewidth=2)
             # persistence as a tall tick so it stays visible when the model dot sits on top of it
             ax.plot(p, i, "|", color=PERSIST, markersize=16, markeredgewidth=2.5)
             ax.plot(m, i, "o", color=MODEL, markersize=7, markeredgecolor="white", markeredgewidth=1.5)
-            ax.text(max(p, m) + 0.02, i, f"{m:.3f} vs {p:.3f}", va="center", fontsize=8, color=INK)
-        ax.set_yticks(y, ["whole tumor", "tumor core", "enhancing"], color=INK)
+            ax.text(max(p, m) + 0.03, i, f"{m:.3f} vs {p:.3f}", va="center", fontsize=8, color=INK)
+        ax.set_yticks(range(len(regions)), ["whole tumor", "tumor core", "enhancing"], color=INK)
         ax.set_xlim(0, 1)
-        ax.set_title(f"{'Neural ODE' if v == 'ode' else 'No-ODE ablation'} ({r['folds_done']}/5 folds)", loc="left", fontsize=10, color=INK)
-        ax.set_xlabel("Mean Dice", color=MUTED, fontsize=9)
+        name = "Neural ODE" if v == "ode" else "No-ODE ablation"
+        ax.set_title(f"{name}, {frame} frame ({r['folds_done']}/5 folds)", loc="left", fontsize=9, color=INK)
+        ax.set_xlabel("Mean Dice", color=MUTED, fontsize=8)
         style(ax)
+    for ax in list(axes.flat)[len(panels):]:
+        ax.axis("off")
     handles = [
         plt.Line2D([], [], marker="o", linestyle="", color=MODEL, markersize=7, label="model"),
         plt.Line2D([], [], marker="|", linestyle="", color=PERSIST, markersize=12, markeredgewidth=2.5, label="persistence"),
     ]
     fig.legend(handles=handles, loc="lower right", frameon=False, fontsize=8, ncol=2)
     fig.suptitle("Step 2 - next-visit 3D tumor mask Dice", x=0.01, ha="left", fontsize=11, color=INK)
-    fig.tight_layout(rect=(0, 0.06, 1, 1))
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
     fig.savefig(out / "step2_mask_dice.png")
     plt.close(fig)
 
