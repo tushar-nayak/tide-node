@@ -1,0 +1,157 @@
+{
+  "cohort": {
+    "patients": 79,
+    "transitions": 399,
+    "exclusions": {
+      "pre_op_scans": 39,
+      "missing_volumes": 0,
+      "missing_seg": 0,
+      "surgery_targets": 31
+    },
+    "rules": "see scripts/lumiere_cohort.py"
+  },
+  "protocol": {
+    "folds": 5,
+    "repeats": 3,
+    "ensemble": 5,
+    "epochs_max": 400,
+    "hidden": 32,
+    "split": "patient-level; neural ODE early-stops on an inner patient-level validation split",
+    "target": "log1p(volume mL) per compartment at next scan"
+  },
+  "summary": {
+    "persistence": {
+      "mae_mean": 0.7448174577188311,
+      "mae_necrosis": 0.8455852809408823,
+      "mae_enhancing": 0.7744589097953063,
+      "mae_edema": 0.6144081824203051,
+      "mae_total": 0.6242455093552118,
+      "skill_vs_persistence": 0.0,
+      "patient_mae_mean": 0.872054865356994,
+      "patient_mae_diff_vs_persistence": 0.0,
+      "patient_mae_diff_ci95": [
+        0.0,
+        0.0
+      ],
+      "patients_better_than_persistence": 0,
+      "auroc_pd_from_predicted_change": 0.5,
+      "growth_direction_accuracy": NaN
+    },
+    "loglinear": {
+      "mae_mean": 0.9933102039848907,
+      "mae_necrosis": 1.0993814488554008,
+      "mae_enhancing": 0.9716201501066628,
+      "mae_edema": 0.9089290129926088,
+      "mae_total": 1.003643292091466,
+      "skill_vs_persistence": -0.3336290572822014,
+      "patient_mae_mean": 1.0914373928102705,
+      "patient_mae_diff_vs_persistence": 0.21938252745327694,
+      "patient_mae_diff_ci95": [
+        0.1641244543299709,
+        0.2768121050672637
+      ],
+      "patients_better_than_persistence": 4,
+      "auroc_pd_from_predicted_change": 0.5405919921395235,
+      "growth_direction_accuracy": 0.36752136752136755
+    },
+    "gompertz": {
+      "mae_mean": 0.7191914492632195,
+      "mae_necrosis": 0.7817677143737886,
+      "mae_enhancing": 0.8007914271651219,
+      "mae_edema": 0.5750152062507482,
+      "mae_total": 0.5986949431850775,
+      "skill_vs_persistence": 0.034405756994602354,
+      "patient_mae_mean": 0.7965778848827191,
+      "patient_mae_diff_vs_persistence": -0.07547698047427479,
+      "patient_mae_diff_ci95": [
+        -0.11363325080692685,
+        -0.03823748397510918
+      ],
+      "patients_better_than_persistence": 62,
+      "auroc_pd_from_predicted_change": 0.5838126722890908,
+      "growth_direction_accuracy": 0.6419753086419753
+    },
+    "ridge": {
+      "mae_mean": 0.7207238203223735,
+      "mae_necrosis": 0.7733675816462385,
+      "mae_enhancing": 0.8120659002388693,
+      "mae_edema": 0.5767379790820124,
+      "mae_total": 0.5970538655727688,
+      "skill_vs_persistence": 0.032348378984361825,
+      "patient_mae_mean": 0.7836934038599976,
+      "patient_mae_diff_vs_persistence": -0.0883614614969963,
+      "patient_mae_diff_ci95": [
+        -0.13610010918178964,
+        -0.040304312820475856
+      ],
+      "patients_better_than_persistence": 50,
+      "auroc_pd_from_predicted_change": 0.6532997625481045,
+      "growth_direction_accuracy": 0.6723646723646723
+    },
+    "gbm": {
+      "mae_mean": 0.6931149912051257,
+      "mae_necrosis": 0.7507015965745687,
+      "mae_enhancing": 0.7879846749075704,
+      "mae_edema": 0.5406587021332375,
+      "mae_total": 0.5550129792996681,
+      "skill_vs_persistence": 0.06941629251287385,
+      "patient_mae_mean": 0.7875531593576083,
+      "patient_mae_diff_vs_persistence": -0.08450170599938561,
+      "patient_mae_diff_ci95": [
+        -0.11858672994232618,
+        -0.050895856418566296
+      ],
+      "patients_better_than_persistence": 58,
+      "auroc_pd_from_predicted_change": 0.6354704003930238,
+      "growth_direction_accuracy": 0.6866096866096866
+    },
+    "neural_ode": {
+      "mae_mean": 0.7080928009826385,
+      "mae_necrosis": 0.7663500485245817,
+      "mae_enhancing": 0.8019366444705187,
+      "mae_edema": 0.5559917099528152,
+      "mae_total": 0.5765419854962963,
+      "skill_vs_persistence": 0.04930692259640379,
+      "patient_mae_mean": 0.791575139269857,
+      "patient_mae_diff_vs_persistence": -0.08047972608713705,
+      "patient_mae_diff_ci95": [
+        -0.12222549997714799,
+        -0.04399218161818823
+      ],
+      "patients_better_than_persistence": 53,
+      "auroc_pd_from_predicted_change": 0.6276099238516335,
+      "growth_direction_accuracy": 0.6533713200379867
+    },
+    "_reference": {
+      "auroc_pd_from_true_volume_change": 0.7131079587324981,
+      "pd_rate": 0.6310160427807486,
+      "n_rated": 1122
+    }
+  },
+  "mae_mean_by_repeat": {
+    "0": {
+      "persistence": 0.7448174577188311,
+      "loglinear": 0.9933102039848907,
+      "gompertz": 0.7183302706282052,
+      "ridge": 0.7162317677615856,
+      "gbm": 0.6951559541917053,
+      "neural_ode": 0.7002294076061586
+    },
+    "1": {
+      "persistence": 0.7448174577188312,
+      "loglinear": 0.9933102039848907,
+      "gompertz": 0.7192141588224826,
+      "ridge": 0.7191604476322078,
+      "gbm": 0.691551883834523,
+      "neural_ode": 0.7106210607387407
+    },
+    "2": {
+      "persistence": 0.7448174577188311,
+      "loglinear": 0.9933102039848907,
+      "gompertz": 0.7200299183389709,
+      "ridge": 0.7267792455733268,
+      "gbm": 0.6926371355891482,
+      "neural_ode": 0.7134279346030162
+    }
+  }
+}

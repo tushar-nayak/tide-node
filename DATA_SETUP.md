@@ -6,7 +6,7 @@ it, so that machine can run this project's training pipeline without repeating t
 
 ## What you need
 
-- ~330GB free disk: ~32GB for the downloaded zip, ~32GB extracted, ~263GB for the
+- ~120GB free disk: ~32GB for the downloaded zip, ~32GB extracted, ~50GB for the
   registered cache (registration produces full 3D volumes per patient/target/moving-week
   triple, not small files).
 - Python 3.11+ with `requirements.txt` installed (`python3 -m pip install -r requirements.txt`).
@@ -87,7 +87,7 @@ registration skips any (patient, target week, moving week) triple already on dis
 
 **Only copying the cache instead?** If you already have a `data/lumiere_registered/`
 directory from another machine with this same dataset version, you can skip this whole
-script and just copy that ~263GB directory over directly -- registration output doesn't
+script and just copy that ~50GB directory over directly -- registration output doesn't
 depend on which machine produced it, only on the source volumes.
 
 ## Step 4: Verify

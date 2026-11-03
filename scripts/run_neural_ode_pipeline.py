@@ -20,6 +20,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, Subset
 from torchdiffeq import odeint
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lumiere_weeks import registered_cache_matches_sources, resolve_patient_weeks  # noqa: E402
+
 
 MODALITIES = ("FLAIR", "T1", "T2", "CT1")
 WEEK_PATTERN = re.compile(r"wk(\d+)")
@@ -230,6 +233,7 @@ class HistoryForecastDataset(Dataset):
         self.registered_data_dir = registered_data_dir.resolve() if registered_data_dir is not None else None
         self.patient_weeks: dict[str, list[int]] = {}
         self.patient_files: dict[str, dict[int, dict[str, Path]]] = {}
+        self.week_scans: dict[str, dict[int, object]] = {}
         self.slice_cache: dict[tuple[str, int, int | None], torch.Tensor] = {}
         self.mask_slice_cache: dict[tuple[str, int], torch.Tensor | None] = {}
         self.samples: list[ForecastSample] = []
@@ -276,29 +280,14 @@ class HistoryForecastDataset(Dataset):
     def _discover_weeks(self, patient_dir: Path) -> list[int]:
         week_to_paths: dict[int, dict[str, Path]] = {}
         if self.is_lumiere:
-            for week_dir in patient_dir.glob("week-*"):
-                try:
-                    week_num = int(week_dir.name.split("-")[1])
-                except (IndexError, ValueError):
-                    continue
-
-                skull_strip_path = week_dir / "DeepBraTumIA-segmentation" / "atlas" / "skull_strip"
-                if not skull_strip_path.exists():
-                    continue
-
-                paths = {}
-                mapping = {"FLAIR": "flair", "T1": "t1", "T2": "t2", "CT1": "ct1"}
-                for mod_key, mod_file_prefix in mapping.items():
-                    matches = list(skull_strip_path.glob(f"{mod_file_prefix}_skull_strip.nii*"))
-                    if matches:
-                        paths[mod_key] = matches[0]
-
-                seg_mask_path = week_dir / "DeepBraTumIA-segmentation" / "atlas" / "segmentation" / "seg_mask.nii.gz"
-                if seg_mask_path.exists():
-                    paths["SEG_MASK"] = seg_mask_path
-
-                if all(mod in paths for mod in MODALITIES):
-                    week_to_paths[week_num] = paths
+            # Shared resolver: deterministically picks one scan per week number when LUMIERE
+            # has several (e.g. week-000-1 pre-op / week-000-2 post-op). See lumiere_weeks.py.
+            for week_num, scan in resolve_patient_weeks(patient_dir).items():
+                paths = dict(scan.modality_paths)
+                if scan.seg_mask_path is not None:
+                    paths["SEG_MASK"] = scan.seg_mask_path
+                week_to_paths[week_num] = paths
+                self.week_scans.setdefault(patient_dir.name, {})[week_num] = scan
         else:
             for mod in MODALITIES:
                 for mod_file in sorted(patient_dir.glob(f"{mod}_wk*.nii")):
@@ -448,7 +437,11 @@ class HistoryForecastDataset(Dataset):
         registered_dir = self._registered_week_dir(patient_id, moving_week, target_week)
         if registered_dir is None or not registered_dir.exists():
             return False
-        return all((registered_dir / f"{mod.lower()}_skull_strip_registered.nii.gz").exists() for mod in MODALITIES)
+        if not all((registered_dir / f"{mod.lower()}_skull_strip_registered.nii.gz").exists() for mod in MODALITIES):
+            return False
+        return registered_cache_matches_sources(
+            registered_dir, self.week_scans.get(patient_id, {}).get(moving_week), self.week_scans.get(patient_id, {}).get(target_week)
+        )
 
     def _resolve_modality_path(self, patient_id: str, week: int, mod: str, reference_week: int | None = None) -> Path:
         if reference_week is not None and reference_week != week and self._has_registered_volume_set(patient_id, week, reference_week):

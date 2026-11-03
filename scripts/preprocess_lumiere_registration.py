@@ -4,8 +4,18 @@ import argparse
 import json
 from pathlib import Path
 
+import sys
+
 import nibabel as nib
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lumiere_weeks import (  # noqa: E402
+    WeekScan,
+    registered_cache_matches_sources,
+    resolve_patient_weeks,
+    write_registration_marker,
+)
 
 
 MODALITIES = ("FLAIR", "T1", "T2", "CT1")
@@ -48,26 +58,9 @@ def resolve_patient_root(data_dir: Path) -> Path:
     raise FileNotFoundError(f"Could not find Patient-* directories under {data_dir}")
 
 
-def discover_patient_week_map(patient_dir: Path) -> dict[int, dict[str, Path]]:
-    week_to_paths: dict[int, dict[str, Path]] = {}
-    for week_dir in patient_dir.glob("week-*"):
-        try:
-            week_num = int(week_dir.name.split("-")[1])
-        except (IndexError, ValueError):
-            continue
-
-        skull_strip_path = week_dir / "DeepBraTumIA-segmentation" / "atlas" / "skull_strip"
-        if not skull_strip_path.exists():
-            continue
-
-        paths = {}
-        for mod, file_prefix in MODALITY_FILE_PREFIX.items():
-            matches = list(skull_strip_path.glob(f"{file_prefix}_skull_strip.nii*"))
-            if matches:
-                paths[mod] = matches[0]
-        if all(mod in paths for mod in MODALITIES):
-            week_to_paths[week_num] = paths
-    return week_to_paths
+def discover_patient_week_map(patient_dir: Path) -> dict[int, WeekScan]:
+    """One scan per week number; duplicate-week handling lives in lumiere_weeks.py."""
+    return resolve_patient_weeks(patient_dir)
 
 
 def normalize_volume(volume: np.ndarray) -> np.ndarray:
@@ -171,14 +164,18 @@ def main() -> None:
         print(f"\n=== {patient_name} ===")
         for target_idx in range(1, len(weeks)):
             target_week = weeks[target_idx]
-            fixed_ct1_path = week_map[target_week]["CT1"]
+            fixed_ct1_path = week_map[target_week].modality_paths["CT1"]
             fixed_ct1_img = nib.load(fixed_ct1_path)
             fixed_ct1 = normalize_volume(fixed_ct1_img.get_fdata())
             print(f"Target week {target_week:03d}: registering {target_idx} prior weeks")
 
             for moving_week in weeks[:target_idx]:
                 dest_dir = registered_week_dir(output_dir, patient_name, target_week, moving_week)
-                if not args.overwrite and all_outputs_exist(output_dir, patient_name, target_week, moving_week):
+                if (
+                    not args.overwrite
+                    and all_outputs_exist(output_dir, patient_name, target_week, moving_week)
+                    and registered_cache_matches_sources(dest_dir, week_map[moving_week], week_map[target_week])
+                ):
                     print(f"  Reusing cache for week {moving_week:03d} -> target {target_week:03d}")
                     manifest["jobs"].append(
                         {
@@ -196,7 +193,7 @@ def main() -> None:
                 print(f"  Registering week {moving_week:03d} -> target {target_week:03d}")
 
                 for mod in MODALITIES:
-                    moving_path = week_map[moving_week][mod]
+                    moving_path = week_map[moving_week].modality_paths[mod]
                     moving_img = nib.load(moving_path)
                     moving_vol = normalize_volume(moving_img.get_fdata())
                     registered_vol = register_to_reference(moving_vol, fixed_ct1)
@@ -206,11 +203,14 @@ def main() -> None:
                         output_path,
                     )
 
+                write_registration_marker(dest_dir, week_map[moving_week], week_map[target_week])
                 manifest["jobs"].append(
                     {
                         "patient_id": patient_name,
                         "moving_week": moving_week,
                         "target_week": target_week,
+                        "moving_source": week_map[moving_week].source_name,
+                        "target_source": week_map[target_week].source_name,
                         "output_dir": str(dest_dir),
                         "status": "generated",
                     }
