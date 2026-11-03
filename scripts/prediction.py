@@ -42,7 +42,32 @@ def resolve(root, value):
 
 def load_bundle(path):
     path = Path(path).resolve()
+    if path.is_dir():
+        from package_models import load_mask
+        model, manifest = load_mask(path)
+        return model, dict(frame=manifest['preprocessing']['frame'], manifest=manifest,
+                           bundle_directory=str(path))
     config = read_json(path)
+    if config.get('kind') == 'mask_cv_ensemble':
+        keys(config, ('version', 'kind', 'members', 'label', 'aggregation'))
+        if config['version'] != 1 or config['aggregation'] != 'mean_logits' or len(config['members']) != 5:
+            raise ValueError('Expected five CV members with mean_logits aggregation')
+        if not isinstance(config['members'], list) or any(not isinstance(m, str) for m in config['members']):
+            raise ValueError('Members must be bundle directory paths')
+        member_paths = [(path.parent / member).resolve() for member in config['members']]
+        if len(set(member_paths)) != 5 or not all(m.is_dir() for m in member_paths):
+            raise ValueError('Expected five distinct packaged fold directories')
+        loaded = [load_bundle(member) for member in member_paths]
+        manifests = [meta['manifest'] for _, meta in loaded]
+        if ({m['provenance'].get('fold') for m in manifests} != set(range(5)) or
+            any(m['provenance'].get('all_cohort') is not False for m in manifests) or
+            len({json.dumps(m['architecture']['constructor'], sort_keys=True) for m in manifests}) != 1):
+            raise ValueError('Expected compatible CV folds 0 through 4')
+        frames = {meta['frame'] for _, meta in loaded}
+        if len(frames) != 1:
+            raise ValueError('Ensemble coordinate frames differ')
+        return MaskEnsemble([model for model, _ in loaded]), dict(config, frame=frames.pop(),
+                    member_metadata=[meta for _, meta in loaded])
     keys(config, ('version', 'variant', 'base', 'frame', 'preprocessing', 'checkpoint'))
     if config['version'] != 1 or config['variant'] not in ('static', 'ode') or config['frame'] not in ('atlas', 'registered'):
         raise ValueError("Unsupported bundle version, variant or frame")
@@ -191,3 +216,60 @@ def export_prediction(output, masks, last, metadata):
     fig.tight_layout()
     fig.savefig(output / 'overlay.png', dpi=120)
     plt.close(fig)
+
+
+class MaskEnsemble(torch.nn.Module):
+    """Sequential CPU evaluation; CV ensembles have no independent test estimate."""
+    def __init__(self, models):
+        super().__init__()
+        self.members = torch.nn.ModuleList(models)
+        self.eval()
+
+    def forward(self, x, last_mask, dt):
+        total = None
+        for model in self.members:
+            logits, _ = model(x, last_mask, dt)
+            total = logits if total is None else total + logits
+        return total / len(self.members), None
+
+
+def predict_volume_history(history_path, horizon, bundle_path, output, trusted=False):
+    from types import SimpleNamespace
+    from package_models import load_volume as load_volume_bundle, sha256
+    from volume_trajectory_experiment import history_features, static_features, y_of
+    horizon = number(horizon, 'horizon_weeks', positive=True)
+    doc = read_json(history_path)
+    keys(doc, ('version', 'patient_id', 'history'), ('clinical',))
+    if doc['version'] != 1 or not isinstance(doc['patient_id'], str) or not doc['patient_id']:
+        raise ValueError('Invalid volume history version/patient_id')
+    if not isinstance(doc['history'], list) or not doc['history']:
+        raise ValueError('Nonempty history required')
+    scans = []
+    # Use the exact experiment compartment names, including necrotic/non-enhancing.
+    from lumiere_cohort import COMPARTMENTS
+    for entry in doc['history']:
+        keys(entry, ('week', 'volumes_mm3'))
+        week = number(entry['week'], 'week')
+        keys(entry['volumes_mm3'], COMPARTMENTS)
+        volumes = {k: number(v, k) for k, v in entry['volumes_mm3'].items()}
+        if min(volumes.values()) < 0 or (scans and week <= scans[-1].week):
+            raise ValueError('Nonnegative volumes and increasing weeks required')
+        scans.append(SimpleNamespace(week=week, volumes_mm3=volumes))
+    clinical = doc.get('clinical', {})
+    keys(clinical, (), ('Age at surgery (years)', 'Sex', 'MGMT qualitative'))
+    if any(not isinstance(v, str) for v in clinical.values()):
+        raise ValueError('Clinical values must be strings')
+    t = SimpleNamespace(history=scans, last=scans[-1], dt_weeks=horizon)
+    x = history_features(t, static_features(doc['patient_id'], {doc['patient_id']: clinical}))[None]
+    if not np.isfinite(x).all():
+        raise ValueError('Nonfinite clinical features')
+    models, manifest = load_volume_bundle(bundle_path, trusted=trusted)
+    pred = np.expm1(np.maximum(y_of(scans[-1]) + np.array([m.predict(x)[0] for m in models]), 0))
+    if not np.isfinite(pred).all():
+        raise ValueError('Nonfinite volume forecast')
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    (output / 'volumes.json').write_text(json.dumps(dict(zip(COMPARTMENTS, pred.tolist())), indent=2) + '\n')
+    (output / 'metadata.json').write_text(json.dumps(dict(patient_id=doc['patient_id'],
+        horizon_weeks=horizon, forecast_week=scans[-1].week+horizon, output_unit='mL',
+        history_sha256=sha256(history_path), bundle=manifest, clinical_validation=False), indent=2) + '\n')

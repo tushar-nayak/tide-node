@@ -1,0 +1,42 @@
+{
+  "case": {
+    "patient": "Patient-003",
+    "last": "week-000-2",
+    "target": "week-014"
+  },
+  "scope": "CPU fp32 export equivalence; not historical CSV reproduction or accuracy evaluation",
+  "checks": [
+    {
+      "frame": "atlas",
+      "variant": "static",
+      "checkpoint_sha256": "98f965a91b0c323b6003adf39fb0ac14bc33e79ef4f6e4ae9e64e4188cb1c42f",
+      "exact_full_resolution_logits": true,
+      "exact_cli_masks": true,
+      "cv_ensemble_forward": true
+    },
+    {
+      "frame": "atlas",
+      "variant": "ode",
+      "checkpoint_sha256": "e634be3e7568953fdcf8b70e2a2e29345eaf4e0facc77098c2350b2be06ef084",
+      "exact_full_resolution_logits": true,
+      "exact_cli_masks": true,
+      "cv_ensemble_forward": true
+    },
+    {
+      "frame": "registered",
+      "variant": "static",
+      "checkpoint_sha256": "16e5c4f272771bedcb5168b699aabd0e01d44db67b85627dba18cfb19b3ed2e8",
+      "exact_full_resolution_logits": true,
+      "exact_cli_masks": true,
+      "cv_ensemble_forward": true
+    },
+    {
+      "frame": "registered",
+      "variant": "ode",
+      "checkpoint_sha256": "359ccf63f4be86ba97a9a38c5efeabfc8b9a91beeef5cd1dc9bb20193e7af45d",
+      "exact_full_resolution_logits": true,
+      "exact_cli_masks": true,
+      "cv_ensemble_forward": true
+    }
+  ]
+}

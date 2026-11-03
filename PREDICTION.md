@@ -89,3 +89,29 @@ PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/tmp/tide-prediction-mpl \
 Tests cover missing segmentation, future-field rejection, chronology/horizon validation, geometry and labels, registered-history requirements, exact CPU input equivalence with `MaskForecastDataset`, operation without a target file, checkpoint loading and forward passes for both architectures, single-visit flags, NIfTI affine/units/shape, physical volumes, PNG creation and overwrite protection.
 
 Local validation on 2026-11-03 also read the existing atlas static/ODE fold-0 `best.pt` checkpoints and held-out Patient-005 week-000-2 history, with a 15-week horizon. Raw preprocessing matched the stored input cache exactly. Both variants reproduced saved held-out WT/TC/ET volumes (146.968 / 81.888 / 0.720 mL) without loading any future scan or mask. These particular checkpoints produce persistence on this case; the check does not establish performance gains or general equivalence across trained checkpoints. The direct CLI also exported all artifacts successfully on CPU.
+
+## Integrated release interface
+
+`--bundle` also accepts a checksum-verified packaging directory, or a JSON
+`mask_cv_ensemble` descriptor with `version: 1`, five relative `members`, a `label`,
+and `aggregation: "mean_logits"`. The logits are averaged before thresholding;
+frames must agree. These are **cross-validation ensembles**, not all-cohort mask
+refits. Their component CV scores do not estimate ensemble generalization.
+
+Volume bundles use the same CLI with `--trust-volume-bundle` (local trusted pickle).
+The volume history JSON has `version: 1`, `patient_id`, and increasing `history`
+entries containing `week` and `volumes_mm3`. Volume keys are exactly
+`Necrotic_NonEnhancing`, `Enhancing_Core`, `Edema_Compartment`. Optional `clinical`
+contains string values for `Age at surgery (years)`, `Sex`, `MGMT qualitative`.
+No MRI, target, cohort files, or future segmentations are loaded by volume inference.
+Supply only visits within the latest surgery-separated segment. Outputs are
+non-overlapping compartment volumes in mL; these differ from mask WT/TC/ET.
+
+Example: `.venv/bin/python scripts/predict.py --history volume-history.json
+--horizon-weeks 12 --bundle runs/packaging/release-20261103/volume-all
+--trust-volume-bundle --output-dir runs/new-volume-forecast`.
+
+Mask inference requires all four historical modalities and existing labels on the
+atlas grid. Registered inference requires history-only prepared alignment. A cache
+override is a trusted prepared input; its declared relation to MRI is not independently
+certified by the CLI. No new registration or native-space segmentation is performed.

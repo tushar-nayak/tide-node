@@ -226,3 +226,21 @@ Before a fully provenance-certified release:
 The audit completes the requested evaluation of available outputs; these remaining
 historical-provenance and interpretation limits prevent an unconditional release
 certification. No new model training or manuscript changes were attempted.
+
+## Main-project integration verification
+
+The original worker audit above is retained as a dated record. Integration reran
+`release_audit.py --source . --output /tmp/tide-release-final-audit --smoke` and
+`release_reference_audit.py --source . --output /tmp/tide-release-final-audit/references.json`
+using the existing `.venv` with two CPU threads. Their frozen outputs are
+`results/release_audit/integration_{audit,references,effects}.*`. All 798 reference
+checks remain exact, and the four historical CPU/CSV discrepancies remain failures.
+Use an explicit output outside the source when executing these read-only audits
+from the main checkout; the worker-relative defaults assume a separate worktree.
+
+Integration adds `scripts/verify_release_inference.py`; four full-resolution CPU
+original-versus-exported checkpoint logits and CLI masks agree exactly. Four CV
+ensemble forwards also succeed. This addresses packaging equivalence, not the
+historical CSV discrepancy. New all-cohort GBM fitting is user-authorized and uses
+the existing baseline settings, with deterministic seed and no validation removal;
+see MODEL_PACKAGING.md. It does not recover missing historical estimators.

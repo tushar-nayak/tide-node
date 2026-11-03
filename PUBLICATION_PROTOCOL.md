@@ -100,3 +100,8 @@ Final publication claims should use `--split holdout`. All rows in the resulting
 - The persistence baseline is strong for slowly changing scans and must remain central in interpretation.
 - Registration quality can affect all downstream metrics.
 - Final clinical claims require a locked cohort definition, data-use language, and independent holdout reporting.
+
+Release clarification (2026-11-03): this document concerns the earlier slice-intensity
+pipeline. It is not a preregistered or locked protocol for the subsequent volume,
+3D-mask, alignment, or follow-up analyses. See RELEASE_AUDIT.md for the paired
+saved-prediction evaluation and its provenance limitations.

@@ -187,3 +187,31 @@ and trusted serialization, and the explicit all-cohort command on a **synthetic*
 48-row fixture. No real-cohort refitting was performed. Remaining integration work
 is to fix the production contract, implement the prediction entrypoint and
 full-resolution checks, then deliberately schedule any approved refits.
+
+## Integrated research release, 2026-11-03
+
+The deferred decisions above are now fixed for this local release. The existing
+GBM baseline hyperparameters were retained without further outcome-driven tuning;
+seed 0 and no internal early stopping define the all-eligible-cohort refit.
+The checked-in contract is `release/contracts/volume-gbm-v1.json`. Two independent
+fits in the existing `.venv`, with `OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2`, produced
+byte-identical `estimators.pkl` files (SHA-256
+`8c75e49351a98f82c56f7ff6b67fee144a85bbc0ee854785fb2c15fa85f0dd80`).
+This verifies local deterministic fitting/serialization in the captured environment,
+not portability to another numerical environment or held-out refit performance.
+
+Local artifacts: `runs/packaging/release-20261103/{volume-all,volume-replay,masks}`.
+All 34 mask exports have exact CPU round trips. Four full-resolution fold-1 checks
+also match original checkpoint logits and CLI masks exactly, and all four five-fold
+CV ensemble forwards succeed. See `results/release_audit/export_equivalence.json`.
+The prediction CLI accepts packaged directories and the four ensemble descriptors
+at the release root. Copy the descriptors from `release/contracts/` to the release
+root after reproducing exports; their member paths are relative to that root.
+Mean logits are thresholded at zero, without enforcing nesting.
+
+These mask ensembles are explicitly CV ensembles, with no new independent ensemble
+evaluation. No final mask configuration was selected using test outcomes and no
+mask models were retrained. Exact CPU packaging equivalence is distinct from
+historical CSV reproduction, which still fails on the four audited trained cases.
+Original volume ensembles were not archived; the new GBM is a separately identified
+refit and does not recreate historical ODE or GBM CV weights.

@@ -1,0 +1,9 @@
+{
+  "contract_id": "tide-research-all-cohort-gbm-v1-existing-baseline-settings",
+  "max_depth": 3,
+  "learning_rate": 0.05,
+  "max_iter": 200,
+  "loss": "absolute_error",
+  "random_state": 0,
+  "early_stopping": false
+}

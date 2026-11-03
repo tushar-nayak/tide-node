@@ -16,7 +16,7 @@ simple controls on five next-visit targets:
 1. multi-modal slice intensities (re-testing an earlier +6.7% claim);
 2. compartment volumes;
 3. 3D tumor masks;
-4. the noise ceiling of those masks;
+4. the inter-segmenter agreement of those masks;
 5. the expert RANO rating.
 
 **Results.**
@@ -24,14 +24,14 @@ simple controls on five next-visit targets:
   MSE by 8.7% [5.7, 11.7]. In the tumor region the gain is 2.5% [-1.0, 6.0], and a
   1-pixel Gaussian blur of the last scan does at least as well (4.1%).
 * **Volume.** Learned volume forecasts reduce error 5-7% below persistence. A population
-  Gompertz fit gets 3.4%, and the Neural ODE is tied with ridge regression and gradient
-  boosting.
+  Gompertz fit gets 3.4%, and paired comparisons do not establish an ODE advantage over ridge or gradient
+  boosting, or equivalence to either.
 * **Alignment.** LUMIERE's per-scan atlas space leaves consecutive scans misaligned by a
-  median 2.5 mm. That misalignment accounted for 40-45% of the change that mask forecasters
-  appeared to predict.
+  median 2.5 mm. Registration changes both references and trained models; changes in scores do not
+  identify a causal fraction attributable to misalignment.
 * **3D masks.** After registration, the Neural ODE mask forecast matches copy-last-mask:
   whole-tumor Dice 0.573 vs 0.570, difference +0.003 [-0.003, +0.010].
-* **Noise ceiling.** Two automated segmenters agree on the same scan only to Dice 0.65, and
+* **Inter-segmenter agreement.** Two automated segmenters agree on the same scan only to Dice 0.65, and
   visits rated stable at most 12 weeks apart overlap at 0.58.
 * **RANO rating.** The last visit's rating predicts next-visit progression with AUROC 0.684.
   No learned model improves on it significantly (best +0.040 [-0.015, 0.092]).
@@ -138,7 +138,7 @@ necrosis, enhancing tumor and edema at the next visit. Methods:
   mask).
 * Frames: run in both the atlas frame and the registered frame.
 
-**D. Noise ceiling and stratification** (`step2_followup_analysis.py`).
+**D. Inter-segmenter agreement and stratification** (`step2_followup_analysis.py`).
 * (a) Same-scan agreement between DeepBraTumIA, the step-2 label, and HD-GLIO-AUTO on all
   399 target scans. HD-GLIO is mapped by registering its own CT1 to DeepBraTumIA's atlas
   CT1, with 4 starting orientations and no tumor masks used; brain-mask Dice median 0.978.
@@ -191,7 +191,7 @@ T1 MSE gets worse (-9.9%).
 
 Learned models reduce volume error significantly, but by a few percent, and much of it is
 mean reversion captured by a two-parameter population model. Per-patient exponential
-extrapolation is far worse than persistence. The Neural ODE is statistically tied with the
+extrapolation is far worse than persistence. Direct paired comparisons do not establish ODE superiority or equivalence to the
 tabular models.
 
 ![Figure 2](results/figures/step1_volume_vs_persistence.png)
@@ -207,12 +207,12 @@ tabular models.
 | registered | interval embedding | 0.574 / 0.570 | 0.408 / 0.406 | 0.277 / 0.278 | +0.006 [+0.001, +0.012] | +0.076 [+0.058, +0.093] |
 
 Registration alone raises persistence Dice more than either model does: 0.506 → 0.570.
-It also removes roughly 40-45% of the change-Dice gain, i.e. the part that was
-misalignment. In the registered frame:
+The change-Dice gain is smaller after registration, but this changes both trained
+models and references and cannot identify a causal fraction due to misalignment. In the registered frame:
 * the Neural ODE matches persistence on whole tumor and is slightly below it on enhancing
   tumor;
-* early stopping kept the persistence initialisation in 2 of 5 folds;
-* the Neural ODE adds nothing over a plain interval embedding.
+* validation checkpoint selection kept persistence in folds 0 and 4 for both variants;
+* direct paired mean-Dice comparisons do not establish an ODE advantage; secondary endpoints differ.
 
 ![Figure 3](results/figures/step2_mask_dice.png)
 *Figure 3. Next-visit mask Dice, model vs persistence, atlas frame (top) and registered
@@ -223,7 +223,7 @@ frame (bottom).*
 what the network learned; the early-stopped fold-0 model used for the metrics is persistence):
 last scan with its outline, real next scan, forecast vs real outline, and change map.*
 
-### 4.4 Noise ceiling and where the mask model helps (D)
+### 4.4 Inter-segmenter agreement and where the mask model helps (D)
 
 | comparison | whole-tumor Dice |
 | :--- | :---: |
@@ -232,10 +232,10 @@ last scan with its outline, real next scan, forecast vs real outline, and change
 | copy-last-mask, visits rated stable, ≤ 12 weeks apart (mean, n=32) | 0.581 |
 | copy-last-mask, all transitions (mean) | 0.570 |
 
-Two segmenters reading the same image agree only modestly better than copying the last
-visit's mask. Even between clinically stable visits, rescan, segmentation and registration
-noise costs about 0.4 Dice. The attainable headroom over persistence for whole tumor is
-therefore small (on the order of 0.08 Dice), and the models use a small fraction of it.
+Same-scan inter-segmenter agreement is not a forecasting accuracy bound. Label
+conventions, correlated errors, real interval change and registration differences
+prevent converting the gap above persistence into attainable headroom. Stable-visit
+differences cannot all be attributed to measurement noise.
 
 Stratified (Figure 5), the mask models behave like a population growth prior:
 * They enlarge the tumor in 78-82% of transitions where the forecast differs from the last
@@ -296,7 +296,7 @@ does not beat the best simple comparator once each confound is removed.
 **Practical recommendations for next-visit forecasting studies:**
 1. Report persistence and a tuned blurred-persistence control.
 2. Register the target into the input frame and quantify the residual misalignment.
-3. Report a same-scan label-agreement ceiling.
+3. Report same-scan inter-segmenter agreement without interpreting it as an accuracy bound.
 4. Report stratified results (growing, stable and responding tumors), because a growth prior
    looks like skill in pooled metrics.
 
@@ -304,16 +304,15 @@ does not beat the best simple comparator once each confound is removed.
 * Single dataset, 79 patients, and no external validation.
 * Labels are automated, apart from the RANO ratings.
 * The models are deliberately conservative (zero-initialised at persistence) and trained
-  for a fixed budget. Larger models or pretraining might extract more. The noise ceiling
-  limits how much more is measurable on this data.
-* Same-segmenter test-retest data would give a tighter ceiling than the two-segmenter
-  comparison.
+  for a fixed budget. Larger models or pretraining might extract more. Inter-segmenter disagreement
+  complicates interpretation without defining an attainable accuracy bound.
+* Same-segmenter test-retest data would help characterize measurement repeatability.
 
 ## 6. Conclusion
 
 On LUMIERE, carrying the last scan, mask or rating forward is close to the best available
-next-visit forecast. Neural ODE models offer no measurable advantage over simple
-baselines. The evaluation protocol and controls in this repository are the main
+next-visit forecast. The paired primary mean-error/overlap comparisons do not establish general ODE
+superiority over static comparators; exploratory secondary effects vary by endpoint. The evaluation protocol and controls in this repository are the main
 contribution.
 
 ## Data and code availability
@@ -326,3 +325,18 @@ contribution.
 ---
 **Status**: draft, results frozen
 **Updated**: November 3, 2026
+
+## Release audit (2026-11-03; supersedes unpaired interpretations above)
+
+See RELEASE_AUDIT.md and results/release_audit/effects.md for direct paired effects.
+ODE-minus-ridge volume MAE is +0.0079 log1p(mL) (95% CI -0.0137 to +0.0290),
+and ODE-minus-GBM is +0.0040 (-0.0122 to +0.0190). Mean mask Dice differences
+versus static are -0.0019 (-0.0078 to +0.0041) atlas and -0.0031
+(-0.0080 to +0.0013) registered. Neither superiority nor equivalence is established.
+The volume experiment has three outer assignments; masks match repeat 0 only;
+inner validation splits differ. No matched neural no-ODE volume model exists.
+All 798 cached reference checks match, but four CPU checkpoint replays differ
+slightly from historical tables. Historical volume estimator states are missing.
+New all-cohort GBM weights are a refit, with no held-out estimate for those weights;
+mask release ensembles combine existing CV models and have no independent ensemble
+accuracy estimate. These are research artifacts, without clinical validation.

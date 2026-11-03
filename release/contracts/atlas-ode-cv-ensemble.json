@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "kind": "mask_cv_ensemble",
+  "label": "Cross-validation ensemble; not all-cohort trained; no independent ensemble test estimate",
+  "aggregation": "mean_logits",
+  "members": [
+    "masks/mask_forecast/ode/fold0/best",
+    "masks/mask_forecast/ode/fold1/best",
+    "masks/mask_forecast/ode/fold2/best",
+    "masks/mask_forecast/ode/fold3/best",
+    "masks/mask_forecast/ode/fold4/best"
+  ]
+}

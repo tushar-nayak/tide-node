@@ -1,8 +1,8 @@
 """Build the step-2 input cache once: every cohort scan, atlas space, downsampled to 2 mm.
 
 LUMIERE's DeepBraTumIA ``atlas/`` outputs are already resampled into one common 1 mm
-atlas space (182x218x182) per scan, so scans of the same patient are voxel-aligned
-without any further registration. This script therefore does NOT register anything;
+atlas grid (182x218x182) per scan. A shared grid does not establish longitudinal
+anatomical alignment. This script does not register scans;
 it only normalizes and downsamples, and skips scans already cached (re-runs are free).
 
 Per scan it writes ``<out>/<Patient>/<week-dir-name>.npy`` (float16, shape 7x91x109x91):

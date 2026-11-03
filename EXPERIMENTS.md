@@ -139,7 +139,7 @@ checkpoints in `runs/mask_forecast/<variant>/fold<k>/`.
 
 Follow-up queue (section 8, then step 2 in the registered frame):
 `tmux new -d -s gbm_followups 'bash scripts/run_followup_experiments.sh'`.
-Noise ceiling (section 9):
+Inter-segmenter agreement (section 9):
 `tmux new -d -s gbm_step2_followups '.venv/bin/python -u scripts/step2_followup_analysis.py ceiling > runs/logs/step2_ceiling.log 2>&1 && touch runs/logs/step2_ceiling.DONE'`,
 then `.venv/bin/python scripts/step2_followup_analysis.py report`.
 
@@ -172,18 +172,18 @@ Full table: `results/volume_trajectory/metrics.md`; figure: `results/figures/ste
 | Neural ODE (ODE-RNN) | 0.708 | +4.9% | -0.081 [-0.122, -0.044] | 0.628 |
 
 Reference: using the *true* next-scan volume change gives AUROC 0.713 for RANO PD, the
-ceiling for any volume-change score.
+reference score, not an upper bound for every volume-change score.
 
 Reading:
 * Every learned model beats persistence, and the patient-level CIs exclude zero. Naive
   per-patient exponential extrapolation is much worse than persistence: volumes between
   visits are dominated by treatment effects, not smooth growth.
-* The Neural ODE is **not** better than simple tabular models: it is statistically tied
-  with ridge / gradient boosting / Gompertz (overlapping CIs), and gradient boosting has the
-  lowest raw MAE in all three repeats. The defensible claim is "learned dynamics beat
-  persistence by ~5-7%", not "Neural ODEs beat other learners".
-* Predicted volume change carries real progression signal (AUROC ~0.63-0.65 against an
-  oracle ceiling of 0.71), without seeing the target scan.
+* Direct paired patient-weighted ODE-minus-ridge MAE is +0.0079 log1p(mL)
+  (95% CI -0.0137 to +0.0290), and ODE-minus-GBM is +0.0040 (-0.0122 to +0.0190).
+  These establish neither superiority nor equivalence. ODE-minus-persistence is
+  -0.0805 (-0.1208 to -0.0420). See RELEASE_AUDIT.md for weighting and limitations.
+* Predicted volume change carries exploratory progression signal. True-volume-change
+  AUROC 0.713 is a retrospective reference score, not a forecasting upper bound.
 
 ### Step 2 (final: 5-fold patient CV, 79 patients, 399 transitions)
 
@@ -199,7 +199,8 @@ Reading:
   of the real change (change-Dice +0.12, 63/79 patients), but typically only 5-15% of the
   changed voxels; large expansions, shrinkage after treatment and new distant lesions are
   missed. Volume error is not improved.
-* The Neural ODE bottleneck adds nothing over a plain dt embedding (tied everywhere).
+* Direct paired ODE-minus-static mean Dice is -0.0019 (95% CI -0.0078 to +0.0041);
+  superiority and equivalence are not established. Secondary effects vary by endpoint.
 * In fold 0 neither variant beat persistence on validation patients, so its early-stopped
   model is persistence; folds 1-4 improved validation Dice by 0.01-0.02.
 * Caveat: some "real change" may be misalignment between atlas-space scans (e.g. Patient-031
@@ -220,20 +221,17 @@ Full table: `results/mask_forecast_registered/metrics.md`.
 | no-ODE (dt embedding) | 0.574 / 0.570 | 0.408 / 0.406 | 0.277 / 0.278 | +0.006 [+0.001, +0.012] | +0.076 [+0.058, +0.093] |
 
 Reading:
-* Alignment alone does more than either model. Persistence WT Dice rises from 0.506 to 0.570
-  (TC 0.350 to 0.406, ET 0.234 to 0.278). About 0.06 Dice of the atlas-frame "change" was
-  misalignment.
-* The model's margin over persistence shrinks with it. Dice gain falls from +0.010 to
-  +0.003 (ODE, CI includes 0) and +0.006 (no-ODE). Change-Dice gain falls from about +0.12 to
-  +0.07. Roughly 40-45% of the change the atlas-frame models "caught" was misalignment, not
-  tumor change. Enhancing-tumor Dice is now slightly *below* persistence for the ODE variant.
-* Volume error is still not improved (logvol_err diff -0.008 [-0.052, +0.030], ODE).
-* Early stopping kept persistence (epoch -1) in folds 0 and 4 for the ODE, and in fold 0
-  for no-ODE. Every fold's last-epoch weights score below the best on validation patients,
-  so longer training would not help.
-* The Neural ODE still adds nothing over a dt embedding.
-* Bottom line for step 2: once scans are properly aligned, neither model forecasts
-  next-visit tumor masks meaningfully better than copying the last mask.
+* Registration raises persistence WT/TC/ET Dice to 0.570/0.406/0.278, but also
+  changes references and trained models. This is not a causal estimate of misalignment.
+* Validation selection retained persistence in folds 0 and 4 for both variants.
+  Forty epochs were run; this is checkpoint selection, not early stopping. Final-epoch
+  behavior does not establish that longer training could never help.
+* Direct paired ODE-minus-static mean Dice is -0.0031 (95% CI -0.0080 to +0.0013).
+  Mean change-Dice is -0.0042 (-0.0175 to +0.0086); exploratory log-volume-error
+  difference is -0.0213 (-0.0428 to -0.0048). No general ODE benefit is established.
+* References were independently checked exactly for all 798 frame-specific cases.
+  CPU replay of four trained checkpoints differs slightly from saved metrics; full
+  historical inference provenance remains unresolved. See RELEASE_AUDIT.md.
 
 ## 8. The original claim re-tested on held-out patients — `scripts/intensity_forecast_cv.py`
 
@@ -279,14 +277,14 @@ Reading:
 * The defensible statement is: "the intensity model reduces whole-slice error vs persistence
   on held-out patients, but shows no measurable skill where the tumor is."
 
-## 9. Step 2 follow-ups: noise ceiling and where the model helps — `scripts/step2_followup_analysis.py`
+## 9. Step 2 follow-ups: inter-segmenter agreement and where the model helps — `scripts/step2_followup_analysis.py`
 
 No training. `ceiling` (CPU, tmux `gbm_step2_followups`, about 1 h on 11 cores) maps HD-GLIO's mask of
 every step-2 target scan into the atlas; `report` (a few seconds) writes
 `results/step2_followups/{summary.md,summary.json,ceiling.csv}` and
 `results/figures/step2_strata_registered.png`.
 
-### 9a. Noise ceiling
+### 9a. Inter-segmenter agreement
 
 LUMIERE has no test-retest scans: its same-week duplicates are pre-op/post-op pairs with
 surgery in between. Two proxies instead:
@@ -319,22 +317,11 @@ this cannot inflate agreement. QC: brain-mask Dice median 0.978, and 3/399 scans
 | all step-2 transitions | 399 | 0.616 [0.394, 0.789] | 0.570 | 0.278 |
 
 Reading:
-* Two automated segmenters looking at the *same image* agree only to WT Dice 0.65 (patient
-  mean). Copying the last visit's mask already reaches 0.57. Across visits, the target is
-  almost as uncertain as within one scan.
-* Visits a neuroradiologist rated as stable, at most 12 weeks apart, still only reach a mean
-  WT Dice of 0.58. That is no better than copy-last-mask over all transitions. Rescan,
-  segmentation and registration noise, plus change too small to cross a RANO threshold,
-  costs about 0.4 Dice at a visit with no clinically meaningful change.
-* Implication: for whole tumor, the attainable headroom over copy-last-mask is small.
-  Roughly 0.08 Dice separates it from same-scan segmenter agreement, and a perfect forecast
-  can't be scored much above the labels' own reliability. The step-2 models' +0.003 to
-  +0.006 uses a small fraction of that, and section 9b shows the fraction they do use is a
-  growth prior, not tumor-specific forecasting. Enhancing tumor has more nominal headroom
-  (0.28 vs 0.51) but is the noisiest label.
-* Same-segmenter test-retest would be higher than DeepBraTumIA-vs-HD-GLIO agreement, which
-  also contains definitional differences. So (a) is a pessimistic estimate of label
-  reliability, and (b) is the more direct one.
+* Same-scan segmenter agreement is 0.648 patient-mean WT Dice; stable short-interval
+  persistence is 0.581. These compare different quantities and do not define an accuracy
+  ceiling or available forecasting headroom. Stable ratings allow biological change;
+  the discrepancy cannot all be attributed to rescan or measurement noise.
+* Label conventions, shared errors and registration error limit interpretation.
 
 ### 9b. Step 2 split by how the tumor changed (registered frame)
 
@@ -379,7 +366,7 @@ Reading:
 
 Question: from what is known at the last scan, will the neuroradiologist rate the next scan
 as progressive disease (PD)? The reference is the expert rating, not an automated mask, so
-step 2's label-noise ceiling does not apply.
+step 2's label-inter-segmenter agreement does not apply.
 
 * Same cohort and folds as step 1: 5-fold patient CV × 3 fold seeds. Each transition's
   out-of-fold score is averaged over the seeds.
