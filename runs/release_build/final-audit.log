@@ -1,0 +1,160 @@
+{
+  "checks": {
+    "volume": {
+      "rows": 1197,
+      "protocol": {
+        "folds": 5,
+        "repeats": 3,
+        "ensemble": 5,
+        "epochs_max": 400,
+        "hidden": 32,
+        "split": "patient-level; neural ODE early-stops on an inner patient-level validation split",
+        "target": "log1p(volume mL) per compartment at next scan"
+      },
+      "duplicates": 0,
+      "missing_cases": 0,
+      "nonfinite_predictions": 0
+    },
+    "volume_quick": {
+      "rows": 399,
+      "protocol": {
+        "folds": 5,
+        "repeats": 1,
+        "ensemble": 2,
+        "epochs_max": 100,
+        "hidden": 32,
+        "split": "patient-level; neural ODE early-stops on an inner patient-level validation split",
+        "target": "log1p(volume mL) per compartment at next scan"
+      },
+      "duplicates": 0,
+      "missing_cases": 0,
+      "nonfinite_predictions": 0
+    },
+    "atlas": {
+      "rows_per_variant": 399,
+      "missing_folds": 0,
+      "duplicates": 0,
+      "reference_mismatches": 0,
+      "nonfinite_metrics": 0
+    },
+    "registered": {
+      "rows_per_variant": 399,
+      "missing_folds": 0,
+      "duplicates": 0,
+      "reference_mismatches": 0,
+      "nonfinite_metrics": 0
+    }
+  },
+  "registration": {
+    "pairs": 691,
+    "methods": {
+      "rigid+affine": 534,
+      "rigid": 132,
+      "rigid+affine_unmasked": 13,
+      "rigid_unmasked": 11,
+      "atlas_fallback": 1
+    }
+  },
+  "smoke": [
+    {
+      "frame": "atlas",
+      "variant": "ode",
+      "patient": "Patient-003",
+      "target": "week-014",
+      "metric_differences_cpu_minus_csv": {
+        "dice_wt": -7.17789689388959e-05,
+        "change_dice_wt": -0.00012521315637459285,
+        "vol_wt_ml": 0.02400000000000091,
+        "true_vol_wt_ml": 0.0,
+        "logvol_err_wt": 0.00031448189367644375,
+        "dice_tc": 3.9984783656243916e-05,
+        "change_dice_tc": 0.00015413041030953867,
+        "vol_tc_ml": -0.007999999999995566,
+        "true_vol_tc_ml": 0.0,
+        "logvol_err_tc": -0.00015238095267600116,
+        "dice_et": 0.0,
+        "change_dice_et": 0.00026054228526850576,
+        "vol_et_ml": -0.016000000000000014,
+        "true_vol_et_ml": 0.0,
+        "logvol_err_et": -0.0009818361122566621
+      },
+      "max_absolute_metric_difference": 0.02400000000000091,
+      "exact_within_1e-6": false
+    },
+    {
+      "frame": "atlas",
+      "variant": "static",
+      "patient": "Patient-003",
+      "target": "week-014",
+      "metric_differences_cpu_minus_csv": {
+        "dice_wt": 4.603674614483966e-05,
+        "change_dice_wt": -0.00010973334796443579,
+        "vol_wt_ml": 0.031999999999996476,
+        "true_vol_wt_ml": 0.0,
+        "logvol_err_wt": 0.00030293850580065396,
+        "dice_tc": 3.292018501144245e-05,
+        "change_dice_tc": 3.8103088232488425e-05,
+        "vol_tc_ml": -0.008000000000002672,
+        "true_vol_tc_ml": 0.0,
+        "logvol_err_tc": -0.00013722126951165592,
+        "dice_et": 0.0,
+        "change_dice_et": 0.00041390728476820016,
+        "vol_et_ml": -0.015999999999998238,
+        "true_vol_et_ml": 0.0,
+        "logvol_err_et": -0.0006842285590242803
+      },
+      "max_absolute_metric_difference": 0.031999999999996476,
+      "exact_within_1e-6": false
+    },
+    {
+      "frame": "registered",
+      "variant": "ode",
+      "patient": "Patient-003",
+      "target": "week-014",
+      "metric_differences_cpu_minus_csv": {
+        "dice_wt": -0.00013789299503585983,
+        "change_dice_wt": -0.00011128421989758941,
+        "vol_wt_ml": 0.0,
+        "true_vol_wt_ml": 0.0,
+        "logvol_err_wt": 0.0,
+        "dice_tc": 0.0,
+        "change_dice_tc": 0.0,
+        "vol_tc_ml": 0.0,
+        "true_vol_tc_ml": 0.0,
+        "logvol_err_tc": 0.0,
+        "dice_et": 0.0,
+        "change_dice_et": -2.526043126305222e-05,
+        "vol_et_ml": 0.016000000000000014,
+        "true_vol_et_ml": 0.0,
+        "logvol_err_et": 0.0009601536983434578
+      },
+      "max_absolute_metric_difference": 0.016000000000000014,
+      "exact_within_1e-6": false
+    },
+    {
+      "frame": "registered",
+      "variant": "static",
+      "patient": "Patient-003",
+      "target": "week-014",
+      "metric_differences_cpu_minus_csv": {
+        "dice_wt": 0.0,
+        "change_dice_wt": 0.0,
+        "vol_wt_ml": 0.0,
+        "true_vol_wt_ml": 0.0,
+        "logvol_err_wt": 0.0,
+        "dice_tc": -8.966491661915876e-05,
+        "change_dice_tc": 0.00014693223871095618,
+        "vol_tc_ml": 0.02400000000000091,
+        "true_vol_tc_ml": 0.0,
+        "logvol_err_tc": 0.00036979969604722385,
+        "dice_et": -3.522304287439156e-07,
+        "change_dice_et": -0.0006175989948671023,
+        "vol_et_ml": 0.05600000000000449,
+        "true_vol_et_ml": 0.0,
+        "logvol_err_et": 0.0010897486872796236
+      },
+      "max_absolute_metric_difference": 0.05600000000000449,
+      "exact_within_1e-6": false
+    }
+  ]
+}

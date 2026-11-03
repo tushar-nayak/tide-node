@@ -1,0 +1,12 @@
+note: "version 2" Tectonic command-line interface activated
+note: Running TeX ...
+warning: main.tex:175: Underfull \hbox (badness 1946) in paragraph at lines 174--175
+warning: main.tex:175: Underfull \hbox (badness 1163) in paragraph at lines 174--175
+note: Rerunning TeX because "main.out" changed ...
+warning: main.tex:175: Underfull \hbox (badness 1946) in paragraph at lines 174--175
+warning: main.tex:175: Underfull \hbox (badness 1163) in paragraph at lines 174--175
+warning: warnings were issued by the TeX engine; use --print and/or --keep-logs for details.
+note: Running xdvipdfmx ...
+note: Writing `main.pdf` (1.1221122741699219 MiB)
+note: Writing `main.log` (18.6640625 KiB)
+note: Skipped writing 2 intermediate files (use --keep-intermediates to keep them)
