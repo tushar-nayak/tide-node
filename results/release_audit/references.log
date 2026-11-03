@@ -1,0 +1,10 @@
+{
+  "atlas": {
+    "transitions": 399,
+    "max_absolute_metric_difference": 0.0
+  },
+  "registered": {
+    "transitions": 399,
+    "max_absolute_metric_difference": 0.0
+  }
+}
