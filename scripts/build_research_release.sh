@@ -20,6 +20,15 @@ cp release/contracts/*.json "$output/"
 "$py" scripts/package_models.py fit-volume-all --contract "$output/volume-gbm-v1.json" \
   --data-dir data/lumiere/extracted/Imaging --clinical-dir data/lumiere/clinical \
   --output "$output/volume-all"
+# Forecast ranges for the volume bundle; quotes held-out coverage from results/volume_intervals/metrics.json
+# (scripts/volume_intervals.py evaluate) when that evaluation used the same contract.
+"$py" scripts/volume_intervals.py calibrate --bundle "$output/volume-all" \
+  --data-dir data/lumiere/extracted/Imaging --clinical-dir data/lumiere/clinical \
+  --output "$output/volume-intervals.json"
+# Progression call (is the current scan RANO PD?); thresholds come from patient-level CV.
+"$py" scripts/progression_model.py fit-all \
+  --data-dir data/lumiere/extracted/Imaging --clinical-dir data/lumiere/clinical \
+  --output "$output/progression-gbm"
 "$py" scripts/package_models.py inventory-masks --runs-dir runs \
   --data-dir data/lumiere/extracted/Imaging --clinical-dir data/lumiere/clinical \
   --output "$output/masks"

@@ -1,0 +1,2326 @@
+{
+  "contract": {
+    "contract_id": "tide-research-all-cohort-gbm-v1-existing-baseline-settings",
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "max_iter": 200,
+    "loss": "absolute_error",
+    "random_state": 0,
+    "early_stopping": false
+  },
+  "contract_sha256": "7401bb0993a308f4c7806c78381226708e1e3e55aaeaa8839216e91ae5b1c657",
+  "cohort": {
+    "patients": 79,
+    "transitions": 399,
+    "exclusions": {
+      "pre_op_scans": 39,
+      "missing_volumes": 0,
+      "missing_seg": 0,
+      "surgery_targets": 31
+    }
+  },
+  "protocol": {
+    "outer": "patient-level 5-fold CV, fold seeds [0, 1, 2] (same assignments as step 1)",
+    "inner": "calibration refit on training patients only: 5-fold out-of-fold GBM residuals, fold seeds [0, 1, 2]",
+    "methods": {
+      "persistence_constant": "last observed volume +/- conformal residual quantiles",
+      "persistence_scaled": "last observed volume, range scaled by the Poisson-GLM scale model",
+      "gbm_constant": "GBM forecast +/- conformal residual quantiles",
+      "gbm_scaled": "GBM forecast, range scaled by the Poisson-GLM scale model (deployed)"
+    },
+    "scale_features": {
+      "necrosis": [
+        "log1p_dt_weeks",
+        "last_log1p_ml_necrosis",
+        "last_necrosis_is_zero",
+        "single_scan_history"
+      ],
+      "enhancing": [
+        "log1p_dt_weeks",
+        "last_log1p_ml_enhancing",
+        "last_enhancing_is_zero",
+        "single_scan_history"
+      ],
+      "edema": [
+        "log1p_dt_weeks",
+        "last_log1p_ml_edema",
+        "last_edema_is_zero",
+        "single_scan_history"
+      ],
+      "total": [
+        "log1p_dt_weeks",
+        "last_log1p_ml_total",
+        "single_scan_history"
+      ]
+    },
+    "levels": [
+      "50%",
+      "80%",
+      "90%",
+      "95%"
+    ],
+    "units": "log1p(mL); total = log1p(sum of compartment mL)",
+    "bootstrap": "2000 patient resamples"
+  },
+  "consistency_with_step1": {
+    "status": "compared",
+    "rows": 1197,
+    "missing": 0,
+    "max_abs_diff_log1p_ml": 0.0
+  },
+  "summary": {
+    "coverage": {
+      "persistence_constant": {
+        "necrosis": {
+          "50%": {
+            "coverage": 0.5029239766081871,
+            "patient_coverage": 0.43324582122050476,
+            "patient_coverage_ci95": [
+              0.366312994904767,
+              0.49503614411842245
+            ],
+            "below": 0.24728487886382622,
+            "above": 0.24979114452798662,
+            "width_mean": 1.0053952584355008,
+            "width_median": 1.062791159508346,
+            "interval_score": 2.798321080085232,
+            "patient_interval_score": 3.118355348348782
+          },
+          "80%": {
+            "coverage": 0.7994987468671679,
+            "patient_coverage": 0.7651461993234145,
+            "patient_coverage_ci95": [
+              0.7054559882803553,
+              0.8221101080120067
+            ],
+            "below": 0.10025062656641603,
+            "above": 0.10025062656641603,
+            "width_mean": 2.5243954878165424,
+            "width_median": 2.7595970228226663,
+            "interval_score": 4.094859277395998,
+            "patient_interval_score": 4.349351248933563
+          },
+          "90%": {
+            "coverage": 0.9039264828738512,
+            "patient_coverage": 0.8898612639118969,
+            "patient_coverage_ci95": [
+              0.8447449333367054,
+              0.9285885343559396
+            ],
+            "below": 0.045112781954887216,
+            "above": 0.050960735171261484,
+            "width_mean": 3.5465696914998626,
+            "width_median": 3.9834681009933277,
+            "interval_score": 4.697892219686752,
+            "patient_interval_score": 4.794219610326982
+          },
+          "95%": {
+            "coverage": 0.9565580618212197,
+            "patient_coverage": 0.9640755166071622,
+            "patient_coverage_ci95": [
+              0.9431879337259084,
+              0.9816459463532249
+            ],
+            "below": 0.020885547201336674,
+            "above": 0.022556390977443608,
+            "width_mean": 4.079829170526894,
+            "width_median": 4.3667551863818,
+            "interval_score": 5.085428728066718,
+            "patient_interval_score": 5.013436165815944
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "coverage": 0.5104427736006684,
+            "patient_coverage": 0.45182725736523194,
+            "patient_coverage_ci95": [
+              0.3843166292216925,
+              0.5267742521777332
+            ],
+            "below": 0.24394319131161235,
+            "above": 0.24561403508771928,
+            "width_mean": 0.9336006647077334,
+            "width_median": 0.9564005090411691,
+            "interval_score": 2.621127360308623,
+            "patient_interval_score": 2.998869081199913
+          },
+          "80%": {
+            "coverage": 0.7986633249791144,
+            "patient_coverage": 0.7630015612610549,
+            "patient_coverage_ci95": [
+              0.7038053797468354,
+              0.8170369970805098
+            ],
+            "below": 0.10192147034252297,
+            "above": 0.09941520467836257,
+            "width_mean": 2.3789407939708376,
+            "width_median": 2.4969349364632984,
+            "interval_score": 3.9005740161785973,
+            "patient_interval_score": 4.423861635097651
+          },
+          "90%": {
+            "coverage": 0.9014202172096909,
+            "patient_coverage": 0.8791478797807915,
+            "patient_coverage_ci95": [
+              0.8323334386546413,
+              0.920369190701469
+            ],
+            "below": 0.05012531328320802,
+            "above": 0.04845446950710108,
+            "width_mean": 3.3203089284783034,
+            "width_median": 3.4508450989739177,
+            "interval_score": 4.491641861581934,
+            "patient_interval_score": 5.046912341911905
+          },
+          "95%": {
+            "coverage": 0.9532163742690059,
+            "patient_coverage": 0.9300269702168438,
+            "patient_coverage_ci95": [
+              0.888934695754316,
+              0.963874949768937
+            ],
+            "below": 0.022556390977443608,
+            "above": 0.02422723475355054,
+            "width_mean": 3.9584428350456635,
+            "width_median": 3.893224592823537,
+            "interval_score": 4.996429502027769,
+            "patient_interval_score": 5.559158755753725
+          }
+        },
+        "edema": {
+          "50%": {
+            "coverage": 0.5037593984962406,
+            "patient_coverage": 0.3808820516098997,
+            "patient_coverage_ci95": [
+              0.30882137948198074,
+              0.45569758725217574
+            ],
+            "below": 0.24644945697577275,
+            "above": 0.24979114452798662,
+            "width_mean": 0.6393923774749837,
+            "width_median": 0.6463282778708059,
+            "interval_score": 2.194373297917239,
+            "patient_interval_score": 2.5700959461330446
+          },
+          "80%": {
+            "coverage": 0.8061821219715957,
+            "patient_coverage": 0.7612189790987258,
+            "patient_coverage_ci95": [
+              0.6963052541691782,
+              0.820867759321082
+            ],
+            "below": 0.09690893901420217,
+            "above": 0.09690893901420217,
+            "width_mean": 2.182193197426648,
+            "width_median": 2.1906188324491733,
+            "interval_score": 3.6092275098719617,
+            "patient_interval_score": 3.8570026157468353
+          },
+          "90%": {
+            "coverage": 0.9022556390977443,
+            "patient_coverage": 0.8881931886678721,
+            "patient_coverage_ci95": [
+              0.835624811633514,
+              0.9288477622061481
+            ],
+            "below": 0.05012531328320802,
+            "above": 0.047619047619047616,
+            "width_mean": 3.4225128088350383,
+            "width_median": 3.514499197536885,
+            "interval_score": 4.637371473533347,
+            "patient_interval_score": 4.782167214138711
+          },
+          "95%": {
+            "coverage": 0.9540517961570593,
+            "patient_coverage": 0.9474767262741947,
+            "patient_coverage_ci95": [
+              0.9148928403991693,
+              0.9752270444042597
+            ],
+            "below": 0.023391812865497075,
+            "above": 0.022556390977443608,
+            "width_mean": 4.373447032798982,
+            "width_median": 4.521240700220805,
+            "interval_score": 5.307745794036261,
+            "patient_interval_score": 5.448032197628592
+          }
+        },
+        "total": {
+          "50%": {
+            "coverage": 0.5004177109440268,
+            "patient_coverage": 0.39472765865170933,
+            "patient_coverage_ci95": [
+              0.3254398148148148,
+              0.4654259883927605
+            ],
+            "below": 0.2506265664160401,
+            "above": 0.24895572263993315,
+            "width_mean": 0.70430012669972,
+            "width_median": 0.710930739033981,
+            "interval_score": 2.1982521336403806,
+            "patient_interval_score": 2.4667815566595452
+          },
+          "80%": {
+            "coverage": 0.8020050125313283,
+            "patient_coverage": 0.7572782878162625,
+            "patient_coverage_ci95": [
+              0.6902206302839216,
+              0.8192624824191279
+            ],
+            "below": 0.0960735171261487,
+            "above": 0.10192147034252297,
+            "width_mean": 2.0665028425633527,
+            "width_median": 2.098272046548839,
+            "interval_score": 3.5614781143740606,
+            "patient_interval_score": 3.6858329687987808
+          },
+          "90%": {
+            "coverage": 0.9014202172096909,
+            "patient_coverage": 0.8959540810806633,
+            "patient_coverage_ci95": [
+              0.8506128286270692,
+              0.9354404008438818
+            ],
+            "below": 0.04928989139515455,
+            "above": 0.04928989139515455,
+            "width_mean": 3.1886697191195927,
+            "width_median": 3.232014959284345,
+            "interval_score": 4.7261881206164915,
+            "patient_interval_score": 4.6693790971768765
+          },
+          "95%": {
+            "coverage": 0.9565580618212197,
+            "patient_coverage": 0.9571110441363605,
+            "patient_coverage_ci95": [
+              0.9320608130734713,
+              0.9782219459513762
+            ],
+            "below": 0.02172096908939014,
+            "above": 0.02172096908939014,
+            "width_mean": 4.661495770557436,
+            "width_median": 4.835894185144969,
+            "interval_score": 5.572217912253142,
+            "patient_interval_score": 5.462245964588292
+          }
+        }
+      },
+      "persistence_scaled": {
+        "necrosis": {
+          "50%": {
+            "coverage": 0.5071010860484545,
+            "patient_coverage": 0.4682421071661579,
+            "patient_coverage_ci95": [
+              0.4024104900608065,
+              0.5346572113423378
+            ],
+            "below": 0.24812030075187969,
+            "above": 0.24477861319966582,
+            "width_mean": 1.172654690651019,
+            "width_median": 1.0662527009878695,
+            "interval_score": 2.7229577525681266,
+            "patient_interval_score": 2.9939439420655987
+          },
+          "80%": {
+            "coverage": 0.8028404344193818,
+            "patient_coverage": 0.798617732478492,
+            "patient_coverage_ci95": [
+              0.7449147175492112,
+              0.8447343690065208
+            ],
+            "below": 0.09941520467836257,
+            "above": 0.09774436090225563,
+            "width_mean": 2.6906575193013165,
+            "width_median": 2.5102766842630553,
+            "interval_score": 4.133357300366042,
+            "patient_interval_score": 4.468649581538884
+          },
+          "90%": {
+            "coverage": 0.9014202172096909,
+            "patient_coverage": 0.9134923796316201,
+            "patient_coverage_ci95": [
+              0.8800872079748663,
+              0.9452640028747623
+            ],
+            "below": 0.04845446950710108,
+            "above": 0.05012531328320802,
+            "width_mean": 3.680638205664594,
+            "width_median": 3.441893526830085,
+            "interval_score": 5.152560271510006,
+            "patient_interval_score": 5.6074910031694625
+          },
+          "95%": {
+            "coverage": 0.948203842940685,
+            "patient_coverage": 0.948785181063662,
+            "patient_coverage_ci95": [
+              0.9233852162254061,
+              0.9726353920341262
+            ],
+            "below": 0.02506265664160401,
+            "above": 0.026733500417710943,
+            "width_mean": 4.815962980856345,
+            "width_median": 4.654288325366956,
+            "interval_score": 5.872794998325529,
+            "patient_interval_score": 6.431883089121173
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "coverage": 0.5146198830409356,
+            "patient_coverage": 0.48170525559766053,
+            "patient_coverage_ci95": [
+              0.4066779781692756,
+              0.5555107928288306
+            ],
+            "below": 0.24310776942355888,
+            "above": 0.24227234753550542,
+            "width_mean": 0.9755723559114003,
+            "width_median": 1.0160799257233664,
+            "interval_score": 2.601149195130933,
+            "patient_interval_score": 2.977245037793252
+          },
+          "80%": {
+            "coverage": 0.7986633249791144,
+            "patient_coverage": 0.781316796190214,
+            "patient_coverage_ci95": [
+              0.7210950260475578,
+              0.8353016870026362
+            ],
+            "below": 0.10025062656641603,
+            "above": 0.1010860484544695,
+            "width_mean": 2.4369709091304115,
+            "width_median": 2.5705830089637938,
+            "interval_score": 3.8097337653952996,
+            "patient_interval_score": 4.371103497863448
+          },
+          "90%": {
+            "coverage": 0.9022556390977443,
+            "patient_coverage": 0.8856459995700505,
+            "patient_coverage_ci95": [
+              0.8389941800463953,
+              0.9252541744472125
+            ],
+            "below": 0.04678362573099415,
+            "above": 0.050960735171261484,
+            "width_mean": 3.146779589367968,
+            "width_median": 3.267524591957209,
+            "interval_score": 4.55794442253825,
+            "patient_interval_score": 5.324726408875142
+          },
+          "95%": {
+            "coverage": 0.949874686716792,
+            "patient_coverage": 0.9397377938517179,
+            "patient_coverage_ci95": [
+              0.9059292746634519,
+              0.9695412648181637
+            ],
+            "below": 0.02506265664160401,
+            "above": 0.02506265664160401,
+            "width_mean": 3.870438701023649,
+            "width_median": 4.023737266503429,
+            "interval_score": 5.4947078915049605,
+            "patient_interval_score": 6.5416538199533445
+          }
+        },
+        "edema": {
+          "50%": {
+            "coverage": 0.5087719298245614,
+            "patient_coverage": 0.44090709454633503,
+            "patient_coverage_ci95": [
+              0.3718709444856597,
+              0.5093156907555642
+            ],
+            "below": 0.24394319131161235,
+            "above": 0.24728487886382622,
+            "width_mean": 0.6986869441431934,
+            "width_median": 0.5617328011254279,
+            "interval_score": 2.15041045332267,
+            "patient_interval_score": 2.54675949206325
+          },
+          "80%": {
+            "coverage": 0.8045112781954887,
+            "patient_coverage": 0.7696829131955715,
+            "patient_coverage_ci95": [
+              0.7111071312653591,
+              0.8249395102084974
+            ],
+            "below": 0.09941520467836257,
+            "above": 0.0960735171261487,
+            "width_mean": 2.075343711364198,
+            "width_median": 1.695173215025315,
+            "interval_score": 3.412061625993917,
+            "patient_interval_score": 3.865827975616251
+          },
+          "90%": {
+            "coverage": 0.9022556390977443,
+            "patient_coverage": 0.8865615163083517,
+            "patient_coverage_ci95": [
+              0.8370913284441766,
+              0.9269025015069319
+            ],
+            "below": 0.047619047619047616,
+            "above": 0.05012531328320802,
+            "width_mean": 3.259307790872969,
+            "width_median": 2.733898804237817,
+            "interval_score": 4.232311370855968,
+            "patient_interval_score": 4.755643397373097
+          },
+          "95%": {
+            "coverage": 0.9465329991645781,
+            "patient_coverage": 0.9483239568682605,
+            "patient_coverage_ci95": [
+              0.9236404125644633,
+              0.9703970346929207
+            ],
+            "below": 0.02506265664160401,
+            "above": 0.028404344193817876,
+            "width_mean": 3.9319497178231306,
+            "width_median": 3.3750526634799183,
+            "interval_score": 4.764814753469724,
+            "patient_interval_score": 5.223964561182723
+          }
+        },
+        "total": {
+          "50%": {
+            "coverage": 0.506265664160401,
+            "patient_coverage": 0.4618015540483895,
+            "patient_coverage_ci95": [
+              0.39620905202392537,
+              0.5252395603107627
+            ],
+            "below": 0.2506265664160401,
+            "above": 0.24310776942355888,
+            "width_mean": 0.8008070643801405,
+            "width_median": 0.6493016322714706,
+            "interval_score": 2.15710406958771,
+            "patient_interval_score": 2.4370959464302078
+          },
+          "80%": {
+            "coverage": 0.8053467000835421,
+            "patient_coverage": 0.7762573221433982,
+            "patient_coverage_ci95": [
+              0.7224444946755073,
+              0.8282444211320793
+            ],
+            "below": 0.09523809523809523,
+            "above": 0.09941520467836257,
+            "width_mean": 2.0637014794442776,
+            "width_median": 1.6782153920915786,
+            "interval_score": 3.3695458315606754,
+            "patient_interval_score": 3.704626627684794
+          },
+          "90%": {
+            "coverage": 0.899749373433584,
+            "patient_coverage": 0.8983484284117196,
+            "patient_coverage_ci95": [
+              0.8583845271582614,
+              0.9340627141260054
+            ],
+            "below": 0.047619047619047616,
+            "above": 0.05263157894736842,
+            "width_mean": 3.065126077494025,
+            "width_median": 2.513434361879197,
+            "interval_score": 4.156581017569826,
+            "patient_interval_score": 4.58694705502473
+          },
+          "95%": {
+            "coverage": 0.9548872180451128,
+            "patient_coverage": 0.9564119307790194,
+            "patient_coverage_ci95": [
+              0.9314211623467952,
+              0.9789584589109905
+            ],
+            "below": 0.025898078529657476,
+            "above": 0.01921470342522974,
+            "width_mean": 3.889804812184461,
+            "width_median": 3.2472212659593,
+            "interval_score": 4.779558031689995,
+            "patient_interval_score": 5.2801123992305365
+          }
+        }
+      },
+      "gbm_constant": {
+        "necrosis": {
+          "50%": {
+            "coverage": 0.5271512113617377,
+            "patient_coverage": 0.48002207590815205,
+            "patient_coverage_ci95": [
+              0.41994492936739775,
+              0.5410092257718839
+            ],
+            "below": 0.23642439431913115,
+            "above": 0.23642439431913115,
+            "width_mean": 1.1958906613609777,
+            "width_median": 1.1830236337637139,
+            "interval_score": 2.428671485007931,
+            "patient_interval_score": 2.6173818501409505
+          },
+          "80%": {
+            "coverage": 0.8095238095238095,
+            "patient_coverage": 0.7667703838589913,
+            "patient_coverage_ci95": [
+              0.7023494847861936,
+              0.823480814778283
+            ],
+            "below": 0.09523809523809523,
+            "above": 0.09523809523809523,
+            "width_mean": 2.2806204004901494,
+            "width_median": 2.3714915853815928,
+            "interval_score": 3.4938697741897373,
+            "patient_interval_score": 3.6696337999960713
+          },
+          "90%": {
+            "coverage": 0.9005847953216374,
+            "patient_coverage": 0.8914338591553782,
+            "patient_coverage_ci95": [
+              0.8518132711170685,
+              0.92542953647384
+            ],
+            "below": 0.04928989139515455,
+            "above": 0.05012531328320802,
+            "width_mean": 3.0504020579123403,
+            "width_median": 3.309379694997966,
+            "interval_score": 4.137278075871413,
+            "patient_interval_score": 4.198021860086997
+          },
+          "95%": {
+            "coverage": 0.9523809523809523,
+            "patient_coverage": 0.9477222144943664,
+            "patient_coverage_ci95": [
+              0.9177906543175531,
+              0.9718414707655215
+            ],
+            "below": 0.022556390977443608,
+            "above": 0.02506265664160401,
+            "width_mean": 3.720327604618781,
+            "width_median": 3.9731812964821476,
+            "interval_score": 4.620210670001929,
+            "patient_interval_score": 4.628642339645274
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "coverage": 0.529657477025898,
+            "patient_coverage": 0.4607484346408397,
+            "patient_coverage_ci95": [
+              0.3942208039557723,
+              0.5273842714072143
+            ],
+            "below": 0.22305764411027568,
+            "above": 0.24728487886382622,
+            "width_mean": 1.1468366472936384,
+            "width_median": 1.1875732459879849,
+            "interval_score": 2.555586546103624,
+            "patient_interval_score": 2.945842322664397
+          },
+          "80%": {
+            "coverage": 0.8187134502923976,
+            "patient_coverage": 0.7671482116102368,
+            "patient_coverage_ci95": [
+              0.7062213229222721,
+              0.8282693403935493
+            ],
+            "below": 0.0810359231411863,
+            "above": 0.10025062656641603,
+            "width_mean": 2.4532885166775507,
+            "width_median": 2.560875455235479,
+            "interval_score": 3.743259527817947,
+            "patient_interval_score": 4.2526737999641435
+          },
+          "90%": {
+            "coverage": 0.9030910609857978,
+            "patient_coverage": 0.8709903551675704,
+            "patient_coverage_ci95": [
+              0.8219432846806264,
+              0.9159349335615157
+            ],
+            "below": 0.04594820384294068,
+            "above": 0.050960735171261484,
+            "width_mean": 3.3035493472913617,
+            "width_median": 3.4168790840500627,
+            "interval_score": 4.341174326018005,
+            "patient_interval_score": 4.897276177461228
+          },
+          "95%": {
+            "coverage": 0.948203842940685,
+            "patient_coverage": 0.9231623158838347,
+            "patient_coverage_ci95": [
+              0.8796618580083768,
+              0.9590145921237694
+            ],
+            "below": 0.023391812865497075,
+            "above": 0.028404344193817876,
+            "width_mean": 3.9037797049600047,
+            "width_median": 3.887599359248985,
+            "interval_score": 4.679565586797403,
+            "patient_interval_score": 5.156928531103724
+          }
+        },
+        "edema": {
+          "50%": {
+            "coverage": 0.5121136173767753,
+            "patient_coverage": 0.4005921410984702,
+            "patient_coverage_ci95": [
+              0.33490791849969054,
+              0.46899820467858433
+            ],
+            "below": 0.24644945697577275,
+            "above": 0.24143692564745195,
+            "width_mean": 0.6745429068315276,
+            "width_median": 0.6844637695100593,
+            "interval_score": 1.8886638807609906,
+            "patient_interval_score": 2.1818061061473712
+          },
+          "80%": {
+            "coverage": 0.797827903091061,
+            "patient_coverage": 0.7197889136180274,
+            "patient_coverage_ci95": [
+              0.6551334552402589,
+              0.7792042868348247
+            ],
+            "below": 0.10442773600668337,
+            "above": 0.09774436090225563,
+            "width_mean": 1.7348591142410863,
+            "width_median": 1.760145632073285,
+            "interval_score": 3.090985880775809,
+            "patient_interval_score": 3.280871836336215
+          },
+          "90%": {
+            "coverage": 0.9064327485380117,
+            "patient_coverage": 0.8924066732611036,
+            "patient_coverage_ci95": [
+              0.8533211716202223,
+              0.9274652568481682
+            ],
+            "below": 0.04594820384294068,
+            "above": 0.047619047619047616,
+            "width_mean": 2.7471327981183395,
+            "width_median": 2.7123217576115284,
+            "interval_score": 4.094054603383528,
+            "patient_interval_score": 4.123645423803787
+          },
+          "95%": {
+            "coverage": 0.9507101086048454,
+            "patient_coverage": 0.9540472068953081,
+            "patient_coverage_ci95": [
+              0.9295739568682605,
+              0.9747514109776768
+            ],
+            "below": 0.026733500417710943,
+            "above": 0.022556390977443608,
+            "width_mean": 3.858077653713069,
+            "width_median": 4.00906747623565,
+            "interval_score": 4.945141370679479,
+            "patient_interval_score": 4.936699059952857
+          }
+        },
+        "total": {
+          "50%": {
+            "coverage": 0.5121136173767753,
+            "patient_coverage": 0.39905311519235565,
+            "patient_coverage_ci95": [
+              0.33095221088100835,
+              0.46748928901618764
+            ],
+            "below": 0.24227234753550542,
+            "above": 0.24561403508771928,
+            "width_mean": 0.7523324472031745,
+            "width_median": 0.7384092006464056,
+            "interval_score": 1.8782138578357435,
+            "patient_interval_score": 2.0551756944131143
+          },
+          "80%": {
+            "coverage": 0.7994987468671679,
+            "patient_coverage": 0.7511282669510517,
+            "patient_coverage_ci95": [
+              0.6866692619382493,
+              0.8113861970191084
+            ],
+            "below": 0.09941520467836257,
+            "above": 0.1010860484544695,
+            "width_mean": 1.7350494666425509,
+            "width_median": 1.735862838569652,
+            "interval_score": 3.069009721967401,
+            "patient_interval_score": 3.0987596609187356
+          },
+          "90%": {
+            "coverage": 0.8947368421052632,
+            "patient_coverage": 0.8910171403842291,
+            "patient_coverage_ci95": [
+              0.8529420333534259,
+              0.9254546361983071
+            ],
+            "below": 0.059314954051796154,
+            "above": 0.04594820384294068,
+            "width_mean": 2.570431808497252,
+            "width_median": 2.58765346350517,
+            "interval_score": 4.0993325500558155,
+            "patient_interval_score": 3.990552627438479
+          },
+          "95%": {
+            "coverage": 0.948203842940685,
+            "patient_coverage": 0.9516971659376722,
+            "patient_coverage_ci95": [
+              0.9283564814814816,
+              0.9719694601577512
+            ],
+            "below": 0.02422723475355054,
+            "above": 0.02756892230576441,
+            "width_mean": 3.8226104352970447,
+            "width_median": 3.9563553480208986,
+            "interval_score": 5.0523813845128975,
+            "patient_interval_score": 4.923846594712906
+          }
+        }
+      },
+      "gbm_scaled": {
+        "necrosis": {
+          "50%": {
+            "coverage": 0.52046783625731,
+            "patient_coverage": 0.5000068087093403,
+            "patient_coverage_ci95": [
+              0.4385971719911593,
+              0.5595085183218095
+            ],
+            "below": 0.24143692564745195,
+            "above": 0.23809523809523808,
+            "width_mean": 1.259963217966666,
+            "width_median": 1.215560028838373,
+            "interval_score": 2.4072344227705607,
+            "patient_interval_score": 2.5980901723062857
+          },
+          "80%": {
+            "coverage": 0.8170426065162907,
+            "patient_coverage": 0.8072553559895332,
+            "patient_coverage_ci95": [
+              0.7538866782537668,
+              0.8545934064763179
+            ],
+            "below": 0.0910609857978279,
+            "above": 0.09189640768588136,
+            "width_mean": 2.277204303492618,
+            "width_median": 2.2253014060011287,
+            "interval_score": 3.430196929501001,
+            "patient_interval_score": 3.5990430931459048
+          },
+          "90%": {
+            "coverage": 0.9064327485380117,
+            "patient_coverage": 0.9141036530277036,
+            "patient_coverage_ci95": [
+              0.8836228925785887,
+              0.9435554802089613
+            ],
+            "below": 0.04594820384294068,
+            "above": 0.047619047619047616,
+            "width_mean": 3.0043452283245085,
+            "width_median": 2.9747791400328003,
+            "interval_score": 4.244579526173245,
+            "patient_interval_score": 4.475968152618458
+          },
+          "95%": {
+            "coverage": 0.9490392648287385,
+            "patient_coverage": 0.9454503536782017,
+            "patient_coverage_ci95": [
+              0.91656702240563,
+              0.9692445248141451
+            ],
+            "below": 0.025898078529657476,
+            "above": 0.02506265664160401,
+            "width_mean": 3.7570151598405293,
+            "width_median": 3.8081877825029,
+            "interval_score": 4.8990727371819505,
+            "patient_interval_score": 5.221422413386993
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "coverage": 0.5246449456975772,
+            "patient_coverage": 0.4687636613269524,
+            "patient_coverage_ci95": [
+              0.40756879182116523,
+              0.5333690601768132
+            ],
+            "below": 0.2247284878863826,
+            "above": 0.2506265664160401,
+            "width_mean": 1.1886031254086893,
+            "width_median": 1.2104773298420803,
+            "interval_score": 2.532597360197496,
+            "patient_interval_score": 2.924318673806317
+          },
+          "80%": {
+            "coverage": 0.8178780284043442,
+            "patient_coverage": 0.7806128002330535,
+            "patient_coverage_ci95": [
+              0.7207085059221134,
+              0.8389717587265056
+            ],
+            "below": 0.0835421888053467,
+            "above": 0.0985797827903091,
+            "width_mean": 2.4604909029982025,
+            "width_median": 2.538446874794734,
+            "interval_score": 3.641077365141355,
+            "patient_interval_score": 4.173982477378576
+          },
+          "90%": {
+            "coverage": 0.9055973266499582,
+            "patient_coverage": 0.8896679387185716,
+            "patient_coverage_ci95": [
+              0.8434941757726568,
+              0.9289798188215911
+            ],
+            "below": 0.04093567251461988,
+            "above": 0.053467000835421885,
+            "width_mean": 3.1107910805772034,
+            "width_median": 3.201610532384674,
+            "interval_score": 4.2736561401912265,
+            "patient_interval_score": 4.925712551646277
+          },
+          "95%": {
+            "coverage": 0.948203842940685,
+            "patient_coverage": 0.9395854262942869,
+            "patient_coverage_ci95": [
+              0.9078172928805839,
+              0.965699300113857
+            ],
+            "below": 0.02422723475355054,
+            "above": 0.02756892230576441,
+            "width_mean": 3.6595225252706967,
+            "width_median": 3.761780034409141,
+            "interval_score": 4.944944439214155,
+            "patient_interval_score": 5.772497851958131
+          }
+        },
+        "edema": {
+          "50%": {
+            "coverage": 0.5171261487050961,
+            "patient_coverage": 0.446508133216994,
+            "patient_coverage_ci95": [
+              0.375721013632406,
+              0.515855101590861
+            ],
+            "below": 0.24728487886382622,
+            "above": 0.23558897243107768,
+            "width_mean": 0.7400982171836478,
+            "width_median": 0.575554728302643,
+            "interval_score": 1.8282636842775015,
+            "patient_interval_score": 2.1196619958505427
+          },
+          "80%": {
+            "coverage": 0.8011695906432749,
+            "patient_coverage": 0.7840978114712291,
+            "patient_coverage_ci95": [
+              0.7311693791440624,
+              0.8320321217987358
+            ],
+            "below": 0.10275689223057644,
+            "above": 0.0960735171261487,
+            "width_mean": 1.7382461020771836,
+            "width_median": 1.348319042956387,
+            "interval_score": 2.8994158159350945,
+            "patient_interval_score": 3.2279542526506315
+          },
+          "90%": {
+            "coverage": 0.8913951545530493,
+            "patient_coverage": 0.8903546699432775,
+            "patient_coverage_ci95": [
+              0.8540432238296161,
+              0.9253934975889089
+            ],
+            "below": 0.055973266499582286,
+            "above": 0.05263157894736842,
+            "width_mean": 2.6221521357162603,
+            "width_median": 2.056762176115156,
+            "interval_score": 3.6975192227866582,
+            "patient_interval_score": 4.124876804759563
+          },
+          "95%": {
+            "coverage": 0.9415204678362573,
+            "patient_coverage": 0.9440409215725671,
+            "patient_coverage_ci95": [
+              0.9183777459647712,
+              0.9669552441229655
+            ],
+            "below": 0.03258145363408521,
+            "above": 0.025898078529657476,
+            "width_mean": 3.3656853930342687,
+            "width_median": 2.6482263329354008,
+            "interval_score": 4.426790247134448,
+            "patient_interval_score": 4.9595356548813365
+          }
+        },
+        "total": {
+          "50%": {
+            "coverage": 0.5154553049289892,
+            "patient_coverage": 0.4543414918414918,
+            "patient_coverage_ci95": [
+              0.38464602131928083,
+              0.5224892063222758
+            ],
+            "below": 0.24812030075187969,
+            "above": 0.23642439431913115,
+            "width_mean": 0.8129669611106182,
+            "width_median": 0.674902599880526,
+            "interval_score": 1.8298765401962547,
+            "patient_interval_score": 1.999036656547946
+          },
+          "80%": {
+            "coverage": 0.8003341687552213,
+            "patient_coverage": 0.7914884107922082,
+            "patient_coverage_ci95": [
+              0.7388053797468355,
+              0.8392675924637951
+            ],
+            "below": 0.09941520467836257,
+            "above": 0.10025062656641603,
+            "width_mean": 1.6675229630964923,
+            "width_median": 1.3883318745165067,
+            "interval_score": 2.9157998290816423,
+            "patient_interval_score": 3.096194812773281
+          },
+          "90%": {
+            "coverage": 0.8913951545530493,
+            "patient_coverage": 0.8935133666146323,
+            "patient_coverage_ci95": [
+              0.8592037120755477,
+              0.9275014199935087
+            ],
+            "below": 0.055973266499582286,
+            "above": 0.05263157894736842,
+            "width_mean": 2.6913956457104216,
+            "width_median": 2.242131558081425,
+            "interval_score": 3.6751925759120025,
+            "patient_interval_score": 3.961310581013781
+          },
+          "95%": {
+            "coverage": 0.9490392648287385,
+            "patient_coverage": 0.9495422533397215,
+            "patient_coverage_ci95": [
+              0.9239254996058793,
+              0.9723700110250741
+            ],
+            "below": 0.025898078529657476,
+            "above": 0.02506265664160401,
+            "width_mean": 3.366390487826199,
+            "width_median": 2.8101168200139863,
+            "interval_score": 4.243090788262025,
+            "patient_interval_score": 4.640610504971841
+          }
+        }
+      }
+    },
+    "paired_interval_score": {
+      "necrosis": {
+        "50%": {
+          "persistence_constant": {
+            "diff": -0.5202651760424968,
+            "diff_ci95": [
+              -0.7585887151050149,
+              -0.3035958645531916
+            ],
+            "relative": -0.16683960547279686,
+            "patients_better": 56
+          },
+          "persistence_scaled": {
+            "diff": -0.3958537697593131,
+            "diff_ci95": [
+              -0.5847447848996837,
+              -0.22710821036139783
+            ],
+            "relative": -0.13221816353922894,
+            "patients_better": 61
+          },
+          "gbm_constant": {
+            "diff": -0.019291677834665625,
+            "diff_ci95": [
+              -0.06630471824358841,
+              0.02949807609735578
+            ],
+            "relative": -0.007370601211140337,
+            "patients_better": 43
+          }
+        },
+        "80%": {
+          "persistence_constant": {
+            "diff": -0.7503081557876586,
+            "diff_ci95": [
+              -1.1307775578839863,
+              -0.42459655096273835
+            ],
+            "relative": -0.17251036139507703,
+            "patients_better": 61
+          },
+          "persistence_scaled": {
+            "diff": -0.8696064883929776,
+            "diff_ci95": [
+              -1.0838084464063107,
+              -0.6719812437453396
+            ],
+            "relative": -0.19460162908847023,
+            "patients_better": 70
+          },
+          "gbm_constant": {
+            "diff": -0.07059070685016551,
+            "diff_ci95": [
+              -0.20770993786840494,
+              0.0590182813030772
+            ],
+            "relative": -0.019236444478531095,
+            "patients_better": 40
+          }
+        },
+        "90%": {
+          "persistence_constant": {
+            "diff": -0.31825145770852226,
+            "diff_ci95": [
+              -0.7202722318892211,
+              0.17440358034753536
+            ],
+            "relative": -0.06638232779804103,
+            "patients_better": 59
+          },
+          "persistence_scaled": {
+            "diff": -1.1315228505510044,
+            "diff_ci95": [
+              -1.3892526743200317,
+              -0.8872154941638025
+            ],
+            "relative": -0.20178772465465317,
+            "patients_better": 72
+          },
+          "gbm_constant": {
+            "diff": 0.27794629253146214,
+            "diff_ci95": [
+              0.08003402145442337,
+              0.500339819346105
+            ],
+            "relative": 0.06620887212952772,
+            "patients_better": 30
+          }
+        },
+        "95%": {
+          "persistence_constant": {
+            "diff": 0.2079862475710488,
+            "diff_ci95": [
+              -0.36635781323311,
+              0.8885710424032882
+            ],
+            "relative": 0.04148576758375835,
+            "patients_better": 52
+          },
+          "persistence_scaled": {
+            "diff": -1.2104606757341818,
+            "diff_ci95": [
+              -1.5785874283048034,
+              -0.7789686089727756
+            ],
+            "relative": -0.1881969337691389,
+            "patients_better": 71
+          },
+          "gbm_constant": {
+            "diff": 0.5927800737417181,
+            "diff_ci95": [
+              0.23251889054839145,
+              0.994069395343731
+            ],
+            "relative": 0.12806780698185186,
+            "patients_better": 25
+          }
+        }
+      },
+      "enhancing": {
+        "50%": {
+          "persistence_constant": {
+            "diff": -0.0745504073935962,
+            "diff_ci95": [
+              -0.18844100537271335,
+              0.036188394605794386
+            ],
+            "relative": -0.024859507159201145,
+            "patients_better": 45
+          },
+          "persistence_scaled": {
+            "diff": -0.05292636398693593,
+            "diff_ci95": [
+              -0.15379686912544474,
+              0.04641428377623094
+            ],
+            "relative": -0.017776959341635246,
+            "patients_better": 39
+          },
+          "gbm_constant": {
+            "diff": -0.021523648858079794,
+            "diff_ci95": [
+              -0.0644906657797549,
+              0.022627795354468655
+            ],
+            "relative": -0.007306449735100727,
+            "patients_better": 47
+          }
+        },
+        "80%": {
+          "persistence_constant": {
+            "diff": -0.24987915771907468,
+            "diff_ci95": [
+              -0.5173702567964343,
+              0.0036531807484661187
+            ],
+            "relative": -0.056484397191947644,
+            "patients_better": 42
+          },
+          "persistence_scaled": {
+            "diff": -0.19712102048487204,
+            "diff_ci95": [
+              -0.3543280862376461,
+              -0.05273325006603754
+            ],
+            "relative": -0.04509639741571501,
+            "patients_better": 48
+          },
+          "gbm_constant": {
+            "diff": -0.0786913225855669,
+            "diff_ci95": [
+              -0.2847866336699835,
+              0.12230911981838584
+            ],
+            "relative": -0.018503963926466777,
+            "patients_better": 40
+          }
+        },
+        "90%": {
+          "persistence_constant": {
+            "diff": -0.12119979026562734,
+            "diff_ci95": [
+              -0.5868991219191739,
+              0.34312608078636747
+            ],
+            "relative": -0.024014641439108815,
+            "patients_better": 44
+          },
+          "persistence_scaled": {
+            "diff": -0.3990138572288647,
+            "diff_ci95": [
+              -0.6606208565217068,
+              -0.16559387296241865
+            ],
+            "relative": -0.07493602987071726,
+            "patients_better": 62
+          },
+          "gbm_constant": {
+            "diff": 0.028436374185049466,
+            "diff_ci95": [
+              -0.33717935067636334,
+              0.4387738899629657
+            ],
+            "relative": 0.005806569438726452,
+            "patients_better": 41
+          }
+        },
+        "95%": {
+          "persistence_constant": {
+            "diff": 0.21333909620440436,
+            "diff_ci95": [
+              -0.5489407022401348,
+              1.0954604732659865
+            ],
+            "relative": 0.0383761474672042,
+            "patients_better": 50
+          },
+          "persistence_scaled": {
+            "diff": -0.7691559679952147,
+            "diff_ci95": [
+              -1.1773177341575158,
+              -0.4190713058149443
+            ],
+            "relative": -0.11757821327217531,
+            "patients_better": 66
+          },
+          "gbm_constant": {
+            "diff": 0.6155693208544072,
+            "diff_ci95": [
+              -0.09033858506517932,
+              1.4370020029159944
+            ],
+            "relative": 0.11936743298683226,
+            "patients_better": 40
+          }
+        }
+      },
+      "edema": {
+        "50%": {
+          "persistence_constant": {
+            "diff": -0.450433950282502,
+            "diff_ci95": [
+              -0.7019037538102953,
+              -0.20408399224509055
+            ],
+            "relative": -0.17525958552645593,
+            "patients_better": 51
+          },
+          "persistence_scaled": {
+            "diff": -0.4270974962127067,
+            "diff_ci95": [
+              -0.6710881398091044,
+              -0.19796960789912113
+            ],
+            "relative": -0.16770232821109263,
+            "patients_better": 48
+          },
+          "gbm_constant": {
+            "diff": -0.062144110296828405,
+            "diff_ci95": [
+              -0.11125227868057176,
+              -0.00901640105536224
+            ],
+            "relative": -0.028482874863047455,
+            "patients_better": 51
+          }
+        },
+        "80%": {
+          "persistence_constant": {
+            "diff": -0.6290483630962053,
+            "diff_ci95": [
+              -1.0639252550744582,
+              -0.25273089375534313
+            ],
+            "relative": -0.1630925425168274,
+            "patients_better": 47
+          },
+          "persistence_scaled": {
+            "diff": -0.6378737229656198,
+            "diff_ci95": [
+              -0.9888068330029531,
+              -0.32978712905391827
+            ],
+            "relative": -0.16500313179712467,
+            "patients_better": 66
+          },
+          "gbm_constant": {
+            "diff": -0.05291758368558412,
+            "diff_ci95": [
+              -0.2542248455836459,
+              0.1579205582334249
+            ],
+            "relative": -0.016129122478821898,
+            "patients_better": 42
+          }
+        },
+        "90%": {
+          "persistence_constant": {
+            "diff": -0.6572904093791487,
+            "diff_ci95": [
+              -1.2830582725808688,
+              -0.04635006960989748
+            ],
+            "relative": -0.13744613685523951,
+            "patients_better": 48
+          },
+          "persistence_scaled": {
+            "diff": -0.6307665926135327,
+            "diff_ci95": [
+              -0.9036918952540081,
+              -0.35627027072550227
+            ],
+            "relative": -0.13263538493276283,
+            "patients_better": 69
+          },
+          "gbm_constant": {
+            "diff": 0.0012313809557760967,
+            "diff_ci95": [
+              -0.46954185707274954,
+              0.4371766087257213
+            ],
+            "relative": 0.00029861465504961627,
+            "patients_better": 40
+          }
+        },
+        "95%": {
+          "persistence_constant": {
+            "diff": -0.48849654274725607,
+            "diff_ci95": [
+              -1.2734489968530096,
+              0.2959497909774923
+            ],
+            "relative": -0.08966476794316447,
+            "patients_better": 50
+          },
+          "persistence_scaled": {
+            "diff": -0.2644289063013873,
+            "diff_ci95": [
+              -0.6669121207390072,
+              0.28720025441404545
+            ],
+            "relative": -0.05061843418047992,
+            "patients_better": 70
+          },
+          "gbm_constant": {
+            "diff": 0.022836594928480357,
+            "diff_ci95": [
+              -0.7147057669887011,
+              0.7806949856670882
+            ],
+            "relative": 0.0046258835410353,
+            "patients_better": 42
+          }
+        }
+      },
+      "total": {
+        "50%": {
+          "persistence_constant": {
+            "diff": -0.4677449001115993,
+            "diff_ci95": [
+              -0.7045661305622363,
+              -0.2719475074547462
+            ],
+            "relative": -0.18961747903815526,
+            "patients_better": 58
+          },
+          "persistence_scaled": {
+            "diff": -0.43805928988226245,
+            "diff_ci95": [
+              -0.6272964428341627,
+              -0.25790714287343003
+            ],
+            "relative": -0.1797464275150594,
+            "patients_better": 59
+          },
+          "gbm_constant": {
+            "diff": -0.05613903786516881,
+            "diff_ci95": [
+              -0.10857629518309944,
+              -0.004865809096922991
+            ],
+            "relative": -0.0273159311964324,
+            "patients_better": 50
+          }
+        },
+        "80%": {
+          "persistence_constant": {
+            "diff": -0.5896381560255003,
+            "diff_ci95": [
+              -0.9668090191105145,
+              -0.2503660662103961
+            ],
+            "relative": -0.15997419335517649,
+            "patients_better": 54
+          },
+          "persistence_scaled": {
+            "diff": -0.608431814911514,
+            "diff_ci95": [
+              -0.8566434846663883,
+              -0.3760707430488294
+            ],
+            "relative": -0.16423566422718108,
+            "patients_better": 64
+          },
+          "gbm_constant": {
+            "diff": -0.0025648481454554903,
+            "diff_ci95": [
+              -0.16836311143628827,
+              0.15608468776259984
+            ],
+            "relative": -0.0008277015406528983,
+            "patients_better": 38
+          }
+        },
+        "90%": {
+          "persistence_constant": {
+            "diff": -0.7080685161630952,
+            "diff_ci95": [
+              -1.2762546195022992,
+              -0.2019540397614024
+            ],
+            "relative": -0.15164082877554233,
+            "patients_better": 49
+          },
+          "persistence_scaled": {
+            "diff": -0.6256364740109465,
+            "diff_ci95": [
+              -0.9488973632537686,
+              -0.34509163616878696
+            ],
+            "relative": -0.13639496303442147,
+            "patients_better": 67
+          },
+          "gbm_constant": {
+            "diff": -0.029242046424696376,
+            "diff_ci95": [
+              -0.44986780067042387,
+              0.3263484584403878
+            ],
+            "relative": -0.007327818764657349,
+            "patients_better": 34
+          }
+        },
+        "95%": {
+          "persistence_constant": {
+            "diff": -0.8216354596164506,
+            "diff_ci95": [
+              -1.31282228171443,
+              -0.25836461572232383
+            ],
+            "relative": -0.1504208094880949,
+            "patients_better": 64
+          },
+          "persistence_scaled": {
+            "diff": -0.639501894258695,
+            "diff_ci95": [
+              -0.9376318254530139,
+              -0.36223732340006337
+            ],
+            "relative": -0.12111520473539326,
+            "patients_better": 72
+          },
+          "gbm_constant": {
+            "diff": -0.28323608974106323,
+            "diff_ci95": [
+              -0.8676281182496037,
+              0.2560347036844706
+            ],
+            "relative": -0.05752333755588457,
+            "patients_better": 45
+          }
+        }
+      }
+    },
+    "conditional_coverage_80": {
+      "horizon 0-8 wk": {
+        "n_transitions": 88,
+        "persistence_constant": 0.8181818181818182,
+        "persistence_constant_width": 2.0775977667983736,
+        "persistence_scaled": 0.7803030303030303,
+        "persistence_scaled_width": 1.6554210110477636,
+        "gbm_constant": 0.8560606060606061,
+        "gbm_constant_width": 1.7373545797995846,
+        "gbm_scaled": 0.7992424242424242,
+        "gbm_scaled_width": 1.323706018570798
+      },
+      "horizon 9-16 wk": {
+        "n_transitions": 229,
+        "persistence_constant": 0.8107714701601164,
+        "persistence_constant_width": 2.054398852735791,
+        "persistence_scaled": 0.8311499272197962,
+        "persistence_scaled_width": 2.052973164818446,
+        "gbm_constant": 0.8136826783114993,
+        "gbm_constant_width": 1.7329655737636984,
+        "gbm_scaled": 0.8064046579330422,
+        "gbm_scaled_width": 1.6644916985911018
+      },
+      "horizon 17-26 wk": {
+        "n_transitions": 61,
+        "persistence_constant": 0.7923497267759563,
+        "persistence_constant_width": 2.0798710755180725,
+        "persistence_scaled": 0.7759562841530054,
+        "persistence_scaled_width": 2.410918678397864,
+        "gbm_constant": 0.7431693989071039,
+        "gbm_constant_width": 1.731530792622269,
+        "gbm_scaled": 0.8142076502732241,
+        "gbm_scaled_width": 1.9439371676644759
+      },
+      "horizon >26 wk": {
+        "n_transitions": 21,
+        "persistence_constant": 0.6666666666666666,
+        "persistence_constant_width": 2.11316942006773,
+        "persistence_scaled": 0.7142857142857143,
+        "persistence_scaled_width": 2.8829974857318903,
+        "gbm_constant": 0.5714285714285714,
+        "gbm_constant_width": 1.7583352107699486,
+        "gbm_scaled": 0.6984126984126984,
+        "gbm_scaled_width": 2.338417449351185
+      },
+      "single-scan history": {
+        "n_transitions": 107,
+        "persistence_constant": 0.6697819314641744,
+        "persistence_constant_width": 2.093942593600966,
+        "persistence_scaled": 0.7881619937694704,
+        "persistence_scaled_width": 3.340832044571979,
+        "gbm_constant": 0.6417445482866043,
+        "gbm_constant_width": 1.7320877767095681,
+        "gbm_scaled": 0.7850467289719626,
+        "gbm_scaled_width": 2.6227752342156356
+      },
+      "two or more history scans": {
+        "n_transitions": 292,
+        "persistence_constant": 0.8504566210045662,
+        "persistence_constant_width": 2.0564478652995697,
+        "persistence_scaled": 0.8116438356164384,
+        "persistence_scaled_width": 1.595711854551593,
+        "gbm_constant": 0.8573059360730594,
+        "gbm_constant_width": 1.7361347434330616,
+        "gbm_scaled": 0.8059360730593608,
+        "gbm_scaled_width": 1.3174818911452992
+      },
+      "last total volume, lowest third": {
+        "n_transitions": 133,
+        "persistence_constant": 0.7368421052631579,
+        "persistence_constant_width": 1.9933901035469141,
+        "persistence_scaled": 0.7894736842105263,
+        "persistence_scaled_width": 2.2121806918694875,
+        "gbm_constant": 0.7994987468671679,
+        "gbm_constant_width": 1.7189470679701226,
+        "gbm_scaled": 0.8045112781954887,
+        "gbm_scaled_width": 1.802397084987079
+      },
+      "last total volume, middle third": {
+        "n_transitions": 133,
+        "persistence_constant": 0.8771929824561403,
+        "persistence_constant_width": 2.1001421662003157,
+        "persistence_scaled": 0.8546365914786967,
+        "persistence_scaled_width": 1.9734221494701698,
+        "gbm_constant": 0.8070175438596491,
+        "gbm_constant_width": 1.7438053251916408,
+        "gbm_scaled": 0.8220551378446115,
+        "gbm_scaled_width": 1.5857494239602798
+      },
+      "last total volume, highest third": {
+        "n_transitions": 133,
+        "persistence_constant": 0.7919799498746867,
+        "persistence_constant_width": 2.105976257942828,
+        "persistence_scaled": 0.7719298245614035,
+        "persistence_scaled_width": 2.0055015969931755,
+        "gbm_constant": 0.7919799498746867,
+        "gbm_constant_width": 1.742396006765889,
+        "gbm_scaled": 0.7744360902255639,
+        "gbm_scaled_width": 1.6144223803421187
+      },
+      "target rating PD": {
+        "n_transitions": 236,
+        "persistence_constant": 0.8573446327683616,
+        "persistence_constant_width": 2.0782788514147508,
+        "persistence_scaled": 0.8333333333333334,
+        "persistence_scaled_width": 1.9693628076367728,
+        "gbm_constant": 0.8290960451977402,
+        "gbm_constant_width": 1.732414755751337,
+        "gbm_scaled": 0.8234463276836158,
+        "gbm_scaled_width": 1.5830097040257816
+      },
+      "target rating SD": {
+        "n_transitions": 92,
+        "persistence_constant": 0.6666666666666666,
+        "persistence_constant_width": 2.0251573215183027,
+        "persistence_scaled": 0.7463768115942029,
+        "persistence_scaled_width": 2.512243153544752,
+        "gbm_constant": 0.6884057971014492,
+        "gbm_constant_width": 1.7358645459989215,
+        "gbm_scaled": 0.7681159420289855,
+        "gbm_scaled_width": 2.0321894495238064
+      },
+      "target rating PR/CR": {
+        "n_transitions": 46,
+        "persistence_constant": 0.8043478260869565,
+        "persistence_constant_width": 2.086622794543562,
+        "persistence_scaled": 0.8043478260869565,
+        "persistence_scaled_width": 1.8719208404556371,
+        "gbm_constant": 0.8260869565217391,
+        "gbm_constant_width": 1.7502824827142003,
+        "gbm_scaled": 0.7971014492753623,
+        "gbm_scaled_width": 1.5420058253266862
+      },
+      "target rating unrated": {
+        "n_transitions": 25,
+        "persistence_constant": 0.7733333333333333,
+        "persistence_constant_width": 2.0704681248083547,
+        "persistence_scaled": 0.76,
+        "persistence_scaled_width": 1.6565015563564747,
+        "gbm_constant": 0.88,
+        "gbm_constant_width": 1.7288928958523297,
+        "gbm_scaled": 0.7066666666666667,
+        "gbm_scaled_width": 1.3543069921679327
+      }
+    },
+    "direction_calls": {
+      "gbm_constant": {
+        "total": {
+          "50%": {
+            "growth_calls_per_seed": 67.33333333333333,
+            "shrink_calls_per_seed": 61.666666666666664,
+            "growth_base_rate": 0.5488721804511278,
+            "shrink_base_rate": 0.43609022556390975,
+            "growth_calls": 0.16875522138680032,
+            "growth_call_precision": 0.8118811881188119,
+            "shrink_calls": 0.1545530492898914,
+            "shrink_call_precision": 0.7567567567567568
+          },
+          "80%": {
+            "growth_calls_per_seed": 21.333333333333332,
+            "shrink_calls_per_seed": 9.666666666666666,
+            "growth_base_rate": 0.5488721804511278,
+            "shrink_base_rate": 0.43609022556390975,
+            "growth_calls": 0.053467000835421885,
+            "growth_call_precision": 0.765625,
+            "shrink_calls": 0.02422723475355054,
+            "shrink_call_precision": 0.896551724137931
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "growth_calls_per_seed": 35.0,
+            "shrink_calls_per_seed": 2.6666666666666665,
+            "growth_base_rate": 0.518796992481203,
+            "shrink_base_rate": 0.37593984962406013,
+            "growth_calls": 0.08771929824561403,
+            "growth_call_precision": 0.5714285714285714,
+            "shrink_calls": 0.006683375104427736,
+            "shrink_call_precision": 0.75
+          },
+          "80%": {
+            "growth_calls_per_seed": 0.3333333333333333,
+            "shrink_calls_per_seed": 0.0,
+            "growth_base_rate": 0.518796992481203,
+            "shrink_base_rate": 0.37593984962406013,
+            "growth_calls": 0.000835421888053467,
+            "growth_call_precision": 0.0,
+            "shrink_calls": 0.0,
+            "shrink_call_precision": null
+          }
+        }
+      },
+      "gbm_scaled": {
+        "total": {
+          "50%": {
+            "growth_calls_per_seed": 73.66666666666667,
+            "shrink_calls_per_seed": 49.0,
+            "growth_base_rate": 0.5488721804511278,
+            "shrink_base_rate": 0.43609022556390975,
+            "growth_calls": 0.1846282372598162,
+            "growth_call_precision": 0.8054298642533937,
+            "shrink_calls": 0.12280701754385964,
+            "shrink_call_precision": 0.8231292517006803
+          },
+          "80%": {
+            "growth_calls_per_seed": 22.333333333333332,
+            "shrink_calls_per_seed": 4.666666666666667,
+            "growth_base_rate": 0.5488721804511278,
+            "shrink_base_rate": 0.43609022556390975,
+            "growth_calls": 0.055973266499582286,
+            "growth_call_precision": 0.835820895522388,
+            "shrink_calls": 0.011695906432748537,
+            "shrink_call_precision": 0.9285714285714286
+          }
+        },
+        "enhancing": {
+          "50%": {
+            "growth_calls_per_seed": 43.333333333333336,
+            "shrink_calls_per_seed": 2.6666666666666665,
+            "growth_base_rate": 0.518796992481203,
+            "shrink_base_rate": 0.37593984962406013,
+            "growth_calls": 0.1086048454469507,
+            "growth_call_precision": 0.5692307692307692,
+            "shrink_calls": 0.006683375104427736,
+            "shrink_call_precision": 0.625
+          },
+          "80%": {
+            "growth_calls_per_seed": 0.6666666666666666,
+            "shrink_calls_per_seed": 0.0,
+            "growth_base_rate": 0.518796992481203,
+            "shrink_base_rate": 0.37593984962406013,
+            "growth_calls": 0.001670843776106934,
+            "growth_call_precision": 0.5,
+            "shrink_calls": 0.0,
+            "shrink_call_precision": null
+          }
+        }
+      }
+    },
+    "typical_range": {
+      "necrosis": {
+        "50%": {
+          "median_lower_factor": 0.551877618957111,
+          "median_upper_factor": 1.879409836321708,
+          "median_width_ml": 9.688166443958874
+        },
+        "80%": {
+          "median_lower_factor": 0.346297767267474,
+          "median_upper_factor": 3.2635099854463543,
+          "median_width_ml": 21.990769955290887
+        },
+        "90%": {
+          "median_lower_factor": 0.253332424350542,
+          "median_upper_factor": 5.177047459802796,
+          "median_width_ml": 38.196409459973985
+        },
+        "95%": {
+          "median_lower_factor": 0.17528857246413534,
+          "median_upper_factor": 8.17446849501283,
+          "median_width_ml": 63.384595037079414
+        }
+      },
+      "enhancing": {
+        "50%": {
+          "median_lower_factor": 0.5956296057870029,
+          "median_upper_factor": 2.0139783983490953,
+          "median_width_ml": 4.458265327489882
+        },
+        "80%": {
+          "median_lower_factor": 0.428406535581301,
+          "median_upper_factor": 5.463674395565717,
+          "median_width_ml": 16.562179862743307
+        },
+        "90%": {
+          "median_lower_factor": 0.36163430952438624,
+          "median_upper_factor": 9.165339873811861,
+          "median_width_ml": 29.531208534505275
+        },
+        "95%": {
+          "median_lower_factor": 0.34799463522469337,
+          "median_upper_factor": 14.3622976584453,
+          "median_width_ml": 48.68390778453437
+        }
+      },
+      "edema": {
+        "50%": {
+          "median_lower_factor": 0.7459311217694511,
+          "median_upper_factor": 1.3252972589243346,
+          "median_width_ml": 24.302178562388043
+        },
+        "80%": {
+          "median_lower_factor": 0.5082172564379006,
+          "median_upper_factor": 1.9588421891751213,
+          "median_width_ml": 62.895842740709114
+        },
+        "90%": {
+          "median_lower_factor": 0.3698677909389681,
+          "median_upper_factor": 2.8816660383681683,
+          "median_width_ml": 109.5777894703614
+        },
+        "95%": {
+          "median_lower_factor": 0.28203572247463,
+          "median_upper_factor": 3.970298131762441,
+          "median_width_ml": 158.0205318368554
+        }
+      },
+      "total": {
+        "50%": {
+          "median_lower_factor": 0.7560891420830472,
+          "median_upper_factor": 1.4894315055828349,
+          "median_width_ml": 38.32177054852572
+        },
+        "80%": {
+          "median_lower_factor": 0.5295443046845825,
+          "median_upper_factor": 2.1321021663923223,
+          "median_width_ml": 85.36683641835452
+        },
+        "90%": {
+          "median_lower_factor": 0.32799464541552736,
+          "median_upper_factor": 3.112443684586096,
+          "median_width_ml": 148.31536501694276
+        },
+        "95%": {
+          "median_lower_factor": 0.23515460544562916,
+          "median_upper_factor": 3.8982852001790484,
+          "median_width_ml": 196.44206058391728
+        }
+      }
+    },
+    "horizon_weeks": {
+      "min": 1.0,
+      "p95": 27.0,
+      "p99": 48.01999999999998,
+      "max": 155.0
+    }
+  },
+  "deployed_multipliers_by_outer_fold": {
+    "necrosis": {
+      "80%": [
+        [
+          -1.5043196908779313,
+          1.5766702678486613
+        ],
+        [
+          -1.426148124238098,
+          1.5762426910162206
+        ],
+        [
+          -1.4647039414381242,
+          1.5704338365775548
+        ],
+        [
+          -1.4641373681119123,
+          1.6963517950714833
+        ],
+        [
+          -1.500773755760557,
+          1.5695292881939673
+        ],
+        [
+          -1.5970952133766763,
+          1.5662176514801207
+        ],
+        [
+          -1.4508540027547498,
+          1.5694887925648002
+        ],
+        [
+          -1.3831461380775254,
+          1.594039827748086
+        ],
+        [
+          -1.4845222733125667,
+          1.5602471769563295
+        ],
+        [
+          -1.5295888316653752,
+          1.532382867439798
+        ],
+        [
+          -1.533578758418593,
+          1.4690116806153772
+        ],
+        [
+          -1.4561692844478922,
+          1.5693985893217401
+        ],
+        [
+          -1.4854317609954648,
+          1.5768188795392126
+        ],
+        [
+          -1.3430679575330013,
+          1.7602703722697495
+        ],
+        [
+          -1.5056526227968734,
+          1.619797607164494
+        ]
+      ],
+      "90%": [
+        [
+          -2.060753605710875,
+          2.0256083277003527
+        ],
+        [
+          -1.9427191068715342,
+          2.101809864791982
+        ],
+        [
+          -2.119880961746345,
+          2.216756374082136
+        ],
+        [
+          -1.7926867567945886,
+          2.1694746383427863
+        ],
+        [
+          -1.898334898414745,
+          2.225166268117187
+        ],
+        [
+          -2.1050869672326513,
+          2.153284799579489
+        ],
+        [
+          -1.9680013010561481,
+          2.161468190230639
+        ],
+        [
+          -1.7881273312210102,
+          2.2691051813787753
+        ],
+        [
+          -1.8891561748407517,
+          2.3668222009784166
+        ],
+        [
+          -1.9745354525749146,
+          2.1216017809787306
+        ],
+        [
+          -2.0220769815353834,
+          2.2547012194392795
+        ],
+        [
+          -2.070377942923357,
+          2.1407877936635367
+        ],
+        [
+          -2.0442891509582912,
+          2.093168459129515
+        ],
+        [
+          -1.7834352617627438,
+          2.339549551818936
+        ],
+        [
+          -1.959697227455278,
+          2.208805227610086
+        ]
+      ]
+    },
+    "enhancing": {
+      "80%": [
+        [
+          -1.2510586640308548,
+          2.1170174539700515
+        ],
+        [
+          -1.1462556416127392,
+          2.101171628302713
+        ],
+        [
+          -1.311174160461539,
+          1.9676914927778961
+        ],
+        [
+          -1.22503425966574,
+          2.1580606562559015
+        ],
+        [
+          -1.2617491082697998,
+          2.070338242758091
+        ],
+        [
+          -1.3603076422873226,
+          2.003572515288929
+        ],
+        [
+          -1.1591151242024602,
+          2.295171593836069
+        ],
+        [
+          -1.393646687442425,
+          1.9636574136097327
+        ],
+        [
+          -1.123623162787974,
+          2.0512196703929653
+        ],
+        [
+          -1.3561557574401857,
+          1.9359901013499812
+        ],
+        [
+          -1.154346269742125,
+          2.186788791756405
+        ],
+        [
+          -1.1877188997254506,
+          2.20296234477402
+        ],
+        [
+          -1.3231282009785588,
+          2.006584530138411
+        ],
+        [
+          -1.294776524364912,
+          1.9941174303777611
+        ],
+        [
+          -1.261543760327991,
+          1.9891501793973017
+        ]
+      ],
+      "90%": [
+        [
+          -1.6370062796969087,
+          2.74690919682488
+        ],
+        [
+          -1.6073772792333996,
+          2.756731495172194
+        ],
+        [
+          -1.838564922647163,
+          2.5176493975186873
+        ],
+        [
+          -1.7132157240924228,
+          2.7513615834280576
+        ],
+        [
+          -1.7601231099363712,
+          2.714983257667023
+        ],
+        [
+          -1.7711009672673732,
+          2.5444636709423945
+        ],
+        [
+          -1.6748673869086972,
+          2.885722944696803
+        ],
+        [
+          -1.8119764302286148,
+          2.699656187408847
+        ],
+        [
+          -1.5129745457979769,
+          2.829368443774965
+        ],
+        [
+          -1.6856940321836202,
+          2.5417081874072216
+        ],
+        [
+          -1.7775120956767596,
+          2.648286726412796
+        ],
+        [
+          -1.5950485890484072,
+          2.7167531156100724
+        ],
+        [
+          -1.7574597013691386,
+          2.797053627273043
+        ],
+        [
+          -1.7455142303144697,
+          2.5755888427701636
+        ],
+        [
+          -1.6314621002779888,
+          2.6858685523716037
+        ]
+      ]
+    },
+    "edema": {
+      "80%": [
+        [
+          -1.688954994151427,
+          1.614902697218935
+        ],
+        [
+          -1.7227515330696885,
+          1.6057186542397974
+        ],
+        [
+          -1.625043649169214,
+          1.7360280520862417
+        ],
+        [
+          -1.619921821509834,
+          1.521286821323296
+        ],
+        [
+          -1.5226677443312209,
+          1.6104981075944647
+        ],
+        [
+          -1.6418124614619196,
+          1.6502346287689469
+        ],
+        [
+          -1.6595640591580902,
+          1.532039882233169
+        ],
+        [
+          -1.4641515136691403,
+          1.5448481940303396
+        ],
+        [
+          -1.556699122766055,
+          1.618053985223029
+        ],
+        [
+          -1.7077980273440911,
+          1.6766170497056805
+        ],
+        [
+          -1.637749779185251,
+          1.6666651424113508
+        ],
+        [
+          -1.6982880962695786,
+          1.5177962932435054
+        ],
+        [
+          -1.615231033496906,
+          1.5873402948502977
+        ],
+        [
+          -1.5763700610809792,
+          1.7185871097556094
+        ],
+        [
+          -1.7509395595576307,
+          1.436408422971739
+        ]
+      ],
+      "90%": [
+        [
+          -2.297454540370411,
+          2.4758536561131144
+        ],
+        [
+          -2.4256014187834722,
+          2.5156257728447677
+        ],
+        [
+          -2.4681918173936164,
+          2.5396243816018904
+        ],
+        [
+          -2.308039188816444,
+          2.5167158177686586
+        ],
+        [
+          -2.5928341625720948,
+          2.627339728063627
+        ],
+        [
+          -2.4249139011318275,
+          2.5829767481313897
+        ],
+        [
+          -2.4020269126281555,
+          2.380198583499783
+        ],
+        [
+          -2.457538056899513,
+          2.6753335213854585
+        ],
+        [
+          -2.265200760645298,
+          2.535015006371273
+        ],
+        [
+          -2.329345412809138,
+          2.596320314904232
+        ],
+        [
+          -2.217715113308081,
+          2.6022226730488147
+        ],
+        [
+          -2.3783093278466185,
+          2.3308426097958077
+        ],
+        [
+          -2.5536339323698796,
+          2.4773123756822697
+        ],
+        [
+          -2.1980156141568403,
+          2.5752538868597186
+        ],
+        [
+          -2.4813166381052962,
+          2.3068820590243635
+        ]
+      ]
+    },
+    "total": {
+      "80%": [
+        [
+          -1.44716904591012,
+          1.5856000110000503
+        ],
+        [
+          -1.3600276352562382,
+          1.6207857959293575
+        ],
+        [
+          -1.180792390046345,
+          1.6824602542068272
+        ],
+        [
+          -1.4311688116477976,
+          1.6357057035352343
+        ],
+        [
+          -1.3051394656495878,
+          1.5716963602876977
+        ],
+        [
+          -1.5075841992310806,
+          1.6558583009780437
+        ],
+        [
+          -1.2802696546129726,
+          1.6559192451980236
+        ],
+        [
+          -1.357405562175235,
+          1.5422141325127303
+        ],
+        [
+          -1.2823576308418587,
+          1.6297643206235788
+        ],
+        [
+          -1.4035755717327831,
+          1.6177790361459785
+        ],
+        [
+          -1.3137385521533111,
+          1.6250815913768335
+        ],
+        [
+          -1.2910093982885085,
+          1.5110917296689892
+        ],
+        [
+          -1.4473240391928934,
+          1.4982171561883437
+        ],
+        [
+          -1.285258092321466,
+          1.7699985950570036
+        ],
+        [
+          -1.541304690839844,
+          1.5784606032437698
+        ]
+      ],
+      "90%": [
+        [
+          -2.455404765894743,
+          2.45214176791618
+        ],
+        [
+          -2.301727022835505,
+          2.3801865534080258
+        ],
+        [
+          -2.258536575192742,
+          2.4501433565915183
+        ],
+        [
+          -2.365191205010397,
+          2.2190112858884845
+        ],
+        [
+          -2.3825128586715567,
+          2.5065194300755094
+        ],
+        [
+          -2.4936734897695456,
+          2.4017424962354
+        ],
+        [
+          -2.5541559148128075,
+          2.2960609367806644
+        ],
+        [
+          -2.5921047969615674,
+          2.353284428352626
+        ],
+        [
+          -2.3065847668791046,
+          2.5689653075234236
+        ],
+        [
+          -2.224354056133666,
+          2.5761064550119004
+        ],
+        [
+          -2.3986234393819132,
+          2.5074178742965736
+        ],
+        [
+          -2.54309791091427,
+          2.4518083847477268
+        ],
+        [
+          -2.5739921292231775,
+          2.506625696230439
+        ],
+        [
+          -2.231675540299973,
+          2.4940504875461844
+        ],
+        [
+          -2.417578086162042,
+          2.251391582490038
+        ]
+      ]
+    }
+  }
+}

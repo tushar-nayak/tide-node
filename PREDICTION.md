@@ -115,3 +115,106 @@ Mask inference requires all four historical modalities and existing labels on th
 atlas grid. Registered inference requires history-only prepared alignment. A cache
 override is a trusted prepared input; its declared relation to MRI is not independently
 certified by the CLI. No new registration or native-space segmentation is performed.
+
+## Forecast ranges for volume bundles
+
+Add `--intervals` with the calibration file built for that bundle:
+
+```bash
+.venv/bin/python scripts/predict.py --history volume-history.json --horizon-weeks 12 \
+  --bundle runs/packaging/release-20261103/volume-all --trust-volume-bundle \
+  --intervals runs/packaging/release-20261103/volume-intervals.json \
+  --output-dir runs/new-volume-forecast
+```
+
+For a made-up two-visit history (36.5 mL total at week 10), the terminal shows:
+
+```text
+Forecast for week 22 (12 weeks after the last scan), mL:
+  Necrotic_NonEnhancing  last     3.5  forecast     3.9  ranges 50% 1.8-7.8  80% 0.8-13.2  90% 0.3-22.0  95% 0.0-34.3
+  Enhancing_Core         last     9.0  forecast     7.2  ranges 50% 4.0-15.3  80% 2.3-41.3  90% 1.3-67.8  95% 0.5-108.1
+  Edema_Compartment      last    24.0  forecast    29.0  ranges 50% 21.6-37.3  80% 14.8-54.4  90% 10.9-82.5  95% 8.2-113.9
+  Total                  last    36.5  forecast    40.1  ranges 50% 30.6-56.9  80% 22.1-80.2  90% 13.7-120.6  95% 9.9-150.5
+  Held-out coverage of the total-volume ranges (averaged over patients): 50% range -> 45%, 80% range -> 79%, 90% range -> 89%, 95% range -> 95%
+```
+
+`volumes.json` is unchanged. A new `intervals.json` holds:
+
+- `volumes`: for each compartment and `Total`, the last observed volume, the forecast, and
+  the 50/80/90/95% `ranges` in mL.
+- `held_out_patient_coverage`: what each range achieved on held-out LUMIERE patients
+  (EXPERIMENTS.md section 11).
+- `horizon_within_calibration` and `warning`. The warning is set beyond 26 weeks: only 5%
+  of LUMIERE intervals were that long, and the 80% range held 70% of next volumes there. It
+  is also set beyond the longest interval seen (155 weeks).
+- The calibration file path and SHA-256. Both are also recorded in `metadata.json`.
+
+How the ranges are made. Residuals come from patient-grouped out-of-fold forecasts made
+with the released GBM settings. A small scale model widens the range for longer horizons,
+smaller tumors and single-scan histories. Conformal quantiles then set each level. The
+calibration file records the SHA-256 of the bundle's `estimators.pkl`, and the CLI refuses
+a calibration built for a different bundle. It also refuses one whose scale features or
+floor differ from the code. Build a new file with
+`scripts/volume_intervals.py calibrate --bundle <volume-all> --output <new file>`; it
+refuses to overwrite, and `scripts/build_research_release.sh` runs it.
+
+What the ranges mean:
+- Coverage is marginal. Across LUMIERE-like visits, an 80% range contains the next volume
+  about 80% of the time. It is not a guarantee for an individual patient.
+- The ranges are wide. A typical 80% total-volume range runs from ×0.53 to ×2.1 of the
+  forecast.
+- Each compartment and the total are calibrated separately, so the compartment ranges need
+  not add up to the total range.
+- They assume DeepBraTumIA compartment volumes, no surgery in the interval and LUMIERE-like
+  scans.
+- Mask forecasts have no ranges.
+
+## Progression call (is the current scan RANO PD?)
+
+A `progression_gbm` bundle estimates the probability that an expert would rate the current
+scan as progressive disease under RANO. Its inputs are the automated compartment volumes of
+the current scan and the earlier scans since the last surgery, the previous scan's expert
+rating, and optionally age, sex and MGMT. Held-out evaluation is in EXPERIMENTS.md section
+12b (AUROC 0.82). Run it with:
+
+```bash
+.venv/bin/python scripts/predict.py --history scan.json \
+  --bundle runs/packaging/release-20261103/progression-gbm --trust-progression-bundle --output-dir runs/my-call
+```
+
+`--horizon-weeks` and `--intervals` do not apply and are rejected.
+
+History JSON (`version: 1`): `patient_id`, `history` and optional `clinical`, which takes
+the same string fields as the volume forecast.
+- `history` lists visits oldest first, each with `week` and `volumes_mm3`. The keys are
+  `Necrotic_NonEnhancing`, `Enhancing_Core` and `Edema_Compartment`, in mm³.
+- The last visit is the scan to assess and must not carry a rating.
+- The visit before it must carry `rating`: one of `PD`, `SD`, `PR`, `CR`, `Post-Op` or
+  `unknown`.
+- Only the first visit may be `Post-Op`. A later `Post-Op` means a new surgery, so start
+  the history there.
+- Weeks must strictly increase and volumes must be nonnegative. Unknown fields are
+  rejected.
+
+`progression.json` contains:
+- `probability_pd` and `call`, one of three bands:
+  - "likely PD": at or above the 80%-specificity threshold;
+  - "PD less likely": below the 90%-sensitivity threshold;
+  - "uncertain": in between.
+- `held_out_pd_rate_in_this_band`: how often held-out scans in that band were rated PD.
+  It is 85%, 49% and 28% for the three bands respectively.
+- The thresholds with their held-out sensitivity and specificity, and the held-out AUROC.
+- Plain enhancing and total volume changes against the previous scan and the nadir.
+- The input checksum and bundle path.
+
+The bundle (`progression_model.py fit-all`) holds a scikit-learn pickle (load only trusted
+bundles), a manifest and `SHA256SUMS.json`. Loading checks the checksums, the scikit-learn
+version, the feature list, and the hashes of `progression_model.py`,
+`volume_trajectory_experiment.py`, `lumiere_cohort.py` and `lumiere_weeks.py`. Editing any
+of those files requires refitting the bundle.
+
+Limits:
+- Volumes cannot see new non-enhancing lesions or subtle T2/FLAIR progression, so stable
+  scans usually land in "uncertain".
+- The model was fitted to one centre's expert readings and DeepBraTumIA volumes.
+- It is not clinically validated.

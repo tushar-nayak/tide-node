@@ -233,7 +233,8 @@ class MaskEnsemble(torch.nn.Module):
         return total / len(self.members), None
 
 
-def predict_volume_history(history_path, horizon, bundle_path, output, trusted=False):
+def predict_volume_history(history_path, horizon, bundle_path, output, trusted=False, intervals=None):
+    """Write volumes.json and metadata.json; with an interval calibration also intervals.json (returned)."""
     from types import SimpleNamespace
     from package_models import load_volume as load_volume_bundle, sha256
     from volume_trajectory_experiment import history_features, static_features, y_of
@@ -264,12 +265,29 @@ def predict_volume_history(history_path, horizon, bundle_path, output, trusted=F
     if not np.isfinite(x).all():
         raise ValueError('Nonfinite clinical features')
     models, manifest = load_volume_bundle(bundle_path, trusted=trusted)
-    pred = np.expm1(np.maximum(y_of(scans[-1]) + np.array([m.predict(x)[0] for m in models]), 0))
+    calibration = None
+    if intervals is not None:
+        from volume_intervals import load_calibration
+        calibration = load_calibration(intervals, bundle_path)
+    centre = np.maximum(y_of(scans[-1]) + np.array([m.predict(x)[0] for m in models]), 0)
+    pred = np.expm1(centre)
     if not np.isfinite(pred).all():
         raise ValueError('Nonfinite volume forecast')
+    ranges = None
+    if calibration is not None:
+        from volume_intervals import forecast_ranges
+        ranges = dict(patient_id=doc['patient_id'], horizon_weeks=horizon, forecast_week=scans[-1].week + horizon,
+                      **forecast_ranges(calibration, x, centre, y_of(scans[-1]), horizon),
+                      calibration_file=str(Path(intervals).resolve()), calibration_sha256=sha256(intervals),
+                      clinical_validation=False)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     (output / 'volumes.json').write_text(json.dumps(dict(zip(COMPARTMENTS, pred.tolist())), indent=2) + '\n')
     (output / 'metadata.json').write_text(json.dumps(dict(patient_id=doc['patient_id'],
         horizon_weeks=horizon, forecast_week=scans[-1].week+horizon, output_unit='mL',
-        history_sha256=sha256(history_path), bundle=manifest, clinical_validation=False), indent=2) + '\n')
+        history_sha256=sha256(history_path), bundle=manifest, clinical_validation=False,
+        intervals=None if ranges is None else dict(file=ranges['calibration_file'],
+                                                   sha256=ranges['calibration_sha256'])), indent=2) + '\n')
+    if ranges is not None:
+        (output / 'intervals.json').write_text(json.dumps(ranges, indent=2, allow_nan=False) + '\n')
+    return ranges

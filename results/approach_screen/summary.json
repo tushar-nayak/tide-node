@@ -1,0 +1,514 @@
+{
+  "A": {
+    "pairs": 1473,
+    "patients": 79,
+    "bins": {
+      "all horizons": {
+        "pairs": 1473,
+        "patients": 79,
+        "median_horizon_weeks": 34.0,
+        "mae": {
+          "persistence": 0.8861027723504773,
+          "patient_slope": 1.6829930228786383,
+          "drift": 0.8819387782710943,
+          "gompertz": 0.7758059961729387,
+          "gbm": 0.7730297332882444
+        },
+        "mae_total": {
+          "persistence": 0.6888580627615554,
+          "patient_slope": 2.0158951081726655,
+          "drift": 0.7049934053953459,
+          "gompertz": 0.5795064822416268,
+          "gbm": 0.5696492896883507
+        },
+        "skill_vs_persistence": {
+          "persistence": 0.0,
+          "patient_slope": -0.8993203445400908,
+          "drift": 0.004699222493500965,
+          "gompertz": 0.1244740222231393,
+          "gbm": 0.1276071383484053
+        },
+        "gbm_minus_persistence": {
+          "diff": -0.15270404303923188,
+          "ci95": [
+            -0.19981450601012504,
+            -0.10554457796090704
+          ],
+          "relative": -0.15223153580414492,
+          "patients_better": 62
+        },
+        "gbm_minus_drift": {
+          "diff": -0.14178308178252508,
+          "ci95": [
+            -0.18686141817594246,
+            -0.09734398186280553
+          ],
+          "relative": -0.1429001449387792,
+          "patients_better": 58
+        },
+        "gbm_minus_gompertz": {
+          "diff": -0.0282596633901885,
+          "ci95": [
+            -0.06175309371593885,
+            0.0015473544542895167
+          ],
+          "relative": -0.032162246728229565,
+          "patients_better": 44
+        }
+      },
+      "1-13 weeks": {
+        "pairs": 249,
+        "patients": 63,
+        "median_horizon_weeks": 10.0,
+        "mae": {
+          "persistence": 0.68717067220654,
+          "patient_slope": 0.943530258089492,
+          "drift": 0.6827487197035861,
+          "gompertz": 0.6543823890475268,
+          "gbm": 0.6554153300054906
+        },
+        "mae_total": {
+          "persistence": 0.5534280251210951,
+          "patient_slope": 0.8988438050449626,
+          "drift": 0.5466610099370387,
+          "gompertz": 0.5175380036729811,
+          "gbm": 0.5012392782464326
+        },
+        "skill_vs_persistence": {
+          "persistence": 0.0,
+          "patient_slope": -0.3730653769896324,
+          "drift": 0.006435013427966707,
+          "gompertz": 0.04771490473207829,
+          "gbm": 0.04621172510037641
+        },
+        "gbm_minus_persistence": {
+          "diff": -0.03673903972948917,
+          "ci95": [
+            -0.08887198407491548,
+            0.015913158738383396
+          ],
+          "relative": -0.04666376992744521,
+          "patients_better": 39
+        },
+        "gbm_minus_drift": {
+          "diff": -0.027310522610458146,
+          "ci95": [
+            -0.08095410394167032,
+            0.027017735484979908
+          ],
+          "relative": -0.03510866693231137,
+          "patients_better": 37
+        },
+        "gbm_minus_gompertz": {
+          "diff": 0.007046957351182434,
+          "ci95": [
+            -0.03415807701546655,
+            0.04994971091399296
+          ],
+          "relative": 0.009477729484012702,
+          "patients_better": 33
+        }
+      },
+      "14-26 weeks": {
+        "pairs": 335,
+        "patients": 69,
+        "median_horizon_weeks": 18.0,
+        "mae": {
+          "persistence": 0.8047342316140582,
+          "patient_slope": 1.191975159416129,
+          "drift": 0.7990410523727816,
+          "gompertz": 0.7445281264848578,
+          "gbm": 0.731554787535297
+        },
+        "mae_total": {
+          "persistence": 0.6703701903699493,
+          "patient_slope": 1.2618098452308435,
+          "drift": 0.6588199443886064,
+          "gompertz": 0.6136994428843675,
+          "gbm": 0.5981107776404153
+        },
+        "skill_vs_persistence": {
+          "persistence": 0.0,
+          "patient_slope": -0.4812034987319731,
+          "drift": 0.007074608010470551,
+          "gompertz": 0.07481489262417085,
+          "gbm": 0.09093616402024418
+        },
+        "gbm_minus_persistence": {
+          "diff": -0.1107370718275674,
+          "ci95": [
+            -0.16355260362522134,
+            -0.059557264839593886
+          ],
+          "relative": -0.12342098038616499,
+          "patients_better": 48
+        },
+        "gbm_minus_drift": {
+          "diff": -0.09697350367259196,
+          "ci95": [
+            -0.14938197642050496,
+            -0.04831481770333432
+          ],
+          "relative": -0.10976471978952697,
+          "patients_better": 48
+        },
+        "gbm_minus_gompertz": {
+          "diff": -0.027566358163183802,
+          "ci95": [
+            -0.06243813131730105,
+            0.00893958532855015
+          ],
+          "relative": -0.03386281641707731,
+          "patients_better": 40
+        }
+      },
+      "27-52 weeks": {
+        "pairs": 423,
+        "patients": 65,
+        "median_horizon_weeks": 37.0,
+        "mae": {
+          "persistence": 0.9373757646385263,
+          "patient_slope": 1.6081611979712098,
+          "drift": 0.931201291864965,
+          "gompertz": 0.8135235343040682,
+          "gbm": 0.8013369212376938
+        },
+        "mae_total": {
+          "persistence": 0.8107119879603046,
+          "patient_slope": 1.8054899263665085,
+          "drift": 0.7904963452671302,
+          "gompertz": 0.6342959784139286,
+          "gbm": 0.6223563368195758
+        },
+        "skill_vs_persistence": {
+          "persistence": 0.0,
+          "patient_slope": -0.7155992918073295,
+          "drift": 0.006586977182989506,
+          "gompertz": 0.13212655479973756,
+          "gbm": 0.14512733157048519
+        },
+        "gbm_minus_persistence": {
+          "diff": -0.20152887793157795,
+          "ci95": [
+            -0.28099890566923513,
+            -0.12330838413282869
+          ],
+          "relative": -0.17522282955807994,
+          "patients_better": 50
+        },
+        "gbm_minus_drift": {
+          "diff": -0.1897429716059807,
+          "ci95": [
+            -0.26426298353528754,
+            -0.11728325747025399
+          ],
+          "relative": -0.16668344846976307,
+          "patients_better": 48
+        },
+        "gbm_minus_gompertz": {
+          "diff": 0.0018784323313206944,
+          "ci95": [
+            -0.03776954402086653,
+            0.04011124484164869
+          ],
+          "relative": 0.0019841439390343558,
+          "patients_better": 30
+        }
+      },
+      ">52 weeks": {
+        "pairs": 466,
+        "patients": 36,
+        "median_horizon_weeks": 82.0,
+        "mae": {
+          "persistence": 1.0043518675107692,
+          "patient_slope": 2.4990253718663644,
+          "drift": 1.003249978934264,
+          "gompertz": 0.8289348500147126,
+          "gbm": 0.839995726296884
+        },
+        "mae_total": {
+          "persistence": 0.6639037843593918,
+          "patient_slope": 3.345864484714109,
+          "drift": 0.7451760928215511,
+          "gompertz": 0.5383038051330239,
+          "gbm": 0.5378991039557064
+        },
+        "skill_vs_persistence": {
+          "persistence": 0.0,
+          "patient_slope": -1.4881970678862393,
+          "drift": 0.0010971140813789138,
+          "gompertz": 0.17465693366092705,
+          "gbm": 0.1636439842753843
+        },
+        "gbm_minus_persistence": {
+          "diff": -0.2230742335781589,
+          "ci95": [
+            -0.3383005417140239,
+            -0.10613649996380918
+          ],
+          "relative": -0.19077467273208107,
+          "patients_better": 27
+        },
+        "gbm_minus_drift": {
+          "diff": -0.21087865107963133,
+          "ci95": [
+            -0.3100429081848049,
+            -0.10417140118459402
+          ],
+          "relative": -0.1822457006633897,
+          "patients_better": 27
+        },
+        "gbm_minus_gompertz": {
+          "diff": -0.031508904358319025,
+          "ci95": [
+            -0.10846606200031571,
+            0.0407229873415342
+          ],
+          "relative": -0.0322261931887358,
+          "patients_better": 20
+        }
+      }
+    }
+  },
+  "B": {
+    "rows": 374,
+    "patients": 79,
+    "pd_rate": 0.6310160427807486,
+    "all": {
+      "previous_rating": {
+        "auroc": 0.6836618766887742,
+        "ci95": [
+          0.6229773040371958,
+          0.7396058642214494
+        ],
+        "minus_previous_rating": 0.0,
+        "minus_previous_rating_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "enhancing_change_vs_nadir": {
+        "auroc": 0.7111428395971505,
+        "ci95": [
+          0.6444995208850026,
+          0.7730808674613441
+        ],
+        "minus_previous_rating": 0.027480962908376316,
+        "minus_previous_rating_ci95": [
+          -0.06050835758332853,
+          0.1189989953233227
+        ]
+      },
+      "total_change_vs_last": {
+        "auroc": 0.7131079587324981,
+        "ci95": [
+          0.6589250992491447,
+          0.766217178724007
+        ],
+        "minus_previous_rating": 0.029446082043723898,
+        "minus_previous_rating_ci95": [
+          -0.05150461846420989,
+          0.1151397799034405
+        ]
+      },
+      "gbm_volumes_only": {
+        "auroc": 0.7904691721935643,
+        "ci95": [
+          0.7360686844560316,
+          0.841242684063317
+        ],
+        "minus_previous_rating": 0.10680729550479007,
+        "minus_previous_rating_ci95": [
+          0.03297701493977231,
+          0.18622280465949817
+        ]
+      },
+      "logistic_all": {
+        "auroc": 0.8084929992630803,
+        "ci95": [
+          0.7552985675587262,
+          0.8542621215152727
+        ],
+        "minus_previous_rating": 0.12483112257430606,
+        "minus_previous_rating_ci95": [
+          0.06538279795922558,
+          0.18893362651219267
+        ]
+      },
+      "gbm_all": {
+        "auroc": 0.8209899287644313,
+        "ci95": [
+          0.7721917620705389,
+          0.8638563987863744
+        ],
+        "minus_previous_rating": 0.13732805207565713,
+        "minus_previous_rating_ci95": [
+          0.06998405734793463,
+          0.20873020270337644
+        ]
+      }
+    },
+    "previous_not_pd": {
+      "rows": 238,
+      "pd_rate": 0.4957983193277311,
+      "previous_rating": {
+        "auroc": 0.5227754237288136,
+        "ci95": [
+          0.45117189908801403,
+          0.6044316174632582
+        ],
+        "minus_enhancing_change_vs_nadir": -0.12577683615819202,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          -0.219194836498867,
+          -0.02558745301372294
+        ]
+      },
+      "enhancing_change_vs_nadir": {
+        "auroc": 0.6485522598870056,
+        "ci95": [
+          0.5768947156777733,
+          0.7202825720805563
+        ],
+        "minus_enhancing_change_vs_nadir": 0.0,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "total_change_vs_last": {
+        "auroc": 0.6837570621468927,
+        "ci95": [
+          0.6161688912926727,
+          0.7494933281969945
+        ],
+        "minus_enhancing_change_vs_nadir": 0.03520480225988709,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          -0.055276412872469476,
+          0.13019607089144106
+        ]
+      },
+      "gbm_volumes_only": {
+        "auroc": 0.7386299435028248,
+        "ci95": [
+          0.6716408478922709,
+          0.8085787378257979
+        ],
+        "minus_enhancing_change_vs_nadir": 0.09007768361581925,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          0.011644088470145834,
+          0.1734477116089458
+        ]
+      },
+      "logistic_all": {
+        "auroc": 0.7241525423728814,
+        "ci95": [
+          0.6580221721111152,
+          0.7916398522886328
+        ],
+        "minus_enhancing_change_vs_nadir": 0.0756002824858758,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          0.004637600712620322,
+          0.15107930018137078
+        ]
+      },
+      "gbm_all": {
+        "auroc": 0.7312853107344632,
+        "ci95": [
+          0.6617256458581077,
+          0.803543213468271
+        ],
+        "minus_enhancing_change_vs_nadir": 0.08273305084745763,
+        "minus_enhancing_change_vs_nadir_ci95": [
+          -0.0014812994646335833,
+          0.17132707322418708
+        ]
+      }
+    }
+  },
+  "C": {
+    "patients": 73,
+    "visits": 454,
+    "excluded_inconsistent_survival": [
+      "Patient-064",
+      "Patient-073",
+      "Patient-086"
+    ],
+    "median_remaining_weeks": 51.5,
+    "all_visits": {
+      "clinical_and_time": {
+        "c_index": 0.5990170569528765,
+        "ci95": [
+          0.5362585831736082,
+          0.6587392218288423
+        ],
+        "minus_clinical_and_time": 0.0,
+        "minus_clinical_and_time_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "plus_ratings": {
+        "c_index": 0.6340879863624129,
+        "ci95": [
+          0.5720420597203697,
+          0.691454709481318
+        ],
+        "minus_clinical_and_time": 0.03507092940953638,
+        "minus_clinical_and_time_ci95": [
+          0.010032833949059955,
+          0.06503318714776431
+        ]
+      },
+      "plus_ratings_and_volumes": {
+        "c_index": 0.6775129347728565,
+        "ci95": [
+          0.6276363134638856,
+          0.7223270227264107
+        ],
+        "minus_clinical_and_time": 0.07849587781997991,
+        "minus_clinical_and_time_ci95": [
+          0.022014854865049102,
+          0.130684296185818
+        ]
+      }
+    },
+    "first_postop_visit": {
+      "clinical_and_time": {
+        "c_index": 0.5725249424405219,
+        "ci95": [
+          0.4876155150506541,
+          0.6530902646463507
+        ],
+        "minus_clinical_and_time": 0.0,
+        "minus_clinical_and_time_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "plus_ratings": {
+        "c_index": 0.5729086722947045,
+        "ci95": [
+          0.4821418148971651,
+          0.6567614904487536
+        ],
+        "minus_clinical_and_time": 0.00038372985418266836,
+        "minus_clinical_and_time_ci95": [
+          -0.030303324735893696,
+          0.031421231611799674
+        ]
+      },
+      "plus_ratings_and_volumes": {
+        "c_index": 0.6166538756715273,
+        "ci95": [
+          0.5391187598496044,
+          0.6921875151816945
+        ],
+        "minus_clinical_and_time": 0.04412893323100542,
+        "minus_clinical_and_time_ci95": [
+          -0.0003876006564649453,
+          0.09463178773142866
+        ]
+      }
+    }
+  }
+}

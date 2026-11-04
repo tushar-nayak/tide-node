@@ -429,11 +429,189 @@ Reading:
   volume error (5-7% below persistence), and much of that is mean reversion: a population
   Gompertz fit alone gets 3.4%. The Neural ODE never beats simple tabular models.
 
+## 11. Calibrated ranges for the volume forecast — `scripts/volume_intervals.py`
+
+Question: the volume model (step 1 gradient boosting, the released `volume-all` bundle) gives
+one number per compartment. Can it give a range that holds its stated coverage on unseen
+patients? And is that range tighter than an equally calibrated range around the last scan?
+
+* Method: normalized split-conformal prediction in log1p(mL).
+  * Residuals come from patient-grouped 5-fold out-of-fold forecasts over 3 fold seeds,
+    using the released GBM contract.
+  * A small log-link Poisson GLM predicts the residual size from four inputs: horizon, last
+    volume, a last-volume-is-zero flag and a single-scan-history flag.
+  * Equal-tailed conformal quantiles of residual / predicted size set the 50/80/90/95%
+    ranges. Ranges cover each compartment and the total.
+* Evaluation is nested. Each outer split refits the whole calibration on its training
+  patients only, then scores it on held-out patients. The outer folds are step 1's (5 folds
+  × 3 seeds), and the outer GBM forecasts reproduce step 1's held-out GBM forecasts exactly
+  (max difference 0.0 over 1,197 rows).
+* Four ranges are compared: centred on the GBM forecast or on the last scan, each with
+  either a fixed width or a width from the size model. The deployed range is GBM-centred
+  with a scaled width.
+* Runtime about 25 s on CPU. Output: `results/volume_intervals/{metrics.md,metrics.json,predictions.csv}`,
+  `results/figures/step1_volume_intervals.png`.
+
+Held-out results, total tumor volume. Coverage is per visit, then averaged over patients
+with a 95% CI. Interval score = width + (2/alpha) × miss distance; lower is better.
+
+| range | nominal | coverage | patient coverage [95% CI] | mean width | interval score |
+| :--- | ---: | ---: | :---: | ---: | ---: |
+| last scan, fixed width | 80% | 0.802 | 0.757 [0.690, 0.819] | 2.067 | 3.561 |
+| last scan, scaled width | 80% | 0.805 | 0.776 [0.722, 0.828] | 2.064 | 3.370 |
+| GBM, fixed width | 80% | 0.799 | 0.751 [0.687, 0.811] | 1.735 | 3.069 |
+| **GBM, scaled width (deployed)** | 80% | 0.800 | 0.791 [0.739, 0.839] | 1.668 | 2.916 |
+| **GBM, scaled width (deployed)** | 50% / 90% / 95% | 0.515 / 0.891 / 0.949 | 0.454 / 0.894 / 0.950 | 0.813 / 2.691 / 3.366 | - |
+
+Paired interval-score differences, deployed minus the alternative, patient bootstrap:
+
+| quantity | level | vs last scan, fixed | vs last scan, scaled | vs GBM, fixed |
+| :--- | ---: | :---: | :---: | :---: |
+| total | 80% | -16% [CI excludes 0] | -16% [excludes 0] | -0% [includes 0] |
+| total | 90% | -15% [excludes 0] | -14% [excludes 0] | -1% [includes 0] |
+| necrosis / enhancing / edema | 80% | -17% / -6% / -16% (enhancing CI touches 0) | -19% / -5% / -17% (all exclude 0) | -2% / -2% / -2% (all include 0) |
+
+80% total-volume coverage by subgroup, GBM fixed width → deployed:
+
+| subgroup | transitions | fixed width | deployed |
+| :--- | ---: | ---: | ---: |
+| single-scan history | 107 | 0.642 | 0.785 |
+| two or more history scans | 292 | 0.857 | 0.806 |
+| horizon 17-26 weeks | 61 | 0.743 | 0.814 |
+| horizon > 26 weeks | 21 | 0.571 | 0.698 |
+| next rating SD | 92 | 0.688 | 0.768 |
+
+Reading:
+* The ranges hold their stated coverage on unseen patients. 80% ranges contained 80% of
+  next-visit total volumes (79% averaged over patients); 90% held 89% and 95% held 95%.
+  The 50% range held 52% of visits but only 45% averaged over patients, so patients with
+  few visits are harder to cover.
+* Centring the range on the model's forecast makes it better by interval score than an
+  equally calibrated range around the last scan: 14-16% for the total, 16-19% for necrosis
+  and edema (CIs exclude 0). Enhancing tumor improves by only 5-6%, and that CI excludes 0
+  only against the scaled last-scan range. At 80%, the total-volume range is 19%
+  narrower (1.67 vs 2.07 log units) with the same coverage. This is the clearest evidence
+  that the volume model adds something. The gain is larger than the 5-7% point-error gain,
+  because the model mostly cuts the large misses.
+* Scaling the width leaves average sharpness unchanged, but coverage holds across
+  subgroups. A fixed-width "80%" range covers 64% of visits with a single-scan history and
+  57% of horizons beyond 26 weeks; the scaled range covers 79% and 70%. That is why the
+  scaled version is deployed. The exception is the necrosis 90% range, where scaling
+  scores 7% worse (CI excludes 0).
+* Horizons beyond 26 weeks are 5% of the data and still under-covered (0.70 on 21
+  transitions). `predict.py` prints a warning for them.
+* The ranges are wide. A typical 80% range for total volume runs from ×0.53 to ×2.1 of the
+  forecast (median width 85 mL); for enhancing tumor the upper end is ×5.5. When the
+  deployed 80% range excludes "no change", it is usually right: growth calls are 84%
+  correct against a 55% base rate, shrink calls 93% against 44%. But such calls are rare:
+  about 7% of visits, roughly 27 of 399 per fold seed. For enhancing tumor such calls carry
+  no information.
+* Scope:
+  * Coverage is marginal, across LUMIERE-like visits. It is not a guarantee for each patient.
+  * The ranges assume DeepBraTumIA compartment volumes and no surgery in the interval.
+  * The calibration comes from models fitted to 80% of patients and is applied to the
+    all-cohort model, so if anything the ranges are slightly conservative.
+  * Not clinically validated.
+
+```bash
+.venv/bin/python scripts/volume_intervals.py evaluate     # nested CV, ~25 s CPU
+.venv/bin/python scripts/volume_intervals.py calibrate \
+  --bundle runs/packaging/release-20261103/volume-all \
+  --output runs/packaging/release-20261103/volume-intervals.json   # ~12 s; refuses to overwrite
+```
+
+## 12. Changing the question: what LUMIERE can answer
+
+Sections 7-11 show that LUMIERE cannot support a useful next-visit forecast. What drives
+change, treatment, is not recorded, and the automated labels are noisy compared with the
+change. So we screened other questions under the same rules: patient-level 5-fold CV × 3
+fold seeds, out-of-fold predictions averaged over seeds, patient bootstrap, and each
+question scored against its own trivial rule.
+
+### 12a. Screen — `scripts/approach_screen.py` (~6 min CPU, `results/approach_screen/`)
+
+* **Long-horizon volume** (all 1,473 within-segment scan pairs). GBM error beats copy-last
+  more as the horizon grows: +4.6% at ≤13 weeks, +9.1% at 14-26, +14.5% at 27-52, +16.4%
+  beyond 52. It also beats a horizon-only drift model beyond 13 weeks (CIs exclude 0). But a
+  2-parameter population Gompertz model matches it at every horizon (all CIs include 0).
+  Patient history adds nothing over mean reversion, and per-patient slope extrapolation is
+  far worse than copy-last.
+* **Remaining survival from each visit** (73 patients, 454 visits). Adding the rating
+  history and volumes raises the C-index (pairs of visits from different patients) to
+  0.678 [0.628, 0.722]. Age, sex, MGMT, weeks since the first scan and surgeries so far
+  give 0.599 (+0.078 [+0.022, +0.131]). At the first post-op visit the gain is +0.044
+  [-0.000, +0.095]. Three patients whose recorded death precedes their last scan are
+  excluded.
+* **Is the current scan PD?** This gives by far the largest gain: AUROC 0.82 vs 0.68 for
+  carrying the previous rating forward. It is developed in 12b.
+
+### 12b. Automated progression call — `scripts/progression_call_experiment.py`, released as `scripts/progression_model.py`
+
+* Rows: 374 follow-up scans with an expert rating of PD, SD, PR or CR (79 patients, 63% PD).
+  Label: PD.
+* Inputs, all known when the scan is read:
+  * V: this scan's automated volumes, plus their change since the previous scan and since
+    the segment nadir, with timing;
+  * R: the previous scan's expert rating;
+  * S: age, sex and MGMT;
+  * M (optional): mask comparison with the current scan registered into the previous
+    scan's frame, using the step 2 registration cache. It covers new enhancing tumor
+    outside the prior core, new FLAIR abnormality, new enhancing components and the
+    largest axial enhancing area.
+* Excluded input: the rating file's `LessThan3Months` flag. Using it would lift AUROC to
+  0.86, but raters set it selectively. Among the 80 first follow-ups 9-26 weeks after
+  surgery, only 16 are flagged. Those grew (median enhancing log-change vs nadir +0.48)
+  while unflagged early scans did not (-0.03). The flag records the rater's decision not to
+  call growth PD, so it leaks the label.
+
+| score | AUROC [95% CI] | minus previous rating | AUROC, previous scan not PD |
+| :--- | :---: | :---: | :---: |
+| previous rating carried forward | 0.684 [0.622, 0.738] | - | 0.523 |
+| rule: enhancing volume change vs nadir | 0.711 [0.649, 0.772] | +0.027 [-0.059, +0.116] | 0.649 |
+| rule: new enhancing volume (registered masks) | 0.731 [0.671, 0.791] | +0.047 [-0.045, +0.134] | 0.721 |
+| GBM, volumes only (V) | 0.790 [0.740, 0.841] | +0.107 [+0.035, +0.184] | 0.739 |
+| **released: monotone GBM, V+R+S** | **0.820 [0.774, 0.862]** | **+0.136 [+0.072, +0.203]** | **0.728** |
+| GBM, V+R+S+M | 0.833 [0.792, 0.870] | +0.149 [+0.086, +0.213] | 0.754 |
+
+* The released model scores 0.820, the same as an unconstrained GBM (0.821; difference
+  -0.001 [-0.010, +0.007]). Its constraint means more enhancing, edema or total growth
+  never lowers the PD probability. Brier score is 0.168, against 0.201 for the previous
+  rating and 0.233 for a constant.
+* Mask features add +0.012 [-0.005, +0.029] AUROC. At 80% specificity they find 74% of PD
+  scans instead of 67%, mainly scans the expert called PD for new or non-target lesions
+  (73% vs 65% found). They need registration, which the CLI does not run, so the released
+  model is V+R+S.
+* PD called for T2 progression alone (18 scans) is mostly missed (33-39% found).
+  Volumes do not capture it.
+* Held-out bands of the released model:
+  * "likely PD" (p ≥ 0.70): 51% of scans, 85% of them PD;
+  * "uncertain": 26% of scans, 49% PD;
+  * "PD less likely" (p < 0.42): 23% of scans, 28% PD.
+* Calibration is good overall. Observed PD rates by quintile were 0.28, 0.47, 0.58, 0.87
+  and 0.96, against mean predictions of 0.22, 0.51, 0.72, 0.88 and 0.96. But near-stable
+  scans after a non-PD rating are over-called. They average 0.48 against 25% observed (28
+  scans), though none of the 28 crossed the "likely PD" threshold.
+* Scope:
+  * the reference is one expert reading per scan;
+  * labels come from automated DeepBraTumIA volumes and a single centre;
+  * there is no external validation, and the model is not clinically validated.
+
+```bash
+.venv/bin/python scripts/progression_call_experiment.py          # ~1-2 min; caches mask features in results/progression_call/
+.venv/bin/python scripts/progression_model.py fit-all --output runs/packaging/<release>/progression-gbm   # ~10 s
+.venv/bin/python scripts/predict.py --history scan.json --bundle runs/packaging/<release>/progression-gbm \
+  --trust-progression-bundle --output-dir runs/my-call
+```
+
 ### Figures (`results/figures/`)
 
 * `step1_volume_vs_persistence.png`: error of each method relative to persistence, 95% CI.
 * `step1_patient_trajectories.png`: real total tumor volume over time for six held-out
   patients, with each next-visit forecast drawn from the last real scan.
+* `step1_volume_intervals.png`: held-out coverage of the volume forecast ranges vs nominal,
+  plus 80% coverage and width by horizon (section 11).
+* `progression_call_roc.png`: held-out ROC curves of the progression call on all rated
+  scans and on scans whose previous rating was not PD (section 12b).
 * `step2_forecast_<variant>_fold<k>_<weights>.png`: the visual forecast. Per held-out
   transition: last scan with its tumor outline, the real next scan, the predicted outline
   over the real one, and a change map (change predicted correctly / missed / predicted but
