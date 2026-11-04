@@ -2,6 +2,10 @@
   "rows": 374,
   "patients": 79,
   "pd_rate": 0.6310160427807486,
+  "mask_margin_mm": {
+    "atlas": 8,
+    "registered": 4
+  },
   "all": {
     "previous_rating": {
       "auroc": 0.6836618766887742,
@@ -15,19 +19,7 @@
         0.0
       ]
     },
-    "gbm_volumes": {
-      "auroc": 0.7904691721935643,
-      "ci95": [
-        0.7396101869228086,
-        0.8412812838505161
-      ],
-      "minus_previous_rating": 0.10680729550479007,
-      "minus_previous_rating_ci95": [
-        0.034846542521425876,
-        0.18446454958242603
-      ]
-    },
-    "gbm_volumes_rating_clinical": {
+    "unconstrained_volumes": {
       "auroc": 0.8209899287644313,
       "ci95": [
         0.775258335296073,
@@ -39,7 +31,7 @@
         0.20540308802744617
       ]
     },
-    "released_monotone_gbm": {
+    "released_volumes": {
       "auroc": 0.8198538442643085,
       "ci95": [
         0.7743127174963771,
@@ -51,28 +43,52 @@
         0.20283242673674814
       ]
     },
-    "gbm_plus_masks": {
-      "auroc": 0.8331183984279047,
+    "released_volumes_masks": {
+      "auroc": 0.8349914026037829,
       "ci95": [
-        0.7919901464374899,
-        0.8699178588898114
+        0.7961815268266754,
+        0.8708046792446024
       ],
-      "minus_previous_rating": 0.1494565217391305,
+      "minus_previous_rating": 0.1513295259150087,
       "minus_previous_rating_ci95": [
-        0.08606397849203448,
-        0.21294064511797037
+        0.09256052946155421,
+        0.21208742589056784
       ]
     },
-    "logistic_plus_masks": {
-      "auroc": 0.8242753623188406,
+    "reference_registered_masks": {
+      "auroc": 0.8376013264554164,
       "ci95": [
-        0.77659653294349,
-        0.8680849807277201
+        0.7965018770793146,
+        0.8726107291401408
       ],
-      "minus_previous_rating": 0.14061348563006637,
+      "minus_previous_rating": 0.1539394497666422,
       "minus_previous_rating_ci95": [
-        0.0808421075249068,
-        0.19997986194927705
+        0.09334800656332909,
+        0.21650453507625783
+      ]
+    },
+    "automated_volumes": {
+      "auroc": 0.7850650945713584,
+      "ci95": [
+        0.7335499620813257,
+        0.8353784315031983
+      ],
+      "minus_previous_rating": 0.10140321788258422,
+      "minus_previous_rating_ci95": [
+        0.030486732418422847,
+        0.17623665470837088
+      ]
+    },
+    "automated_volumes_masks": {
+      "auroc": 0.7968558093834439,
+      "ci95": [
+        0.7533524585515107,
+        0.8412549441284225
+      ],
+      "minus_previous_rating": 0.11319393269466971,
+      "minus_previous_rating_ci95": [
+        0.044689989191975366,
+        0.1843222602513655
       ]
     },
     "rule_enhancing_change_vs_nadir": {
@@ -88,15 +104,15 @@
       ]
     },
     "rule_new_enhancing_ml": {
-      "auroc": 0.7310857283222796,
+      "auroc": 0.7134917710636207,
       "ci95": [
-        0.6709888647695769,
-        0.7905266711630929
+        0.648489107903758,
+        0.7749226615785505
       ],
-      "minus_previous_rating": 0.047423851633505376,
+      "minus_previous_rating": 0.02982989437484651,
       "minus_previous_rating_ci95": [
-        -0.04478926545918546,
-        0.13385609102836002
+        -0.06108952568213566,
+        0.1168028888319208
       ]
     }
   },
@@ -107,70 +123,82 @@
         0.6225952403053683,
         0.7378172767601624
       ],
-      "minus_gbm_volumes_rating_clinical": -0.13732805207565713,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.20966427023786988,
-        -0.07093814734873767
+      "minus_released_volumes": -0.1361919675755343,
+      "minus_released_volumes_ci95": [
+        -0.20597013055123353,
+        -0.06892738868199988
       ]
     },
-    "gbm_volumes": {
-      "auroc": 0.7904691721935643,
-      "ci95": [
-        0.7368555248385703,
-        0.8424648525954017
-      ],
-      "minus_gbm_volumes_rating_clinical": -0.030520756570867058,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.045719587618931405,
-        -0.015308451667202084
-      ]
-    },
-    "gbm_volumes_rating_clinical": {
+    "unconstrained_volumes": {
       "auroc": 0.8209899287644313,
       "ci95": [
         0.7727559776120335,
         0.8640218717201491
       ],
-      "minus_gbm_volumes_rating_clinical": 0.0,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        0.0,
-        0.0
+      "minus_released_volumes": 0.0011360845001228137,
+      "minus_released_volumes_ci95": [
+        -0.007092864275390026,
+        0.00995133272180059
       ]
     },
-    "released_monotone_gbm": {
+    "released_volumes": {
       "auroc": 0.8198538442643085,
       "ci95": [
         0.7731189208547651,
         0.8615093251494331
       ],
-      "minus_gbm_volumes_rating_clinical": -0.0011360845001228137,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.009951332721800602,
-        0.007092864275390024
+      "minus_released_volumes": 0.0,
+      "minus_released_volumes_ci95": [
+        0.0,
+        0.0
       ]
     },
-    "gbm_plus_masks": {
-      "auroc": 0.8331183984279047,
+    "released_volumes_masks": {
+      "auroc": 0.8349914026037829,
       "ci95": [
-        0.790390927080275,
-        0.8688539813358104
+        0.7946268500420056,
+        0.8704460373701527
       ],
-      "minus_gbm_volumes_rating_clinical": 0.012128469663473362,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.0049917814015559055,
-        0.029245939194349656
+      "minus_released_volumes": 0.015137558339474388,
+      "minus_released_volumes_ci95": [
+        -0.0019522804115333302,
+        0.03236581635347965
       ]
     },
-    "logistic_plus_masks": {
-      "auroc": 0.8242753623188406,
+    "reference_registered_masks": {
+      "auroc": 0.8376013264554164,
       "ci95": [
-        0.7770360951816084,
-        0.8669030009656374
+        0.797171442094962,
+        0.8722858842741216
       ],
-      "minus_gbm_volumes_rating_clinical": 0.003285433554409245,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.04003127913968431,
-        0.04731943209310447
+      "minus_released_volumes": 0.01774748219110789,
+      "minus_released_volumes_ci95": [
+        -0.00026896409559262475,
+        0.03579300695098181
+      ]
+    },
+    "automated_volumes": {
+      "auroc": 0.7850650945713584,
+      "ci95": [
+        0.7312825984240625,
+        0.8345736779186606
+      ],
+      "minus_released_volumes": -0.034788749692950094,
+      "minus_released_volumes_ci95": [
+        -0.050350392150960176,
+        -0.020174077278518603
+      ]
+    },
+    "automated_volumes_masks": {
+      "auroc": 0.7968558093834439,
+      "ci95": [
+        0.7525074548519312,
+        0.8386676985168195
+      ],
+      "minus_released_volumes": -0.022998034880864604,
+      "minus_released_volumes_ci95": [
+        -0.04326474196082563,
+        -0.0014399626158706083
       ]
     },
     "rule_enhancing_change_vs_nadir": {
@@ -179,22 +207,22 @@
         0.6471753800441609,
         0.7723023889958318
       ],
-      "minus_gbm_volumes_rating_clinical": -0.10984708916728081,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.18017224030341072,
-        -0.04486806154731098
+      "minus_released_volumes": -0.108711004667158,
+      "minus_released_volumes_ci95": [
+        -0.17812878570067164,
+        -0.0439232051573047
       ]
     },
     "rule_new_enhancing_ml": {
-      "auroc": 0.7310857283222796,
+      "auroc": 0.7134917710636207,
       "ci95": [
-        0.6717647942086052,
-        0.7867628499517693
+        0.6481934486803368,
+        0.7721048586779297
       ],
-      "minus_gbm_volumes_rating_clinical": -0.08990420044215175,
-      "minus_gbm_volumes_rating_clinical_ci95": [
-        -0.15560183546953718,
-        -0.026772475793940476
+      "minus_released_volumes": -0.1063620732006878,
+      "minus_released_volumes_ci95": [
+        -0.17464999611261392,
+        -0.040319383925804336
       ]
     }
   },
@@ -213,19 +241,7 @@
         -0.016561630663316746
       ]
     },
-    "gbm_volumes": {
-      "auroc": 0.7386299435028248,
-      "ci95": [
-        0.6732008516867389,
-        0.8014443602374637
-      ],
-      "minus_rule_enhancing_change_vs_nadir": 0.09007768361581925,
-      "minus_rule_enhancing_change_vs_nadir_ci95": [
-        0.007378344651892073,
-        0.17647644965186182
-      ]
-    },
-    "gbm_volumes_rating_clinical": {
+    "unconstrained_volumes": {
       "auroc": 0.7312853107344632,
       "ci95": [
         0.6617395553671237,
@@ -237,7 +253,7 @@
         0.17390078556441704
       ]
     },
-    "released_monotone_gbm": {
+    "released_volumes": {
       "auroc": 0.7281073446327684,
       "ci95": [
         0.6595912897465204,
@@ -249,28 +265,52 @@
         0.16974524224681475
       ]
     },
-    "gbm_plus_masks": {
-      "auroc": 0.7536016949152542,
+    "released_volumes_masks": {
+      "auroc": 0.7600988700564971,
       "ci95": [
-        0.6899578467444666,
-        0.8121629616570453
+        0.701393132141083,
+        0.8148168779952959
       ],
-      "minus_rule_enhancing_change_vs_nadir": 0.1050494350282486,
+      "minus_rule_enhancing_change_vs_nadir": 0.11154661016949152,
       "minus_rule_enhancing_change_vs_nadir_ci95": [
-        0.025712814644756395,
-        0.18818419902326985
+        0.035050719491567475,
+        0.1922279895186448
       ]
     },
-    "logistic_plus_masks": {
-      "auroc": 0.7483757062146893,
+    "reference_registered_masks": {
+      "auroc": 0.7617937853107345,
       "ci95": [
-        0.6821587170217442,
-        0.8149303848284126
+        0.701119259878601,
+        0.8177318593124142
       ],
-      "minus_rule_enhancing_change_vs_nadir": 0.0998234463276837,
+      "minus_rule_enhancing_change_vs_nadir": 0.1132415254237289,
       "minus_rule_enhancing_change_vs_nadir_ci95": [
-        0.03551749198075382,
-        0.17040534385890047
+        0.03353050915517927,
+        0.19689599151112513
+      ]
+    },
+    "automated_volumes": {
+      "auroc": 0.7341101694915254,
+      "ci95": [
+        0.6717257265729792,
+        0.7963126509258721
+      ],
+      "minus_rule_enhancing_change_vs_nadir": 0.08555790960451981,
+      "minus_rule_enhancing_change_vs_nadir_ci95": [
+        0.007224283383647137,
+        0.16961919054396912
+      ]
+    },
+    "automated_volumes_masks": {
+      "auroc": 0.7564971751412429,
+      "ci95": [
+        0.700713099107733,
+        0.8116692197995165
+      ],
+      "minus_rule_enhancing_change_vs_nadir": 0.10794491525423733,
+      "minus_rule_enhancing_change_vs_nadir_ci95": [
+        0.03509430133197253,
+        0.18571022665359044
       ]
     },
     "rule_enhancing_change_vs_nadir": {
@@ -286,25 +326,26 @@
       ]
     },
     "rule_new_enhancing_ml": {
-      "auroc": 0.7210098870056497,
+      "auroc": 0.6988700564971752,
       "ci95": [
-        0.6451884047022937,
-        0.7830319196781946
+        0.6206061020604088,
+        0.7613001777985351
       ],
-      "minus_rule_enhancing_change_vs_nadir": 0.07245762711864412,
+      "minus_rule_enhancing_change_vs_nadir": 0.05031779661016955,
       "minus_rule_enhancing_change_vs_nadir_ci95": [
-        0.0059598042791792405,
-        0.13283122288955623
+        -0.019586915755906303,
+        0.11384923784246093
       ]
     }
   },
   "brier": {
     "previous_rating": 0.20079774350571827,
-    "gbm_volumes": 0.18146586671491172,
-    "gbm_volumes_rating_clinical": 0.1677181968498321,
-    "released_monotone_gbm": 0.1683915570219921,
-    "gbm_plus_masks": 0.16304778221008173,
-    "logistic_plus_masks": 0.16331158694608675,
+    "unconstrained_volumes": 0.1677181968498321,
+    "released_volumes": 0.1683915570219921,
+    "released_volumes_masks": 0.1623488179212143,
+    "reference_registered_masks": 0.1607954395264217,
+    "automated_volumes": 0.1837009170360123,
+    "automated_volumes_masks": 0.18059513744180414,
     "pd_rate_constant": 0.23283479653407302
   },
   "operating_points": {
@@ -314,34 +355,40 @@
       "specificity_at_90pct_sensitivity": 0.11594202898550725,
       "n_thresholds": 172
     },
-    "gbm_volumes": {
-      "sensitivity_at_80pct_specificity": 0.6313559322033898,
-      "sensitivity_at_90pct_specificity": 0.4830508474576271,
-      "specificity_at_90pct_sensitivity": 0.37681159420289856,
-      "n_thresholds": 374
-    },
-    "gbm_volumes_rating_clinical": {
+    "unconstrained_volumes": {
       "sensitivity_at_80pct_specificity": 0.673728813559322,
       "sensitivity_at_90pct_specificity": 0.5805084745762712,
       "specificity_at_90pct_sensitivity": 0.4420289855072464,
       "n_thresholds": 373
     },
-    "released_monotone_gbm": {
+    "released_volumes": {
       "sensitivity_at_80pct_specificity": 0.6949152542372882,
       "sensitivity_at_90pct_specificity": 0.5847457627118644,
       "specificity_at_90pct_sensitivity": 0.4420289855072464,
       "n_thresholds": 374
     },
-    "gbm_plus_masks": {
-      "sensitivity_at_80pct_specificity": 0.7415254237288136,
-      "sensitivity_at_90pct_specificity": 0.6483050847457628,
-      "specificity_at_90pct_sensitivity": 0.43478260869565216,
+    "released_volumes_masks": {
+      "sensitivity_at_80pct_specificity": 0.7288135593220338,
+      "sensitivity_at_90pct_specificity": 0.6694915254237288,
+      "specificity_at_90pct_sensitivity": 0.37681159420289856,
+      "n_thresholds": 373
+    },
+    "reference_registered_masks": {
+      "sensitivity_at_80pct_specificity": 0.7330508474576272,
+      "sensitivity_at_90pct_specificity": 0.6652542372881356,
+      "specificity_at_90pct_sensitivity": 0.427536231884058,
       "n_thresholds": 374
     },
-    "logistic_plus_masks": {
-      "sensitivity_at_80pct_specificity": 0.711864406779661,
-      "sensitivity_at_90pct_specificity": 0.5254237288135594,
-      "specificity_at_90pct_sensitivity": 0.5072463768115942,
+    "automated_volumes": {
+      "sensitivity_at_80pct_specificity": 0.6313559322033898,
+      "sensitivity_at_90pct_specificity": 0.4533898305084746,
+      "specificity_at_90pct_sensitivity": 0.32608695652173914,
+      "n_thresholds": 374
+    },
+    "automated_volumes_masks": {
+      "sensitivity_at_80pct_specificity": 0.6440677966101694,
+      "sensitivity_at_90pct_specificity": 0.5635593220338984,
+      "specificity_at_90pct_sensitivity": 0.35507246376811596,
       "n_thresholds": 374
     },
     "rule_enhancing_change_vs_nadir": {
@@ -351,32 +398,32 @@
       "n_thresholds": 333
     },
     "rule_new_enhancing_ml": {
-      "sensitivity_at_80pct_specificity": 0.5508474576271186,
-      "sensitivity_at_90pct_specificity": 0.4533898305084746,
+      "sensitivity_at_80pct_specificity": 0.538135593220339,
+      "sensitivity_at_90pct_specificity": 0.3855932203389831,
       "specificity_at_90pct_sensitivity": 0.0,
-      "n_thresholds": 167
+      "n_thresholds": 166
     }
   },
   "sensitivity_by_rationale_at_80pct_specificity": {
     "T2 progression": {
       "pd_scans": 18,
-      "gbm_plus_masks": 0.3888888888888889,
-      "gbm_volumes_rating_clinical": 0.3333333333333333
+      "released_volumes_masks": 0.3888888888888889,
+      "released_volumes": 0.2777777777777778
     },
     "T2 progression + lesion": {
       "pd_scans": 92,
-      "gbm_plus_masks": 0.8260869565217391,
-      "gbm_volumes_rating_clinical": 0.7717391304347826
+      "released_volumes_masks": 0.8152173913043478,
+      "released_volumes": 0.7717391304347826
     },
     "enhancing growth (no rationale text)": {
       "pd_scans": 2,
-      "gbm_plus_masks": 0.5,
-      "gbm_volumes_rating_clinical": 0.5
+      "released_volumes_masks": 0.5,
+      "released_volumes": 0.5
     },
     "new / non-target lesion": {
       "pd_scans": 124,
-      "gbm_plus_masks": 0.7338709677419355,
-      "gbm_volumes_rating_clinical": 0.6532258064516129
+      "released_volumes_masks": 0.717741935483871,
+      "released_volumes": 0.7016129032258065
     }
   },
   "window_flag_check": {

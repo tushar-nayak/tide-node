@@ -35,6 +35,7 @@ def print_progression(r):
     band = r.get('held_out_pd_rate_in_this_band')
     seen = '' if band is None else f" (on held-out patients, {band:.0%} of scans in this band were rated PD)"
     print(f"Scan at week {r['assessed_week']:g}: probability of RANO progression {r['probability_pd']:.2f} -> {r['call']}{seen}")
+    print(f"  Model: {r['model']} ({'volumes, previous rating, clinical and new-tumor masks' if r['model'] == 'volumes_masks' else 'volumes, previous rating and clinical; add both segmentations for new-lesion detection'})")
     print(f"  'likely PD' at >= {t80['threshold']:.2f} (held-out specificity {t80['held_out_specificity']:.0%}, "
           f"sensitivity {t80['held_out_sensitivity']:.0%}); 'PD less likely' below {t90['threshold']:.2f} "
           f"(sensitivity {t90['held_out_sensitivity']:.0%}, specificity {t90['held_out_specificity']:.0%}); "
@@ -43,6 +44,10 @@ def print_progression(r):
           f"({m['enhancing_previous']:.1f}), {pct(m['enhancing_change_vs_nadir_pct'])} vs nadir ({m['enhancing_nadir']:.1f}); "
           f"total {m['total_current']:.1f} mL ({pct(m['total_change_vs_previous_pct'])} vs previous). "
           f"Previous rating: {r['previous_rating']}")
+    n = r.get('new_tumor_outside_prior')
+    if n:
+        print(f"  Outside the prior tumor (+{n['margin_mm']} mm): new enhancing {n['new_enhancing_ml']:.2f} mL in "
+              f"{n['new_enhancing_components']} new component(s); new FLAIR abnormality {n['new_flair_abnormality_ml']:.1f} mL")
 
 
 def main():

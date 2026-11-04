@@ -15,10 +15,17 @@ Feature groups:
      the segment nadir, totals, interval and time since surgery.
   R  the previous scan's expert rating.
   S  age, sex, MGMT.
-  M  mask comparison in the previous scan's frame (current scan registered by
-     register_step2_pairs.py): new enhancing tumor outside the prior tumor core, new FLAIR
-     abnormality, new enhancing components, largest axial enhancing area (a stand-in for
-     RANO's 2D measurement).
+  M  mask comparison of the current with the previous scan: new enhancing tumor outside the
+     prior tumor core, new FLAIR abnormality, new enhancing components, largest axial
+     enhancing area (a stand-in for RANO's 2D measurement). Two versions:
+       atlas space, 8 mm margin  (released; needs only the two atlas segmentations)
+       registered frame, 4 mm margin  (reference; current scan registered by
+                                       register_step2_pairs.py)
+     Atlas-space margins of 4/6/8 mm were tried; 8 mm was chosen (AUROC 0.822/0.831/0.835
+     against 0.838 registered), so the released mask model carries a little selection optimism.
+
+Models named automated_* use no expert rating and no clinical factors; their calls are fully
+automated (used by progression_survival.py).
 
 The rating file's LessThan3Months flag is NOT used: raters set it selectively, mostly on
 early scans that grew but that they chose not to call PD (see window_flag_check in
@@ -32,7 +39,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import math
 import sys
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -43,53 +49,23 @@ SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPTS))
 REPO = SCRIPTS.parent
 
-from approach_screen import N_BOOT, assess_features, auroc_boot, norm_rating, onehot, oof  # noqa: E402
+import progression_model as pm  # noqa: E402  (released feature code: one implementation for training and the CLI)
+from approach_screen import N_BOOT, assess_features, auroc_boot, norm_rating, oof  # noqa: E402
 from lumiere_cohort import build_cohort, load_clinical  # noqa: E402
-from volume_trajectory_experiment import auroc, static_features  # noqa: E402
+from volume_trajectory_experiment import static_features  # noqa: E402
 
-VOXEL_ML = 0.008  # 2 mm isotropic
-MIN_COMPONENT = 4  # voxels (32 mm^3); smaller specks are ignored when counting components
-MASK_FEATURES = ("et_new_ml", "wt_new_ml", "wt_lost_ml", "et_in_prior_core_frac", "et_components", "et_components_prev",
-                 "et_new_components", "et_max_axial_cm2", "et_max_axial_cm2_prev", "et_max_axial_log_ratio")
+MASK_FEATURES = pm.MASK_FEATURES
 V_COLS, R_COLS, S_COLS = list(range(0, 15)), list(range(15, 21)), list(range(21, 26))
+MR_COLS = list(range(26, 36))  # registered frame, 4 mm margin (reference)
+MA_COLS = list(range(36, 46))  # atlas space, released margin
 
 
-def mask_features(job: tuple[str, str, str, str, str]) -> list[float]:
-    """Compare the current scan (registered into the previous scan's frame) with the previous scan."""
-    from scipy import ndimage
-
+def mask_job(job: tuple[str, str, str, str, str]) -> tuple[list[float], list[float]]:
+    """Registered-frame (4 mm margin) and atlas-space (released margin) mask features for one scan."""
     pid, prev_src, cur_src, atlas_dir, aligned_dir = job
-    prev = np.load(Path(atlas_dir) / pid / f"{prev_src}.npy")[4:7].astype(np.float32) > 0.5
-    cur = np.load(Path(aligned_dir) / pid / f"{cur_src}__in__{prev_src}.npy")[4:7].astype(np.float32) > 0.5
-    wt_p, tc_p, et_p = prev
-    wt_c, tc_c, et_c = cur
-    ball = ndimage.iterate_structure(ndimage.generate_binary_structure(3, 1), 2)  # 4 mm margin
-    core_p = ndimage.binary_dilation(tc_p | et_p, structure=ball)
-    et_new = et_c & ~core_p
-
-    def components(mask):
-        lab, n = ndimage.label(mask)
-        if n == 0:
-            return lab, []
-        sizes = ndimage.sum(mask, lab, range(1, n + 1))
-        return lab, [i + 1 for i, s in enumerate(sizes) if s >= MIN_COMPONENT]
-
-    lab_c, keep_c = components(et_c)
-    _, keep_p = components(et_p)
-    new_components = sum(1 for i in keep_c if not core_p[lab_c == i].any())
-
-    def max_axial_cm2(mask):
-        return float(mask.sum(axis=(0, 1)).max()) * 0.04  # 2 mm x 2 mm in-plane voxels
-
-    a_c, a_p = max_axial_cm2(et_c), max_axial_cm2(et_p)
-    return [
-        float(et_new.sum()) * VOXEL_ML,
-        float((wt_c & ~ndimage.binary_dilation(wt_p, structure=ball)).sum()) * VOXEL_ML,
-        float((wt_p & ~ndimage.binary_dilation(wt_c, structure=ball)).sum()) * VOXEL_ML,
-        float((et_c & core_p).sum() / et_c.sum()) if et_c.any() else 1.0,
-        float(len(keep_c)), float(len(keep_p)), float(new_components),
-        a_c, a_p, math.log((a_c + 0.1) / (a_p + 0.1)),
-    ]
+    prev, cur_atlas = (np.load(Path(atlas_dir) / pid / f"{src}.npy")[4:7].astype(np.float32) > 0.5 for src in (prev_src, cur_src))
+    cur_reg = np.load(Path(aligned_dir) / pid / f"{cur_src}__in__{prev_src}.npy")[4:7].astype(np.float32) > 0.5
+    return pm.mask_features(prev, cur_reg, 2), pm.mask_features(prev, cur_atlas, pm.MASK_MARGIN_VOXELS)
 
 
 def load_window_flags(ratings_csv: Path) -> dict[tuple[str, str], float]:
@@ -134,9 +110,7 @@ def brier(p: np.ndarray, y: np.ndarray) -> float:
 
 def main() -> None:
     from sklearn.ensemble import HistGradientBoostingClassifier
-    from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
-    from sklearn.pipeline import make_pipeline
-    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
 
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--data-dir", type=Path, default=REPO / "data/lumiere/extracted/Imaging")
@@ -159,36 +133,36 @@ def main() -> None:
     base = np.stack([assess_features(t, statics[t.patient_id]) for t in rows])
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    cache = args.output_dir / "mask_features.csv"
     keys = [(t.patient_id, t.last.source_name, t.target.source_name) for t in rows]
-    stored = {}
-    if cache.exists():
-        with cache.open() as h:
-            stored = {(r["patient_id"], r["prev_source"], r["cur_source"]): [float(r[f]) for f in MASK_FEATURES] for r in csv.DictReader(h)}
-    missing = [k for k in keys if k not in stored]
+    caches = {"registered": args.output_dir / "mask_features.csv",
+              "atlas": args.output_dir / f"mask_features_atlas_{2 * pm.MASK_MARGIN_VOXELS}mm.csv"}
+    stored = {name: {} for name in caches}
+    for name, cache in caches.items():
+        if cache.exists():
+            with cache.open() as h:
+                stored[name] = {(r["patient_id"], r["prev_source"], r["cur_source"]): [float(r[f]) for f in MASK_FEATURES]
+                                for r in csv.DictReader(h)}
+    missing = [k for k in keys if any(k not in stored[name] for name in caches)]
     if missing:
         print(f"Computing mask features for {len(missing)} scans", flush=True)
         jobs = [(*k, str(args.atlas_dir), str(args.aligned_dir)) for k in missing]
         with ProcessPoolExecutor(max_workers=args.workers) as pool:
-            for k, f in zip(missing, pool.map(mask_features, jobs, chunksize=4)):
-                stored[k] = f
-        with cache.open("w", newline="") as h:
-            w = csv.writer(h)
-            w.writerow(["patient_id", "prev_source", "cur_source", *MASK_FEATURES])
-            for k in sorted(stored):
-                w.writerow([*k, *[round(v, 6) for v in stored[k]]])
-    m = np.array([stored[k] for k in keys])
+            for k, (reg, atl) in zip(missing, pool.map(mask_job, jobs, chunksize=4)):
+                stored["registered"][k], stored["atlas"][k] = reg, atl
+        for name, cache in caches.items():
+            with cache.open("w", newline="") as h:
+                w = csv.writer(h)
+                w.writerow(["patient_id", "prev_source", "cur_source", *MASK_FEATURES])
+                for k in sorted(stored[name]):
+                    w.writerow([*k, *[round(v, 6) for v in stored[name][k]]])
     wflag = np.array([[window.get((t.patient_id, t.target.source_name), 0.0)] for t in rows])
-    x = np.hstack([base, m, wflag])
-    M_COLS = list(range(26, 26 + len(MASK_FEATURES)))
-    W_COLS = [x.shape[1] - 1]
+    x = np.hstack([base, np.array([stored["registered"][k] for k in keys]), np.array([stored["atlas"][k] for k in keys]), wflag])
+    assert np.allclose(base, np.stack([pm.features(t.history, t.target, statics[t.patient_id]) for t in rows]))
 
     gbm = lambda: HistGradientBoostingClassifier(max_depth=2, learning_rate=0.05, max_iter=150, min_samples_leaf=15)  # noqa: E731
-    from progression_model import FEATURES, new_model as released  # the released model (monotone constraints)
-    assert np.allclose(base, np.stack([__import__("progression_model").features(t.history, t.target, statics[t.patient_id])
-                                       for t in rows])) and len(FEATURES) == base.shape[1]
-    logit = lambda: make_pipeline(StandardScaler(), LogisticRegressionCV(Cs=10, max_iter=5000, l1_ratios=(0.0,),  # noqa: E731
-                                                                          use_legacy_attributes=False, scoring="neg_log_loss"))
+    unconstrained = {k: v for k, v in pm.GBM_PARAMS.items() if k != "monotonic_cst"}
+    vol_cst = [pm.GBM_PARAMS["monotonic_cst"][i] for i in V_COLS]
+    automated = lambda cst: (lambda: HistGradientBoostingClassifier(**unconstrained, monotonic_cst=cst))  # noqa: E731
 
     def fit(model_fn, cols):
         def fp(tr, te):
@@ -197,22 +171,24 @@ def main() -> None:
 
     models = {
         "previous_rating": (lambda: LogisticRegression(max_iter=1000), R_COLS),
-        "gbm_volumes": (gbm, V_COLS),
-        "gbm_volumes_rating_clinical": (gbm, V_COLS + R_COLS + S_COLS),
-        "released_monotone_gbm": (released, V_COLS + R_COLS + S_COLS),
-        "gbm_plus_masks": (gbm, V_COLS + R_COLS + S_COLS + M_COLS),
-        "logistic_plus_masks": (logit, V_COLS + R_COLS + S_COLS + M_COLS),
+        "unconstrained_volumes": (gbm, V_COLS + R_COLS + S_COLS),
+        "released_volumes": (lambda: pm.new_model(False), V_COLS + R_COLS + S_COLS),
+        "released_volumes_masks": (lambda: pm.new_model(True), V_COLS + R_COLS + S_COLS + MA_COLS),
+        "reference_registered_masks": (lambda: pm.new_model(True), V_COLS + R_COLS + S_COLS + MR_COLS),
+        "automated_volumes": (automated(vol_cst), V_COLS),
+        "automated_volumes_masks": (automated(vol_cst + list(pm.MASK_MONOTONE)), V_COLS + MA_COLS),
     }
     scores = {k: oof(pid, cohort.patients, fit(fn, cols)) for k, (fn, cols) in models.items()}
     probs = dict(scores)
     scores["rule_enhancing_change_vs_nadir"] = x[:, 7]
-    scores["rule_new_enhancing_ml"] = x[:, M_COLS[0]]
+    scores["rule_new_enhancing_ml"] = x[:, MA_COLS[0]]
     rng = np.random.default_rng(20261104)
     prev_pd = x[:, R_COLS[0]] == 1
     res = {
         "rows": len(rows), "patients": len(set(pid)), "pd_rate": float(label.mean()),
+        "mask_margin_mm": {"atlas": 2 * pm.MASK_MARGIN_VOXELS, "registered": 4},
         "all": auroc_boot(scores, label, pid, rng, "previous_rating"),
-        "vs_volume_model": auroc_boot(scores, label, pid, rng, "gbm_volumes_rating_clinical"),
+        "vs_volume_model": auroc_boot(scores, label, pid, rng, "released_volumes"),
         "previous_not_pd": {"rows": int((~prev_pd).sum()), "pd_rate": float(label[~prev_pd].mean()),
                             **auroc_boot({k: v[~prev_pd] for k, v in scores.items()}, label[~prev_pd], pid[~prev_pd], rng,
                                          "rule_enhancing_change_vs_nadir")},
@@ -220,14 +196,11 @@ def main() -> None:
         "operating_points": {k: operating_points(v, label) for k, v in scores.items()},
     }
     # Which PD calls are found? Sensitivity by the expert's stated reason, at 80% specificity.
-    best = "gbm_plus_masks"
-    thr = np.quantile(scores[best][label == 0], 0.8)
     groups = np.array([rationale_group(rationale.get((t.patient_id, t.target.source_name), "")) for t in rows])
     res["sensitivity_by_rationale_at_80pct_specificity"] = {
         g: {"pd_scans": int(((groups == g) & (label == 1)).sum()),
-            best: float((scores[best][(groups == g) & (label == 1)] > thr).mean()),
-            "gbm_volumes_rating_clinical": float((scores["gbm_volumes_rating_clinical"][(groups == g) & (label == 1)]
-                                                  > np.quantile(scores["gbm_volumes_rating_clinical"][label == 0], 0.8)).mean())}
+            **{k: float((scores[k][(groups == g) & (label == 1)] > np.quantile(scores[k][label == 0], 0.8)).mean())
+               for k in ("released_volumes_masks", "released_volumes")}}
         for g in sorted(set(groups[label == 1]))}
     # Why the LessThan3Months flag is excluded: among first follow-ups 9-26 weeks after surgery
     # (roughly the post-radiotherapy window) it marks mostly scans that grew but were not called PD.
@@ -258,14 +231,14 @@ def write_markdown(res: dict, path: Path) -> None:
          f"- {res['rows']} expert-rated follow-up scans (PD / SD / PR / CR), {res['patients']} patients, PD rate {res['pd_rate']:.2f}.",
          "- Patient-level 5-fold CV x 3 fold seeds; out-of-fold probabilities averaged over seeds; 95% CIs from "
          f"{N_BOOT} patient resamples. Inputs: this and earlier scans only, plus the previous expert rating and age/sex/MGMT.",
-         "", "| score | AUROC [95% CI] | minus previous rating | minus volume model (V+R+S) | AUROC, previous scan not PD | minus enhancing-vs-nadir rule |",
+         "", "| score | AUROC [95% CI] | minus previous rating | minus released volume model | AUROC, previous scan not PD | minus enhancing-vs-nadir rule |",
          "| :--- | :---: | :---: | :---: | :---: | :---: |"]
     for k, v in res["all"].items():
         u, s = res["vs_volume_model"][k], res["previous_not_pd"][k]
         L.append(f"| {k} | {v['auroc']:.3f} [{v['ci95'][0]:.3f}, {v['ci95'][1]:.3f}] | "
                  f"{v['minus_previous_rating']:+.3f} [{v['minus_previous_rating_ci95'][0]:+.3f}, {v['minus_previous_rating_ci95'][1]:+.3f}] | "
-                 f"{u['minus_gbm_volumes_rating_clinical']:+.3f} [{u['minus_gbm_volumes_rating_clinical_ci95'][0]:+.3f}, "
-                 f"{u['minus_gbm_volumes_rating_clinical_ci95'][1]:+.3f}] | {s['auroc']:.3f} [{s['ci95'][0]:.3f}, {s['ci95'][1]:.3f}] | "
+                 f"{u['minus_released_volumes']:+.3f} [{u['minus_released_volumes_ci95'][0]:+.3f}, "
+                 f"{u['minus_released_volumes_ci95'][1]:+.3f}] | {s['auroc']:.3f} [{s['ci95'][0]:.3f}, {s['ci95'][1]:.3f}] | "
                  f"{s['minus_rule_enhancing_change_vs_nadir']:+.3f} [{s['minus_rule_enhancing_change_vs_nadir_ci95'][0]:+.3f}, "
                  f"{s['minus_rule_enhancing_change_vs_nadir_ci95'][1]:+.3f}] |")
     p = res["previous_not_pd"]
@@ -279,9 +252,9 @@ def write_markdown(res: dict, path: Path) -> None:
                  f"{v['specificity_at_90pct_sensitivity']:.2f} | {'-' if b is None else f'{b:.3f}'} |")
     L += [f"| constant PD rate | - | - | - | {res['brier']['pd_rate_constant']:.3f} |", "",
           "## PD scans found, by the expert's stated reason (80% specificity)", "",
-          "| reason | PD scans | with mask features | volumes + rating + clinical only |", "| :--- | ---: | ---: | ---: |"]
+          "| reason | PD scans | released, with atlas masks | released, volumes only |", "| :--- | ---: | ---: | ---: |"]
     for g, v in res["sensitivity_by_rationale_at_80pct_specificity"].items():
-        L.append(f"| {g} | {v['pd_scans']} | {v['gbm_plus_masks']:.2f} | {v['gbm_volumes_rating_clinical']:.2f} |")
+        L.append(f"| {g} | {v['pd_scans']} | {v['released_volumes_masks']:.2f} | {v['released_volumes']:.2f} |")
     w = res["window_flag_check"]
     L += ["", "## Excluded input: the LessThan3Months flag", "",
           f"The rating file flags {w['flagged_scans']} scans ({w['flagged_pd']} rated PD). Of {w['early_first_followups']} first "
@@ -301,8 +274,8 @@ def figure(scores: dict, label: np.ndarray, prev_not_pd: np.ndarray, res: dict, 
     ink, muted, grid = "#0b0b0b", "#52514e", "#e4e3df"
     series = (("previous_rating", "previous rating carried forward", "#8a8984", "--"),
               ("rule_enhancing_change_vs_nadir", "enhancing volume vs nadir (rule)", "#eb6834", ":"),
-              ("released_monotone_gbm", "model: volumes + rating + clinical (released)", "#2a78d6", "-"),
-              ("gbm_plus_masks", "model + registered-mask features", "#1baf7a", "-."))
+              ("released_volumes", "released: volumes + rating + clinical", "#2a78d6", "-"),
+              ("released_volumes_masks", "released: + new-tumor masks (atlas, 8 mm)", "#1baf7a", "-."))
     fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.4), dpi=200)
     panels = (("A  All rated follow-up scans", np.ones(len(label), bool), "all"),
               ("B  Previous scan not PD (new progression)", prev_not_pd, "previous_not_pd"))

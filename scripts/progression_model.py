@@ -5,9 +5,12 @@ Inputs, all available when the scan is read:
   * automated DeepBraTumIA compartment volumes of the current scan and of the earlier scans
     of the same surgery-free segment;
   * the previous scan's expert rating;
-  * optionally age, sex and MGMT status.
-This is feature set V+R+S of progression_call_experiment.py. On held-out LUMIERE patients
-it scored AUROC 0.82 [0.78, 0.86], against 0.68 for carrying the previous rating forward
+  * optionally age, sex and MGMT status;
+  * optionally the atlas-space segmentations of the previous and current scan. With them,
+    the "volumes_masks" model also sees new enhancing tumor, new FLAIR abnormality and new
+    enhancing components outside the prior tumor (8 mm margin, no registration needed).
+On held-out LUMIERE patients, the volumes model scored AUROC 0.82 and the volumes_masks
+model 0.835, against 0.68 for carrying the previous rating forward
 (results/progression_call/metrics.md).
 
 Command:
@@ -36,7 +39,7 @@ from lumiere_cohort import COMPARTMENT_SHORT, COMPARTMENTS  # noqa: E402
 from volume_trajectory_experiment import static_features, y_of  # noqa: E402
 
 KIND = "progression_gbm"
-SCHEMA = 1
+SCHEMA = 2
 RATINGS = ("PD", "SD", "PR", "CR", "Post-Op", "none")
 INPUT_RATINGS = ("PD", "SD", "PR", "CR", "Post-Op", "unknown")
 FEATURES = ([f"current_log1p_ml_{c}" for c in COMPARTMENT_SHORT] + [f"change_vs_previous_{c}" for c in COMPARTMENT_SHORT]
@@ -50,7 +53,9 @@ MONOTONE_UP = ("change_vs_previous_enhancing", "change_vs_previous_edema", "chan
                "total_change_vs_previous", "total_change_vs_nadir")
 GBM_PARAMS = dict(max_depth=2, learning_rate=0.05, max_iter=150, min_samples_leaf=15, random_state=0,
                   monotonic_cst=[int(f in MONOTONE_UP) for f in FEATURES])
-SOURCES = ("progression_model.py", "volume_trajectory_experiment.py", "lumiere_cohort.py", "lumiere_weeks.py")
+SOURCES = ("progression_model.py", "volume_trajectory_experiment.py", "lumiere_cohort.py", "lumiere_weeks.py",
+           "build_atlas_cache.py")
+MODELS = ("volumes", "volumes_masks")
 
 
 def norm_rating(rating: str | None) -> str:
@@ -78,6 +83,61 @@ def features(history: list, current, static: np.ndarray) -> np.ndarray:
         [float(previous == r) for r in RATINGS], static])
 
 
+MASK_FEATURES = ("et_new_ml", "wt_new_ml", "wt_lost_ml", "et_in_prior_core_frac", "et_components", "et_components_prev",
+                 "et_new_components", "et_max_axial_cm2", "et_max_axial_cm2_prev", "et_max_axial_log_ratio")
+MASK_MONOTONE = (1, 1, 0, -1, 0, 0, 1, 0, 0, 1)  # new tumor can only raise P(PD); enhancing inside the prior core lowers it
+VOXEL_ML = 0.008  # the 2 mm grid of the atlas caches
+MIN_COMPONENT = 4  # voxels (32 mm^3); smaller specks are ignored when counting components
+
+
+def mask_features(prev: np.ndarray, cur: np.ndarray, margin_voxels: int) -> list[float]:
+    """Compare boolean WT/TC/ET masks, shape (3, X, Y, Z), of the previous and current scan on one 2 mm grid."""
+    from scipy import ndimage
+
+    wt_p, tc_p, et_p = prev
+    wt_c, _, et_c = cur
+    ball = ndimage.iterate_structure(ndimage.generate_binary_structure(3, 1), margin_voxels)
+    core_p = ndimage.binary_dilation(tc_p | et_p, structure=ball)
+    et_new = et_c & ~core_p
+
+    def components(mask):
+        lab, n = ndimage.label(mask)
+        if n == 0:
+            return lab, []
+        sizes = ndimage.sum(mask, lab, range(1, n + 1))
+        return lab, [i + 1 for i, s in enumerate(sizes) if s >= MIN_COMPONENT]
+
+    lab_c, keep_c = components(et_c)
+    _, keep_p = components(et_p)
+    new_components = sum(1 for i in keep_c if not core_p[lab_c == i].any())
+
+    def max_axial_cm2(mask):
+        return float(mask.sum(axis=(0, 1)).max()) * 0.04  # 2 mm x 2 mm in-plane voxels
+
+    a_c, a_p = max_axial_cm2(et_c), max_axial_cm2(et_p)
+    return [
+        float(et_new.sum()) * VOXEL_ML,
+        float((wt_c & ~ndimage.binary_dilation(wt_p, structure=ball)).sum()) * VOXEL_ML,
+        float((wt_p & ~ndimage.binary_dilation(wt_c, structure=ball)).sum()) * VOXEL_ML,
+        float((et_c & core_p).sum() / et_c.sum()) if et_c.any() else 1.0,
+        float(len(keep_c)), float(len(keep_p)), float(new_components),
+        a_c, a_p, math.log((a_c + 0.1) / (a_p + 0.1)),
+    ]
+
+
+MASK_MARGIN_VOXELS = 4  # 8 mm: absorbs the ~2.5 mm visit-to-visit misalignment of the atlas space (EXPERIMENTS.md 2b)
+FEATURES_MASKS = FEATURES + list(MASK_FEATURES)
+GBM_PARAMS_MASKS = dict(GBM_PARAMS, monotonic_cst=GBM_PARAMS["monotonic_cst"] + list(MASK_MONOTONE))
+
+
+def pooled_masks(seg: np.ndarray) -> np.ndarray:
+    """1 mm atlas label map (1=ET, 2=necrosis, 3=edema) -> boolean WT/TC/ET on the cache's 2 mm grid."""
+    from build_atlas_cache import pool2
+
+    fractions = np.stack([pool2(np.isin(seg, labels).astype(np.float32)) for labels in ((1, 2, 3), (1, 2), (1,))])
+    return fractions.astype(np.float16).astype(np.float32) > 0.5  # same float16 round trip as the caches
+
+
 def cohort_rows(data_dir: Path, clinical_dir: Path):
     from lumiere_cohort import build_cohort, load_clinical
 
@@ -89,13 +149,30 @@ def cohort_rows(data_dir: Path, clinical_dir: Path):
     return cohort, rows, x, y
 
 
-def new_model():
+def _cache_mask_job(job: tuple) -> list[float]:
+    atlas_dir, pid, prev_src, cur_src, margin = job
+    prev, cur = (np.load(Path(atlas_dir) / pid / f"{src}.npy")[4:7].astype(np.float32) > 0.5 for src in (prev_src, cur_src))
+    return mask_features(prev, cur, margin)
+
+
+def cohort_mask_features(rows, atlas_dir: Path, margin: int = MASK_MARGIN_VOXELS, workers: int = 8) -> np.ndarray:
+    """Atlas-space mask features of (previous, current) scan per row, from the 2 mm atlas caches.
+
+    The caches hold exactly what pooled_masks() computes from the 1 mm atlas segmentations."""
+    from concurrent.futures import ProcessPoolExecutor
+
+    jobs = [(str(atlas_dir), t.patient_id, t.last.source_name, t.target.source_name, margin) for t in rows]
+    with ProcessPoolExecutor(max_workers=workers) as pool:
+        return np.array(list(pool.map(_cache_mask_job, jobs, chunksize=4)))
+
+
+def new_model(masks: bool = False):
     from sklearn.ensemble import HistGradientBoostingClassifier
 
-    return HistGradientBoostingClassifier(**GBM_PARAMS)
+    return HistGradientBoostingClassifier(**(GBM_PARAMS_MASKS if masks else GBM_PARAMS))
 
 
-def held_out_scores(cohort, rows, x, y, seeds=(0, 1, 2), folds=5) -> np.ndarray:
+def held_out_scores(cohort, rows, x, y, masks: bool = False, seeds=(0, 1, 2), folds=5) -> np.ndarray:
     from lumiere_cohort import patient_folds
 
     pid = np.array([t.patient_id for t in rows])
@@ -103,7 +180,7 @@ def held_out_scores(cohort, rows, x, y, seeds=(0, 1, 2), folds=5) -> np.ndarray:
     for seed in seeds:
         for test in patient_folds(cohort.patients, folds, seed):
             held = np.isin(pid, test)
-            total[held] += new_model().fit(x[~held], y[~held]).predict_proba(x[held])[:, 1]
+            total[held] += new_model(masks).fit(x[~held], y[~held]).predict_proba(x[held])[:, 1]
     return total / len(seeds)
 
 
@@ -138,30 +215,39 @@ def fit_all(args) -> None:
     if args.output.exists():
         raise FileExistsError(args.output)
     cohort, rows, x, y = cohort_rows(args.data_dir, args.clinical_dir)
-    scores = held_out_scores(cohort, rows, x, y)
-    model = new_model().fit(x, y)
+    xm = np.hstack([x, cohort_mask_features(rows, args.atlas_dir)])
+    models, entries = {}, {}
+    for name, X, masks, feats in (("volumes", x, False, FEATURES), ("volumes_masks", xm, True, FEATURES_MASKS)):
+        scores = held_out_scores(cohort, rows, X, y, masks=masks)
+        models[name] = new_model(masks).fit(X, y)
+        thr = thresholds(scores, y)
+        entries[name] = {"features": feats, "estimator_parameters": models[name].get_params(),
+                         "held_out": {"auroc": fast_auroc(scores, y), "thresholds": thr, "tiers": tier_rates(scores, y, thr)}}
     manifest = {
-        "kind": KIND, "schema_version": SCHEMA, "sklearn_version": sklearn.__version__, "features": FEATURES,
-        "estimator_parameters": model.get_params(),
+        "kind": KIND, "schema_version": SCHEMA, "sklearn_version": sklearn.__version__, "models": entries,
+        "mask_contract": {"margin_voxels": MASK_MARGIN_VOXELS, "margin_mm": 2 * MASK_MARGIN_VOXELS, "grid": "2 mm pooled atlas",
+                          "min_component_voxels": MIN_COMPONENT, "features": list(MASK_FEATURES),
+                          "input": "LUMIERE atlas-space segmentation, 182x218x182 at 1 mm, labels 1=ET 2=necrosis 3=edema"},
         "training": {"scope": "all expert-rated LUMIERE follow-up scans (PD/SD/PR/CR)", "scans": len(rows),
                      "patients": len({t.patient_id for t in rows}), "pd_rate": float(y.mean())},
-        "held_out": {"protocol": "patient-level 5-fold CV x 3 fold seeds, probabilities averaged over seeds",
-                     "auroc": fast_auroc(scores, y), "thresholds": thresholds(scores, y)},
+        "held_out_protocol": "patient-level 5-fold CV x 3 fold seeds, probabilities averaged over seeds",
         "label": "expert RANO rating of the current scan is PD",
-        "inputs": "current scan + earlier scans of the same surgery-free segment (DeepBraTumIA volumes, mm3), "
-                  "previous scan's expert rating, optional age/sex/MGMT",
+        "inputs": "current scan + earlier scans of the same surgery-free segment (DeepBraTumIA volumes, mm3), previous "
+                  "scan's expert rating, optional age/sex/MGMT, optional atlas segmentations of the last two scans",
         "excluded_inputs": "LessThan3Months flag (selectively annotated; leaks the label)",
         "source_sha256": {name: sha256(SCRIPTS / name) for name in SOURCES},
         "clinical_validation": False,
     }
-    manifest["held_out"]["tiers"] = tier_rates(scores, y, manifest["held_out"]["thresholds"])
-    write_bundle(model, manifest, args.output, probe=x)
-    t = manifest["held_out"]["thresholds"]["specificity_80"]
-    print(f"Wrote {args.output}: held-out AUROC {manifest['held_out']['auroc']:.3f}; at the 80%-specificity threshold "
-          f"{t['threshold']:.3f}, held-out sensitivity {t['held_out_sensitivity']:.2f}")
+    write_bundle(models, manifest, args.output, probes={"volumes": x, "volumes_masks": xm})
+    for name in MODELS:
+        h = entries[name]["held_out"]
+        t = h["thresholds"]["specificity_80"]
+        print(f"{name}: held-out AUROC {h['auroc']:.3f}; at the 80%-specificity threshold {t['threshold']:.3f}, "
+              f"held-out sensitivity {t['held_out_sensitivity']:.2f}")
+    print(f"Wrote {args.output}")
 
 
-def write_bundle(model, manifest: dict, output: Path, probe: np.ndarray) -> None:
+def write_bundle(models: dict, manifest: dict, output: Path, probes: dict) -> None:
     """Stage, checksum, reload and compare, then move into place; refuses an existing output."""
     from package_models import sha256, write_json
 
@@ -172,12 +258,14 @@ def write_bundle(model, manifest: dict, output: Path, probe: np.ndarray) -> None
     with tempfile.TemporaryDirectory(dir=output.parent) as tmp:
         stage = Path(tmp) / "bundle"
         stage.mkdir()
-        with (stage / "estimator.pkl").open("wb") as h:
-            pickle.dump(model, h, protocol=5)
+        for name in MODELS:
+            with (stage / f"estimator_{name}.pkl").open("wb") as h:
+                pickle.dump(models[name], h, protocol=5)
         write_json(stage / "manifest.json", manifest)
-        write_json(stage / "SHA256SUMS.json", {n: sha256(stage / n) for n in ("estimator.pkl", "manifest.json")})
+        write_json(stage / "SHA256SUMS.json", {p.name: sha256(p) for p in sorted(stage.iterdir())})
         restored, _ = load(stage, trusted=True)
-        np.testing.assert_array_equal(model.predict_proba(probe), restored.predict_proba(probe))
+        for name in MODELS:
+            np.testing.assert_array_equal(models[name].predict_proba(probes[name]), restored[name].predict_proba(probes[name]))
         stage.rename(output)
 
 
@@ -202,10 +290,15 @@ def load(bundle: Path, *, trusted: bool = False):
     for name, digest in manifest["source_sha256"].items():
         if sha256(SCRIPTS / name) != digest:
             raise ValueError(f"Implementation differs from bundle: {name}")
-    if manifest["features"] != FEATURES:
+    if set(manifest["models"]) != set(MODELS) or manifest["models"]["volumes"]["features"] != FEATURES or \
+            manifest["models"]["volumes_masks"]["features"] != FEATURES_MASKS or \
+            manifest["mask_contract"]["margin_voxels"] != MASK_MARGIN_VOXELS:
         raise ValueError("Feature contract differs from this code")
-    with (bundle / "estimator.pkl").open("rb") as h:
-        return pickle.load(h), manifest
+    models = {}
+    for name in MODELS:
+        with (bundle / f"estimator_{name}.pkl").open("rb") as h:
+            models[name] = pickle.load(h)
+    return models, manifest
 
 
 def _number(value, name: str) -> float:
@@ -226,8 +319,12 @@ def read_history(path: Path):
         raise ValueError("Need the current scan plus at least one earlier scan of the same segment")
     scans = []
     for i, v in enumerate(visits):
-        if not isinstance(v, dict) or set(v) - {"week", "volumes_mm3", "rating"} or not {"week", "volumes_mm3"} <= set(v):
-            raise ValueError("Each visit needs week and volumes_mm3, optionally rating")
+        if not isinstance(v, dict) or set(v) - {"week", "volumes_mm3", "rating", "segmentation"} or \
+                not {"week", "volumes_mm3"} <= set(v):
+            raise ValueError("Each visit needs week and volumes_mm3, optionally rating and segmentation")
+        seg = v.get("segmentation")
+        if seg is not None and (not isinstance(seg, str) or not seg):
+            raise ValueError("segmentation must be a path string")
         week = _number(v["week"], "week")
         if not isinstance(v["volumes_mm3"], dict) or set(v["volumes_mm3"]) != set(COMPARTMENTS):
             raise ValueError(f"volumes_mm3 must have exactly {list(COMPARTMENTS)}")
@@ -239,7 +336,8 @@ def read_history(path: Path):
             raise ValueError(f"rating must be one of {list(INPUT_RATINGS)}")
         if i > 0 and rating == "Post-Op":
             raise ValueError("A Post-Op scan starts a new segment; supply only scans since the last surgery")
-        scans.append(SimpleNamespace(week=week, volumes_mm3=vols, rating=None if rating == "unknown" else rating))
+        scans.append(SimpleNamespace(week=week, volumes_mm3=vols, rating=None if rating == "unknown" else rating,
+                                     segmentation=None if seg is None else (Path(path).parent / seg).resolve()))
     if visits[-2].get("rating") is None:
         raise ValueError("The previous scan's expert rating is required (use \"unknown\" if there is none)")
     if visits[-1].get("rating") is not None:
@@ -251,16 +349,40 @@ def read_history(path: Path):
     return doc["patient_id"], scans, clinical
 
 
+def load_segmentations(prev_path: Path, cur_path: Path):
+    """Atlas-space label maps of the previous and current scan -> pooled boolean WT/TC/ET masks."""
+    from prediction import load_volume
+
+    prev, reference = load_volume(prev_path)
+    cur, _ = load_volume(cur_path, reference=reference)
+    for seg, path in ((prev, prev_path), (cur, cur_path)):
+        if not np.isin(seg, (0, 1, 2, 3)).all():
+            raise ValueError(f"Segmentation must use LUMIERE labels 0, 1=enhancing, 2=necrosis, 3=edema: {path}")
+    return pooled_masks(prev), pooled_masks(cur)
+
+
 def predict_progression(history_path: Path, bundle: Path, output: Path, trusted: bool = False) -> dict:
     from package_models import sha256
 
     patient, scans, clinical = read_history(history_path)
-    model, manifest = load(bundle, trusted=trusted)
+    if (scans[-1].segmentation is None) != (scans[-2].segmentation is None):
+        raise ValueError("Give segmentations for both the previous and the current scan, or for neither")
+    models, manifest = load(bundle, trusted=trusted)
+    name = "volumes" if scans[-1].segmentation is None else "volumes_masks"
     x = features(scans[:-1], scans[-1], static_features(patient, {patient: clinical}))[None]
+    new_tumor = None
+    if name == "volumes_masks":
+        found = mask_features(*load_segmentations(scans[-2].segmentation, scans[-1].segmentation), MASK_MARGIN_VOXELS)
+        x = np.hstack([x, np.array(found)[None]])
+        f = dict(zip(MASK_FEATURES, found))
+        new_tumor = {"margin_mm": 2 * MASK_MARGIN_VOXELS, "new_enhancing_ml": f["et_new_ml"],
+                     "new_enhancing_components": int(f["et_new_components"]), "new_flair_abnormality_ml": f["wt_new_ml"],
+                     "enhancing_inside_prior_core_fraction": f["et_in_prior_core_frac"]}
     if not np.isfinite(x).all():
         raise ValueError("Nonfinite features")
-    p = float(model.predict_proba(x)[0, 1])
-    thr = manifest["held_out"]["thresholds"]
+    p = float(models[name].predict_proba(x)[0, 1])
+    held = manifest["models"][name]["held_out"]
+    thr = held["thresholds"]
     cur, prev = scans[-1].volumes_mm3, scans[-2].volumes_mm3
     nadir_enh = min(s.volumes_mm3["Enhancing_Core"] for s in scans[:-1])
 
@@ -269,9 +391,9 @@ def predict_progression(history_path: Path, bundle: Path, output: Path, trusted:
 
     result = {
         "patient_id": patient, "assessed_week": scans[-1].week, "probability_pd": p,
-        "call": tier(p, thr),
-        "held_out_pd_rate_in_this_band": (manifest["held_out"].get("tiers") or {}).get(tier(p, thr), {}).get("pd_rate"),
-        "thresholds": thr, "held_out_auroc": manifest["held_out"]["auroc"],
+        "model": name, "call": tier(p, thr),
+        "held_out_pd_rate_in_this_band": held["tiers"][tier(p, thr)]["pd_rate"],
+        "thresholds": thr, "held_out_auroc": held["auroc"], "new_tumor_outside_prior": new_tumor,
         "measurements_ml": {
             "enhancing_current": cur["Enhancing_Core"] / 1000, "enhancing_previous": prev["Enhancing_Core"] / 1000,
             "enhancing_nadir": nadir_enh / 1000, "total_current": sum(cur.values()) / 1000, "total_previous": sum(prev.values()) / 1000,
@@ -281,7 +403,8 @@ def predict_progression(history_path: Path, bundle: Path, output: Path, trusted:
         },
         "previous_rating": scans[-2].rating or "unknown",
         "interpretation": "Probability that an expert would rate this scan PD under RANO, estimated from automated volumes, "
-                          "the previous rating and clinical factors. 'likely PD' is above the threshold with 80% held-out "
+                          "the previous rating, clinical factors and, when both segmentations are given, new tumor outside "
+                          "the prior tumor. 'likely PD' is above the threshold with 80% held-out "
                           "specificity; 'PD less likely' is below the one with 90% held-out sensitivity; 'uncertain' is "
                           "in between. held_out_pd_rate_in_this_band says how often such scans were rated PD. "
                           "Research use only.",
@@ -299,6 +422,7 @@ def main() -> None:
     f = sub.add_parser("fit-all")
     f.add_argument("--data-dir", type=Path, default=REPO / "data/lumiere/extracted/Imaging")
     f.add_argument("--clinical-dir", type=Path, default=REPO / "data/lumiere/clinical")
+    f.add_argument("--atlas-dir", type=Path, default=REPO / "data/lumiere_atlas2mm", help="2 mm atlas caches (build_atlas_cache.py)")
     f.add_argument("--output", type=Path, required=True, help="New bundle directory (must not exist)")
     args = ap.parse_args()
     fit_all(args)

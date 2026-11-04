@@ -8,15 +8,23 @@ patient-level bootstrap confidence intervals.
 
 **What works: an automated progression call.** The released model reads the automated tumor
 volumes of the current and earlier scans, the previous expert rating, and age, sex and MGMT.
-It estimates whether an expert would rate the current scan as progressive disease (PD) under
-RANO.
-* On held-out patients, AUROC is **0.82** [0.77, 0.86]. Carrying the previous rating forward
-  scores 0.68 (difference +0.14 [+0.07, +0.20]).
-* For new progression (previous scan not PD), it scores 0.73. An enhancing-volume rule scores
-  0.65.
-* About half of all scans fall in its "likely PD" band, and 85% of those were rated PD.
+If the atlas segmentations of the last two scans are given, it also reads the new tumor
+outside the prior tumor. It estimates whether an expert would rate the current scan as
+progressive disease (PD) under RANO.
+* On held-out patients, AUROC is **0.835** [0.80, 0.87] with segmentations and 0.82 [0.77,
+  0.86] from volumes alone. Carrying the previous rating forward scores 0.68 (difference
+  +0.15 [+0.09, +0.21]).
+* For new progression (previous scan not PD), it scores 0.76 with segmentations and 0.73
+  without. An enhancing-volume rule scores 0.65.
+* About half of all scans fall in its "likely PD" band, and 85-86% of those were rated PD.
+* It runs on CPU in a few seconds (see Run the models below).
 
-It runs on CPU in a few seconds (see Run the models below).
+**Survival check.** A fully automated version of the call (no expert rating) was tested
+against overall survival. It is as prognostic as the expert's call: time-dependent C-index
+0.53-0.54 vs 0.54, with a difference near 0. In about half of patients it flags the same
+first-progression scan as the expert, and earlier or later about equally often in the
+rest. Neither is a strong survival marker in LUMIERE. A simple volumetric rule (enhancing
+tumor ≥ 40% above nadir) did better than the expert: C-index 0.61 vs 0.54 (CI excludes 0).
 
 **What does not work: forecasting the next visit.** Once the evaluation is leakage-free,
 the scans are aligned and trivial controls are included, carrying the last scan forward is
@@ -24,7 +32,8 @@ close to the best next-visit forecast. This holds for intensity, the 3D tumor ma
 next RANO rating. No Neural ODE model beats the best simple baseline for its target. The
 volume forecast gains a modest 5-7%, now with calibrated ranges. Full details, numbers and
 commands are in [EXPERIMENTS.md](EXPERIMENTS.md). The draft paper
-[MANUSCRIPT.md](MANUSCRIPT.md) covers the forecasting results only.
+[MANUSCRIPT.md](MANUSCRIPT.md) covers both parts: forecasting, and assessment with the
+survival check.
 
 ## Findings
 
@@ -38,7 +47,8 @@ commands are in [EXPERIMENTS.md](EXPERIMENTS.md). The draft paper
 | Can the next RANO rating be forecast? | The last visit's rating alone gives AUROC 0.684. No learned model beats it significantly (best +0.04 [-0.015, +0.092]). For patients not currently progressing, every score is ≤ 0.61. | 10 |
 | Can the volume forecast give a trustworthy range? | Yes. On unseen patients, the 80/90/95% ranges held 80/89/95% of next-visit total volumes. Centred on the model, they score 16% better (interval score, CI excludes 0) than equally calibrated ranges around the last scan. They are wide: a typical 80% range spans ×0.53 to ×2.1 of the forecast. | 11 |
 | Which other questions can this data answer? | **Is the current scan PD?** Yes: AUROC 0.82 vs 0.68 (CI excludes 0). Remaining survival from each visit: modestly, C-index 0.68 vs 0.60 for clinical factors and time (CI excludes 0). Volume 6-12+ months ahead: beats copy-last by 14-16%, but a 2-parameter population Gompertz model does about as well (CIs include 0). | 12 |
-| How good is the progression call? | Released model (volumes + previous rating + clinical): AUROC 0.820 [0.774, 0.862]; 69% of PD scans found at 80% specificity. Adding registered-mask features (new lesions) gives 0.833 (+0.012, CI includes 0). A post-radiotherapy flag in the rating file would add more, but raters set it selectively, so it leaks the label and is excluded. | 12 |
+| How good is the progression call? | From volumes + previous rating + clinical: AUROC 0.820 [0.774, 0.862], 69% of PD scans found at 80% specificity. With the new-tumor features from the two atlas segmentations (8 mm margin, no registration): 0.835 [0.796, 0.871], 73% found; new progression 0.760 vs 0.728. A post-radiotherapy flag in the rating file would add more, but raters set it selectively, so it leaks the label and is excluded. | 12b |
+| Does the automated call predict survival like the expert's? | Equally well, and equally weakly. Time-dependent C-index is 0.530-0.544 (automated) vs 0.539 (expert), differences near 0 with CIs including 0. The first-progression scan matches in 34 of 65 patients, with the rest split evenly earlier and later. A simple volume rule is more prognostic than the expert: 0.607, +0.068 [+0.008, +0.132]. | 12c |
 
 Figures: `results/figures/`, listed at the end of EXPERIMENTS.md.
 
@@ -50,7 +60,8 @@ DeepBraTumIA volumes in mm³ for each visit since the last surgery. See
 
 **Progression call.** The last visit in `history` is the scan to assess, with no rating.
 The visit before it needs its expert rating (`PD`, `SD`, `PR`, `CR`, `Post-Op` or
-`unknown`):
+`unknown`). For new-lesion detection, add `"segmentation": "<path to the atlas-space
+seg_mask.nii.gz>"` to the last two visits. The tool then uses its `volumes_masks` model:
 
 ```json
 {"version": 1, "patient_id": "example",
@@ -68,17 +79,23 @@ The visit before it needs its expert rating (`PD`, `SD`, `PR`, `CR`, `Post-Op` o
 
 ```text
 Scan at week 24: probability of RANO progression 0.89 -> likely PD (on held-out patients, 85% of scans in this band were rated PD)
+  Model: volumes (volumes, previous rating and clinical; add both segmentations for new-lesion detection)
   'likely PD' at >= 0.70 (held-out specificity 80%, sensitivity 69%); 'PD less likely' below 0.42 (sensitivity 90%, specificity 44%); held-out AUROC 0.82
   Enhancing tumor 5.2 mL: +160% vs previous (2.0), +160% vs nadir (2.0); total 35.4 mL (+79% vs previous). Previous rating: SD
 ```
 
-The three bands, on held-out patients:
-* "likely PD": 51% of scans, 85% of them rated PD.
-* "uncertain": 26% of scans, 49% rated PD.
-* "PD less likely": 23% of scans, 28% rated PD.
+With segmentations, the output adds a line such as `Outside the prior tumor (+8 mm): new
+enhancing 0.08 mL in 0 new component(s); new FLAIR abnormality 6.7 mL`. On held-out
+patients the three bands were:
 
-Volumes alone cannot see new non-enhancing lesions or subtle T2 progression, so a stable
-scan usually lands in "uncertain" rather than "PD less likely".
+| band | volumes model | volumes_masks model |
+| :--- | :--- | :--- |
+| "likely PD" | 51% of scans, 85% rated PD | 53%, 86% PD |
+| "uncertain" | 26%, 49% PD | 26%, 41% PD |
+| "PD less likely" | 23%, 28% PD | 20%, 32% PD |
+
+Subtle T2/FLAIR progression is mostly missed (39% found). A stable scan usually lands in
+"uncertain" rather than "PD less likely".
 
 **Volume forecast with ranges.** This gives next-visit compartment volumes:
 
@@ -131,6 +148,7 @@ Three data issues found along the way are documented in EXPERIMENTS.md:
 | volume forecast ranges (evaluation + calibration) | `scripts/volume_intervals.py` | `results/volume_intervals/`, `runs/packaging/*/volume-intervals.json` |
 | approach screen: which questions the data can answer | `scripts/approach_screen.py` | `results/approach_screen/` |
 | progression call: evaluation, then released model | `scripts/progression_call_experiment.py`, `scripts/progression_model.py` | `results/progression_call/`, `runs/packaging/*/progression-gbm` |
+| progression call vs survival (expert vs automated) | `scripts/progression_survival.py` | `results/progression_survival/` |
 | CLI (packaged models) | `scripts/predict.py`, `scripts/prediction.py`, `scripts/package_models.py` | user-chosen output directory |
 | figures | `scripts/plot_step_results.py`, `scripts/visualize_mask_forecasts.py` | `results/figures/` |
 
@@ -152,7 +170,8 @@ tmux new -d -s gbm_followups 'bash scripts/run_followup_experiments.sh'   # inte
 .venv/bin/python scripts/rano_forecast_experiment.py               # step 3, ~1 min CPU
 .venv/bin/python scripts/volume_intervals.py evaluate              # volume ranges, held-out check, ~25 s CPU
 .venv/bin/python scripts/approach_screen.py                        # alternative tasks screen, ~6 min CPU
-.venv/bin/python scripts/progression_call_experiment.py            # progression call, ~1-2 min CPU (needs the step 2 caches)
+.venv/bin/python scripts/progression_call_experiment.py            # progression call, ~1 min CPU (needs the step 2 caches)
+tmux new -d -s gbm_survival '.venv/bin/python scripts/progression_survival.py > runs/logs/progression_survival.log 2>&1'   # ~3 min
 .venv/bin/python scripts/plot_step_results.py
 ```
 

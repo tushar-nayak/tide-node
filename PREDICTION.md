@@ -172,10 +172,16 @@ What the ranges mean:
 ## Progression call (is the current scan RANO PD?)
 
 A `progression_gbm` bundle estimates the probability that an expert would rate the current
-scan as progressive disease under RANO. Its inputs are the automated compartment volumes of
-the current scan and the earlier scans since the last surgery, the previous scan's expert
-rating, and optionally age, sex and MGMT. Held-out evaluation is in EXPERIMENTS.md section
-12b (AUROC 0.82). Run it with:
+scan as progressive disease under RANO. It holds two models:
+- `volumes` reads the automated compartment volumes of the current scan and of the earlier
+  scans since the last surgery, the previous scan's expert rating, and optionally age, sex
+  and MGMT. Held-out AUROC is 0.82.
+- `volumes_masks` also reads the atlas-space segmentations of the previous and current
+  scan. It measures new enhancing tumor, new enhancing components and new FLAIR abnormality
+  outside the prior tumor, with an 8 mm margin and no registration. Held-out AUROC is 0.835.
+  The CLI uses it whenever both segmentations are given.
+
+Held-out evaluation is in EXPERIMENTS.md section 12b. Run it with:
 
 ```bash
 .venv/bin/python scripts/predict.py --history scan.json \
@@ -193,6 +199,11 @@ the same string fields as the volume forecast.
   `unknown`.
 - Only the first visit may be `Post-Op`. A later `Post-Op` means a new surgery, so start
   the history there.
+- Optionally, `segmentation` gives a path to a LUMIERE atlas-space label map, absolute or
+  relative to the JSON file. It must be 182×218×182 at 1 mm, with labels 0, 1=enhancing,
+  2=necrosis and 3=edema. Give it for both of the last two visits or for neither. Both
+  files must share one atlas grid. They are pooled to 2 mm exactly as the training caches
+  were.
 - Weeks must strictly increase and volumes must be nonnegative. Unknown fields are
   rejected.
 
@@ -202,19 +213,24 @@ the same string fields as the volume forecast.
   - "PD less likely": below the 90%-sensitivity threshold;
   - "uncertain": in between.
 - `held_out_pd_rate_in_this_band`: how often held-out scans in that band were rated PD.
-  It is 85%, 49% and 28% for the three bands respectively.
+  For the volumes model it is 85%, 49% and 28% for the three bands; for volumes_masks it is
+  86%, 41% and 32%.
 - The thresholds with their held-out sensitivity and specificity, and the held-out AUROC.
+- `model`: `volumes` or `volumes_masks`.
+- With segmentations, `new_tumor_outside_prior`: new enhancing mL, new enhancing
+  components, new FLAIR abnormality mL, and the fraction of enhancing tumor inside the
+  prior core.
 - Plain enhancing and total volume changes against the previous scan and the nadir.
 - The input checksum and bundle path.
 
 The bundle (`progression_model.py fit-all`) holds a scikit-learn pickle (load only trusted
 bundles), a manifest and `SHA256SUMS.json`. Loading checks the checksums, the scikit-learn
 version, the feature list, and the hashes of `progression_model.py`,
-`volume_trajectory_experiment.py`, `lumiere_cohort.py` and `lumiere_weeks.py`. Editing any
-of those files requires refitting the bundle.
+`volume_trajectory_experiment.py`, `lumiere_cohort.py`, `lumiere_weeks.py` and
+`build_atlas_cache.py`. Editing any of those files requires refitting the bundle.
 
 Limits:
-- Volumes cannot see new non-enhancing lesions or subtle T2/FLAIR progression, so stable
-  scans usually land in "uncertain".
+- Subtle T2/FLAIR progression is mostly missed (39% found with masks). Stable scans usually
+  land in "uncertain".
 - The model was fitted to one centre's expert readings and DeepBraTumIA volumes.
 - It is not clinically validated.

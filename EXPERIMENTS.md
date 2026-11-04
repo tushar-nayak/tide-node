@@ -554,54 +554,125 @@ question scored against its own trivial rule.
     the segment nadir, with timing;
   * R: the previous scan's expert rating;
   * S: age, sex and MGMT;
-  * M (optional): mask comparison with the current scan registered into the previous
-    scan's frame, using the step 2 registration cache. It covers new enhancing tumor
-    outside the prior core, new FLAIR abnormality, new enhancing components and the
-    largest axial enhancing area.
+  * M (optional): mask comparison of the current with the previous scan. It covers new
+    enhancing tumor outside the prior core, new FLAIR abnormality, new enhancing components
+    and the largest axial enhancing area. The released version works directly in atlas
+    space with an 8 mm margin, which absorbs the ~2.5 mm atlas misalignment (section 2b),
+    so no registration is needed. A reference version uses the current scan registered into
+    the previous scan's frame, with a 4 mm margin.
+  * Atlas margins of 4/6/8 mm scored 0.822/0.831/0.835. 8 mm was chosen, so the released
+    mask model carries a little selection optimism. The registered version, which involved
+    no selection, scores 0.838.
 * Excluded input: the rating file's `LessThan3Months` flag. Using it would lift AUROC to
-  0.86, but raters set it selectively. Among the 80 first follow-ups 9-26 weeks after
+  0.86, but raters set it selectively. Among the 78 rated first follow-ups 9-26 weeks after
   surgery, only 16 are flagged. Those grew (median enhancing log-change vs nadir +0.48)
   while unflagged early scans did not (-0.03). The flag records the rater's decision not to
   call growth PD, so it leaks the label.
 
-| score | AUROC [95% CI] | minus previous rating | AUROC, previous scan not PD |
-| :--- | :---: | :---: | :---: |
-| previous rating carried forward | 0.684 [0.622, 0.738] | - | 0.523 |
-| rule: enhancing volume change vs nadir | 0.711 [0.649, 0.772] | +0.027 [-0.059, +0.116] | 0.649 |
-| rule: new enhancing volume (registered masks) | 0.731 [0.671, 0.791] | +0.047 [-0.045, +0.134] | 0.721 |
-| GBM, volumes only (V) | 0.790 [0.740, 0.841] | +0.107 [+0.035, +0.184] | 0.739 |
-| **released: monotone GBM, V+R+S** | **0.820 [0.774, 0.862]** | **+0.136 [+0.072, +0.203]** | **0.728** |
-| GBM, V+R+S+M | 0.833 [0.792, 0.870] | +0.149 [+0.086, +0.213] | 0.754 |
+| score | AUROC [95% CI] | minus previous rating | minus released volumes model | AUROC, previous scan not PD |
+| :--- | :---: | :---: | :---: | :---: |
+| previous rating carried forward | 0.684 [0.622, 0.738] | - | - | 0.523 |
+| rule: enhancing volume change vs nadir | 0.711 [0.649, 0.772] | +0.027 [-0.059, +0.116] | - | 0.649 |
+| rule: new enhancing volume (atlas, 8 mm) | 0.713 [0.648, 0.775] | +0.030 [-0.061, +0.117] | - | 0.699 |
+| automated: volumes only (no rating, no clinical) | 0.785 [0.734, 0.835] | +0.101 [+0.030, +0.176] | -0.035 [-0.050, -0.020] | 0.734 |
+| automated: volumes + masks | 0.797 [0.753, 0.841] | +0.113 [+0.045, +0.184] | -0.023 [-0.043, -0.001] | 0.756 |
+| **released "volumes": monotone GBM, V+R+S** | **0.820 [0.774, 0.862]** | **+0.136 [+0.072, +0.203]** | - | **0.728** |
+| **released "volumes_masks": V+R+S+M (atlas, 8 mm)** | **0.835 [0.796, 0.871]** | **+0.151 [+0.093, +0.212]** | **+0.015 [-0.002, +0.032]** | **0.760** |
+| reference: V+R+S+M (registered, 4 mm) | 0.838 [0.797, 0.873] | +0.154 [+0.093, +0.217] | +0.018 [-0.000, +0.036] | 0.762 |
 
-* The released model scores 0.820, the same as an unconstrained GBM (0.821; difference
-  -0.001 [-0.010, +0.007]). Its constraint means more enhancing, edema or total growth
-  never lowers the PD probability. Brier score is 0.168, against 0.201 for the previous
-  rating and 0.233 for a constant.
-* Mask features add +0.012 [-0.005, +0.029] AUROC. At 80% specificity they find 74% of PD
-  scans instead of 67%, mainly scans the expert called PD for new or non-target lesions
-  (73% vs 65% found). They need registration, which the CLI does not run, so the released
-  model is V+R+S.
-* PD called for T2 progression alone (18 scans) is mostly missed (33-39% found).
-  Volumes do not capture it.
-* Held-out bands of the released model:
-  * "likely PD" (p ≥ 0.70): 51% of scans, 85% of them PD;
-  * "uncertain": 26% of scans, 49% PD;
-  * "PD less likely" (p < 0.42): 23% of scans, 28% PD.
-* Calibration is good overall. Observed PD rates by quintile were 0.28, 0.47, 0.58, 0.87
-  and 0.96, against mean predictions of 0.22, 0.51, 0.72, 0.88 and 0.96. But near-stable
-  scans after a non-PD rating are over-called. They average 0.48 against 25% observed (28
-  scans), though none of the 28 crossed the "likely PD" threshold.
+* Both released models are gradient-boosted trees with monotone constraints, so more
+  enhancing, edema or total growth, or more new tumor, never lowers the PD probability.
+  The constraint costs nothing: unconstrained V+R+S scores 0.821, a difference of +0.001
+  [-0.007, +0.010]. Brier scores are 0.168 for volumes and 0.162 for volumes_masks, against
+  0.201 for the previous rating and 0.233 for a constant.
+* The CLI uses volumes_masks whenever the atlas segmentations of the previous and current
+  scan are given. Its features from the raw 1 mm segmentations match the training
+  features (max difference 5e-7 on 15 spot-checked scans).
+* Mask features help most for new progression: 0.760 vs 0.728 when the previous scan was
+  not PD. At 80% specificity, volumes_masks finds 73% of PD scans and volumes 69%.
+* PD called for T2 progression alone (18 scans) is mostly missed: 39% found with masks,
+  28% without. Volumes and masks do not capture subtle T2/FLAIR change.
+* Held-out bands. Each band shows the share of scans in it, then how many of those were PD:
+
+  | band | volumes | volumes_masks |
+  | :--- | :--- | :--- |
+  | "likely PD" (80%-specificity threshold) | 51% of scans, 85% PD (p ≥ 0.70) | 53%, 86% PD (p ≥ 0.70) |
+  | "uncertain" | 26%, 49% PD | 26%, 41% PD |
+  | "PD less likely" (90%-sensitivity threshold) | 23%, 28% PD (p < 0.42) | 20%, 32% PD (p < 0.36) |
+* Calibration of the volumes model is good overall. Observed PD rates by quintile were
+  0.28, 0.47, 0.58, 0.87 and 0.96, against mean predictions of 0.22, 0.51, 0.72, 0.88 and
+  0.96. But near-stable scans after a non-PD rating are over-called. They average 0.48
+  against 25% observed (28 scans), though none of the 28 crossed the "likely PD" threshold.
 * Scope:
   * the reference is one expert reading per scan;
   * labels come from automated DeepBraTumIA volumes and a single centre;
   * there is no external validation, and the model is not clinically validated.
 
 ```bash
-.venv/bin/python scripts/progression_call_experiment.py          # ~1-2 min; caches mask features in results/progression_call/
-.venv/bin/python scripts/progression_model.py fit-all --output runs/packaging/<release>/progression-gbm   # ~10 s
+.venv/bin/python scripts/progression_call_experiment.py          # ~1 min; caches mask features in results/progression_call/
+.venv/bin/python scripts/progression_model.py fit-all --output runs/packaging/<release>/progression-gbm   # ~25 s
 .venv/bin/python scripts/predict.py --history scan.json --bundle runs/packaging/<release>/progression-gbm \
   --trust-progression-bundle --output-dir runs/my-call
 ```
+
+### 12c. Does the automated call predict survival like the expert's? — `scripts/progression_survival.py`
+
+The analysis runs in tmux (`gbm_survival`), takes about 3 min, and writes `results/progression_survival/`.
+
+* Setup: 73 patients with consistent survival data, all deaths observed. Progression is the
+  first follow-up of the first surgery-free segment called PD. Four ways to make the call:
+  * by the expert;
+  * by the fully automated models, which use no expert rating and no clinical factors.
+    The threshold on their held-out probability is either 0.5 (pre-specified) or set to
+    flag as many patients as the expert;
+  * by a volume rule: enhancing tumor ≥ 40% above the segment nadir and ≥ 1 mL above it.
+  * A re-operation (22 patients) counts as progression if nothing was called before it.
+* Progression enters a Cox model as a time-varying covariate. The time-dependent C-index
+  pairs each death with the patients still alive at that time. CIs come from a patient
+  bootstrap.
+
+| progression called by | patients | median weeks start → call | median weeks call → death | HR for death after progression [95% CI] | time-dependent C-index [95% CI] | C minus expert [95% CI] |
+| :--- | ---: | ---: | ---: | :---: | :---: | :---: |
+| expert | 67 | 27 | 48 | 2.14 [0.80, 10.04] | 0.539 [0.484, 0.590] | - |
+| volume rule | 67 | 23 | 45 | 3.91 [1.90, 13.10] | 0.607 [0.549, 0.662] | +0.068 [+0.008, +0.132] |
+| automated, volumes + masks, p ≥ 0.5 | 66 | 25 | 50 | 1.68 [0.77, 4.92] | 0.530 [0.481, 0.583] | -0.009 [-0.066, +0.050] |
+| automated, volumes only, p ≥ 0.5 | 67 | 25 | 49 | 2.03 [0.85, 8.60] | 0.544 [0.492, 0.599] | +0.006 [-0.038, +0.056] |
+
+The rate-matched thresholds give the same picture: C-index 0.522 with masks and 0.541
+volumes only. Full tables, including the 26- and 52-week landmarks, are in
+`results/progression_survival/metrics.md`. The figure is
+`results/figures/progression_survival_landmark.png`.
+
+Reading:
+* **The automated call is as prognostic as the expert's.** The C-index is 0.530-0.544
+  against 0.539, with differences of -0.009 [-0.066, +0.050] with masks and +0.006
+  [-0.038, +0.056] with volumes only. HRs are 1.7-2.0 against 2.1, with heavily
+  overlapping CIs.
+* **It also calls progression at the same time.** 65 patients progressed under both
+  definitions. In 34 the call fell on the same scan, in 16 it was earlier and in 15 later
+  (median difference 0 weeks). Status at 26 weeks agreed for 79% of patients (kappa 0.57).
+* **Neither is a strong survival marker in LUMIERE.**
+  * The expert's C-index CI includes 0.5.
+  * No definition separates survival significantly at the 26- or 52-week landmarks: HRs are
+    1.06-1.82 and all CIs include 1.
+  * Nearly every patient progresses (67 of 73), so "has progressed" says little about who
+    dies sooner.
+* **A simple volume rule is more prognostic than the expert.** Its C-index is 0.607 against
+  0.539 (+0.068 [+0.008, +0.132]), with HR 3.9 [1.9, 13.1].
+  * This is not a late-call artifact: the rule calls progression *earlier* (median 23 vs
+    27 weeks after the segment start).
+  * It matches a published finding: automated volumetric assessment was a better surrogate
+    for overall survival than central RANO reading (Kickingereder et al., Lancet Oncology
+    2019).
+  * It is one of several comparisons and its lower bound is near 0, so treat it as a lead
+    to confirm on external data.
+* **Implication.** A model trained to reproduce expert calls inherits the expert's
+  prognostic value, and no more. If the goal is an endpoint that predicts survival, the
+  volume rule, or a progression definition built for it, is the better target.
+* **Scope.**
+  * We assume survival weeks share the scan-week origin; the 3 patients whose death
+    precedes their last scan are excluded.
+  * The landmark analyses are underpowered (70 and 53 patients).
 
 ### Figures (`results/figures/`)
 
@@ -612,6 +683,8 @@ question scored against its own trivial rule.
   plus 80% coverage and width by horizon (section 11).
 * `progression_call_roc.png`: held-out ROC curves of the progression call on all rated
   scans and on scans whose previous rating was not PD (section 12b).
+* `progression_survival_landmark.png`: survival after a 26-week landmark by progression
+  status, expert vs automated call (section 12c).
 * `step2_forecast_<variant>_fold<k>_<weights>.png`: the visual forecast. Per held-out
   transition: last scan with its tumor outline, the real next scan, the predicted outline
   over the real one, and a change map (change predicted correctly / missed / predicted but

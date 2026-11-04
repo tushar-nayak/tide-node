@@ -1,0 +1,306 @@
+{
+  "meta": {
+    "thresholds": {
+      "automated (+masks)": {
+        "p>=0.5": 0.5,
+        "rate-matched": 0.365
+      },
+      "automated (volumes)": {
+        "p>=0.5": 0.5,
+        "rate-matched": 0.485
+      }
+    },
+    "excluded_inconsistent_survival": [
+      "Patient-064",
+      "Patient-073",
+      "Patient-086"
+    ],
+    "reop_patients": 22
+  },
+  "patients": 73,
+  "deaths": 73,
+  "definitions": {
+    "expert": {
+      "hr": 2.1405928420348204,
+      "c_index": 0.5387864823348695,
+      "progressed_patients": 67,
+      "progression_from_reoperation": 5,
+      "median_weeks_start_to_progression": 27.0,
+      "median_weeks_progression_to_death": 48.0,
+      "hr_ci95": [
+        0.8032208175095135,
+        10.043150122037863
+      ],
+      "c_index_ci95": [
+        0.4838351166819681,
+        0.5902215892857061
+      ],
+      "c_minus_expert": 0.0,
+      "c_minus_expert_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "volume rule": {
+      "hr": 3.9116019400250517,
+      "c_index": 0.6067588325652842,
+      "progressed_patients": 67,
+      "progression_from_reoperation": 8,
+      "median_weeks_start_to_progression": 23.0,
+      "median_weeks_progression_to_death": 45.0,
+      "hr_ci95": [
+        1.9027385391608034,
+        13.100766818820833
+      ],
+      "c_index_ci95": [
+        0.5494243177907246,
+        0.6618984064882227
+      ],
+      "c_minus_expert": 0.0679723502304147,
+      "c_minus_expert_ci95": [
+        0.007918163938053006,
+        0.13235466417109815
+      ]
+    },
+    "automated (+masks) p>=0.5": {
+      "hr": 1.6819326835352295,
+      "c_index": 0.5301459293394777,
+      "progressed_patients": 66,
+      "progression_from_reoperation": 5,
+      "median_weeks_start_to_progression": 25.0,
+      "median_weeks_progression_to_death": 49.5,
+      "hr_ci95": [
+        0.7671680492666642,
+        4.916066234289861
+      ],
+      "c_index_ci95": [
+        0.48123909883720933,
+        0.5828858587281962
+      ],
+      "c_minus_expert": -0.008640552995391793,
+      "c_minus_expert_ci95": [
+        -0.06601061583220763,
+        0.050314862615403834
+      ]
+    },
+    "automated (+masks) rate-matched": {
+      "hr": 1.5382897812838803,
+      "c_index": 0.5224654377880185,
+      "progressed_patients": 67,
+      "progression_from_reoperation": 2,
+      "median_weeks_start_to_progression": 23.0,
+      "median_weeks_progression_to_death": 51.0,
+      "hr_ci95": [
+        0.5979770871672812,
+        6.691590133120307
+      ],
+      "c_index_ci95": [
+        0.4690600823987182,
+        0.58011432650884
+      ],
+      "c_minus_expert": -0.016321044546851016,
+      "c_minus_expert_ci95": [
+        -0.0664188720761996,
+        0.03419322451094697
+      ]
+    },
+    "automated (volumes) p>=0.5": {
+      "hr": 2.028837883427913,
+      "c_index": 0.5443548387096774,
+      "progressed_patients": 67,
+      "progression_from_reoperation": 5,
+      "median_weeks_start_to_progression": 25.0,
+      "median_weeks_progression_to_death": 49.0,
+      "hr_ci95": [
+        0.8513250954428818,
+        8.597949029147006
+      ],
+      "c_index_ci95": [
+        0.49211503597092615,
+        0.5994477548152416
+      ],
+      "c_minus_expert": 0.0055683563748079035,
+      "c_minus_expert_ci95": [
+        -0.03767328911258601,
+        0.0559918724715749
+      ]
+    },
+    "automated (volumes) rate-matched": {
+      "hr": 1.9365645704927077,
+      "c_index": 0.5408986175115207,
+      "progressed_patients": 67,
+      "progression_from_reoperation": 5,
+      "median_weeks_start_to_progression": 24.0,
+      "median_weeks_progression_to_death": 50.0,
+      "hr_ci95": [
+        0.7919006941352018,
+        8.336977921658981
+      ],
+      "c_index_ci95": [
+        0.48635696556242836,
+        0.5955744810485007
+      ],
+      "c_minus_expert": 0.0021121351766512086,
+      "c_minus_expert_ci95": [
+        -0.04069315986747006,
+        0.05124844299685225
+      ]
+    }
+  },
+  "joint_cox": {
+    "model": "expert + automated (+masks) p>=0.5",
+    "hr_expert": 1.9074130029164855,
+    "hr_expert_ci95": [
+      0.5530301171828294,
+      9.440154673979587
+    ],
+    "hr_automated": 1.2990878150356768,
+    "hr_automated_ci95": [
+      0.5049762003458327,
+      4.131390152810732
+    ]
+  },
+  "landmarks": {
+    "26": {
+      "alive_patients": 70,
+      "expert": {
+        "progressed": 32,
+        "median_remaining_weeks_progressed": 51.5,
+        "median_remaining_weeks_not_progressed": 51.0,
+        "hr": 1.0613582432696473,
+        "hr_ci95": [
+          0.6444724939272737,
+          1.7311750691500885
+        ]
+      },
+      "volume rule": {
+        "progressed": 35,
+        "median_remaining_weeks_progressed": 52.0,
+        "median_remaining_weeks_not_progressed": 51.0,
+        "hr": 1.1035907692583982,
+        "hr_ci95": [
+          0.6646358404091403,
+          1.788631907289236
+        ]
+      },
+      "automated (+masks) p>=0.5": {
+        "progressed": 35,
+        "median_remaining_weeks_progressed": 43.0,
+        "median_remaining_weeks_not_progressed": 59.0,
+        "hr": 1.1329328654858675,
+        "hr_ci95": [
+          0.6807526670499928,
+          1.8524244652855288
+        ]
+      },
+      "automated (+masks) rate-matched": {
+        "progressed": 39,
+        "median_remaining_weeks_progressed": 43.0,
+        "median_remaining_weeks_not_progressed": 59.0,
+        "hr": 1.1075587238265263,
+        "hr_ci95": [
+          0.6433352085477635,
+          1.7635660008692535
+        ]
+      },
+      "automated (volumes) p>=0.5": {
+        "progressed": 35,
+        "median_remaining_weeks_progressed": 43.0,
+        "median_remaining_weeks_not_progressed": 59.0,
+        "hr": 1.1313462157122152,
+        "hr_ci95": [
+          0.6785699225606839,
+          1.8553125440922726
+        ]
+      },
+      "automated (volumes) rate-matched": {
+        "progressed": 37,
+        "median_remaining_weeks_progressed": 43.0,
+        "median_remaining_weeks_not_progressed": 59.0,
+        "hr": 1.1750971645942137,
+        "hr_ci95": [
+          0.7097412819622572,
+          1.9159990468343988
+        ]
+      },
+      "agreement_expert_vs_automated": {
+        "percent": 0.7857142857142857,
+        "kappa": 0.5714285714285714
+      }
+    },
+    "52": {
+      "alive_patients": 53,
+      "expert": {
+        "progressed": 44,
+        "median_remaining_weeks_progressed": 35.0,
+        "median_remaining_weeks_not_progressed": 67.0,
+        "hr": 1.8240860334700462,
+        "hr_ci95": [
+          0.6740597605404597,
+          4.37656716968145
+        ]
+      },
+      "volume rule": {
+        "progressed": 36,
+        "median_remaining_weeks_progressed": 32.5,
+        "median_remaining_weeks_not_progressed": 52.0,
+        "hr": 1.4401226151305224,
+        "hr_ci95": [
+          0.7724321343440974,
+          2.5289971448543866
+        ]
+      },
+      "automated (+masks) p>=0.5": {
+        "progressed": 42,
+        "median_remaining_weeks_progressed": 32.0,
+        "median_remaining_weeks_not_progressed": 55.0,
+        "hr": 1.4076070149899649,
+        "hr_ci95": [
+          0.6784771087373318,
+          2.722533049604262
+        ]
+      },
+      "automated (+masks) rate-matched": {
+        "progressed": 46,
+        "median_remaining_weeks_progressed": 35.0,
+        "median_remaining_weeks_not_progressed": 55.0,
+        "hr": 1.6140761516990059,
+        "hr_ci95": [
+          0.5287769393309361,
+          4.408306746111795
+        ]
+      },
+      "automated (volumes) p>=0.5": {
+        "progressed": 43,
+        "median_remaining_weeks_progressed": 36.0,
+        "median_remaining_weeks_not_progressed": 47.0,
+        "hr": 1.2802232146820605,
+        "hr_ci95": [
+          0.5228285204739855,
+          2.7014962742780972
+        ]
+      },
+      "automated (volumes) rate-matched": {
+        "progressed": 43,
+        "median_remaining_weeks_progressed": 36.0,
+        "median_remaining_weeks_not_progressed": 47.0,
+        "hr": 1.2802232146820605,
+        "hr_ci95": [
+          0.5228285204739855,
+          2.7014962742780972
+        ]
+      },
+      "agreement_expert_vs_automated": {
+        "percent": 0.8113207547169812,
+        "kappa": 0.38515081206496543
+      }
+    }
+  },
+  "timing_automated_minus_expert_weeks": {
+    "patients_both_progressed": 65,
+    "median": 0.0,
+    "earlier": 16,
+    "same_scan": 34,
+    "later": 15
+  }
+}
