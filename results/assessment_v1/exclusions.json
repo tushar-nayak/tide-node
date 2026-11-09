@@ -1,0 +1,1352 @@
+[
+  {
+    "patient_id": "Patient-001",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-001",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-002",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-002",
+    "visit": "week-003",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-002",
+    "visit": "week-040-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-002",
+    "visit": "week-040-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-003",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-003",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-004",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-004",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-004",
+    "visit": "week-041",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-005",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-005",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-006",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-006",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-006",
+    "visit": "week-114",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-007",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-007",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-008",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-008",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-009",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-009",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-009",
+    "visit": "week-015",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-009",
+    "visit": "week-026",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-009/week-026/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-010",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-010",
+    "visit": "week-001",
+    "reason": "identical_duplicate_rating_collapsed"
+  },
+  {
+    "patient_id": "Patient-010",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-011",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-011",
+    "visit": "week-003",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-011",
+    "visit": "week-024",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-012",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-012",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-012",
+    "visit": "week-022",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-013",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-013",
+    "visit": "week-001",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-014",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-014",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-015",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-015",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-015",
+    "visit": "week-084",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-015",
+    "visit": "week-146",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-016",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-016",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-017",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-017",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-018",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-018",
+    "visit": "week-003",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-019",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-019",
+    "visit": "week-005",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-019",
+    "visit": "week-141",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-019",
+    "visit": "week-150",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-020",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-020",
+    "visit": "week-000-2",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-021",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-021",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-022",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-022",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-022",
+    "visit": "week-039",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-070",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-023/week-070/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-099",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-116",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-023/week-116/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-023",
+    "visit": "week-127",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-024",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-024",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-024",
+    "visit": "week-018",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-024",
+    "visit": "week-019",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-024",
+    "visit": "week-046",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-025",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-025",
+    "visit": "week-001",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-025",
+    "visit": "week-059",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-026",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-026",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-027",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-027",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-020",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-021",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-024",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-028/week-024/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-025",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-035",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-046",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-028/week-046/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-028",
+    "visit": "week-048",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-028/week-048/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-029",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-029",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-029",
+    "visit": "week-240",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-029/week-240/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-029",
+    "visit": "week-255",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-030",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-030",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-031",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-031",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-031",
+    "visit": "week-018",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-031",
+    "visit": "week-148",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-031",
+    "visit": "week-170",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-032",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-032",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-032",
+    "visit": "week-046",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-032",
+    "visit": "week-069",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-011",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-033/week-011/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-088",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-033/week-088/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-095",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-033",
+    "visit": "week-104",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-034",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-034",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-034",
+    "visit": "week-044",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-035",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-035",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-036",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-036",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-037",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-037",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-037",
+    "visit": "week-049",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-037/week-049/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-038",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-038",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-039",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-039",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-040",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-040",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-041",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-041",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-041",
+    "visit": "week-051",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-041/week-051/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-010",
+    "reason": "conflicting_duplicate_rating"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-010",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-049",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-061-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-061-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-042",
+    "visit": "week-082",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-043",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-043",
+    "visit": "week-002",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-043",
+    "visit": "week-070",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-043",
+    "visit": "week-106",
+    "reason": "conflicting_duplicate_rating"
+  },
+  {
+    "patient_id": "Patient-043",
+    "visit": "week-106",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-044",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-044",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-045",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-045",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-046",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-046",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-047",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-047",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-048",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-048",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-049",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-049",
+    "visit": "week-003",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-049/week-003/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-049",
+    "visit": "week-019",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-050",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-050",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-050",
+    "visit": "week-051",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-051",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-051",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-052",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-052",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-052",
+    "visit": "week-119",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-053",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-053",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-054",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-054",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-054",
+    "visit": "week-028",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-055",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-055",
+    "visit": "week-000-2",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-055",
+    "visit": "week-000-3",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-056",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-056",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-057",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-057",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-058",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-058",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-059",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-059",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-059",
+    "visit": "week-148",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-059/week-148/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-060",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-060",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-060",
+    "visit": "week-040",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-060",
+    "visit": "week-069",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-060",
+    "visit": "week-070",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-061",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-061",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-061",
+    "visit": "week-012",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-061",
+    "visit": "week-046",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-062",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-062",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-063",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-063",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-063",
+    "visit": "week-123",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-063",
+    "visit": "week-178",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-063/week-178/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-064",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-064",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-065",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-065",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-065",
+    "visit": "week-025",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-066",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-066",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-066",
+    "visit": "week-050",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-066",
+    "visit": "week-128",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-066/week-128/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-019-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-019-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-059",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-067",
+    "visit": "week-157",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-068",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-068",
+    "visit": "week-000-2",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-069",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-069",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-070",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-070",
+    "visit": "week-004",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-071",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-071",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-071",
+    "visit": "week-037",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-071/week-037/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-072",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-072",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-072",
+    "visit": "week-120",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-073",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-073",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-073",
+    "visit": "week-073",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-074",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-074",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-074",
+    "visit": "week-014",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-075",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-075",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-076",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-076",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-077",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-077",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-077",
+    "visit": "week-033",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-078",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-078",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-079",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-079",
+    "visit": "week-001",
+    "reason": "no_prior_valid_scan_in_segment"
+  },
+  {
+    "patient_id": "Patient-080",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-080",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-081",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-081",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-082",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-082",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-083",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-083",
+    "visit": "week-002",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-083",
+    "visit": "week-022",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-083/week-022/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-084",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-084",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-085",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-085",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-085",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-085",
+    "visit": "week-025",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-156",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-169",
+    "reason": "no_supervised_current_rating"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-173-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-086",
+    "visit": "week-173-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-087",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-087",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-088",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-088",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-013",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-089/week-013/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-026",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-089/week-026/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-039",
+    "reason": "invalid_or_missing_volumes: [Errno 2] No such file or directory: 'data/lumiere/extracted/Imaging/Patient-089/week-039/DeepBraTumIA-segmentation/atlas/segmentation/measured_volumes_in_mm3.json'"
+  },
+  {
+    "patient_id": "Patient-089",
+    "visit": "week-046",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-090",
+    "visit": "week-000-1",
+    "reason": "duplicate_week_lower_suffix"
+  },
+  {
+    "patient_id": "Patient-090",
+    "visit": "week-000-2",
+    "reason": "surgery_visit"
+  },
+  {
+    "patient_id": "Patient-091",
+    "visit": "week-000",
+    "reason": "preoperative"
+  },
+  {
+    "patient_id": "Patient-091",
+    "visit": "week-001",
+    "reason": "surgery_visit"
+  }
+]

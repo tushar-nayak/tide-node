@@ -1,0 +1,5 @@
+# Assessment-only CPU environment; actual execution versions saved under runs/assessment_v1.
+numpy>=2.0
+scikit-learn>=1.4
+pandas>=2.2
+matplotlib>=3.10

@@ -1,0 +1,4572 @@
+[
+  {
+    "variant": "previous_rating",
+    "method": "boosted",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.8388372641317692,
+          "ci95": [
+            0.7836318355091781,
+            0.8888016611926978
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.925865672370645,
+          "ci95": [
+            0.8873242323859534,
+            0.95737184528941
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.15167517614743883,
+          "ci95": [
+            0.12181419425896485,
+            0.18181220274650073
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7552986512524085,
+          "ci95": [
+            0.7114058512146706,
+            0.7985771581359816
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7468354430379747,
+          "ci95": [
+            0.6153755868544601,
+            0.8585858585858586
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.6878306878306878,
+          "ci95": [
+            0.628300622050622,
+            0.7453191557763097
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.31216931216931215,
+          "ci95": [
+            0.25468084422369036,
+            0.3716993779493779
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8557692307692307,
+          "ci95": [
+            0.8126165152963671,
+            0.8975573310696987
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9036608863198459,
+          "ci95": [
+            0.865697168292763,
+            0.939565404475043
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8945147679324894,
+          "ci95": [
+            0.825194639658261,
+            0.9513980263157894
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.9287749287749287,
+          "ci95": [
+            0.8840960584397828,
+            0.9681348291046341
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6943581320781257,
+          "ci95": [
+            0.6489105949508586,
+            0.7380608850667363
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.007850195570189171,
+          "ci95": [
+            -0.05019218189089092,
+            0.06583769518330511
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.06681327857473697,
+          "ci95": [
+            0.04583200603453603,
+            0.11087000722959724
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6958657767890248,
+          "ci95": [
+            0.5851529424358392,
+            0.7965495322855384
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6592625839531093,
+          "ci95": [
+            0.5419178302968274,
+            0.8089672573605143
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.23024404347280786,
+          "ci95": [
+            0.18472442532889052,
+            0.2755136192745867
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.4885057471264368,
+          "ci95": [
+            0.39766081871345027,
+            0.5757575757575758
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7688172043010753,
+          "ci95": [
+            0.6266410256410256,
+            0.8805143755615453
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.5944444444444444,
+          "ci95": [
+            0.5012324393358876,
+            0.6847610411777255
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.40555555555555556,
+          "ci95": [
+            0.3152389588222744,
+            0.4987675606641124
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.719626168224299,
+          "ci95": [
+            0.6149584076054665,
+            0.8078957680250783
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.7701149425287356,
+          "ci95": [
+            0.6774150878989588,
+            0.8580430006277463
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8924731182795699,
+          "ci95": [
+            0.7978034929818922,
+            0.9611217948717948
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7142857142857143,
+          "ci95": [
+            0.5595187651331719,
+            0.8888888888888888
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.5475631107495852,
+          "ci95": [
+            0.4900952255954864,
+            0.6061066326560212
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.06422977741625185,
+          "ci95": [
+            -0.047177427434890534,
+            0.15375042342758058
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.10995532572926753,
+          "ci95": [
+            0.06513712155336539,
+            0.19497324276835892
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.8352967000804858,
+        "average_precision": 0.9233802389368556,
+        "brier": 0.15507743263792192,
+        "sensitivity": 0.7803468208092486,
+        "specificity": 0.7215189873417721,
+        "band_coverage": 0.7222222222222222,
+        "band_deferral": 0.2777777777777778,
+        "band_accuracy": 0.8351648351648352,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8607594936708861,
+        "higher_precision": 0.9112903225806451,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6938891718181569,
+        "calibration_gap": 0.007381235310220415,
+        "ece_10bins": 0.08700841793495183,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.8485036950318285,
+        "average_precision": 0.9329280134568705,
+        "brier": 0.1480229186522424,
+        "sensitivity": 0.791907514450867,
+        "specificity": 0.7088607594936709,
+        "band_coverage": 0.7103174603174603,
+        "band_deferral": 0.2896825396825397,
+        "band_accuracy": 0.8715083798882681,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.9240506329113924,
+        "higher_precision": 0.9495798319327731,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.7010210450003763,
+        "calibration_gap": 0.014513108492439905,
+        "ece_10bins": 0.07350147475141931,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.8340528279798054,
+        "average_precision": 0.9219530003786185,
+        "brier": 0.15192517715215217,
+        "sensitivity": 0.6936416184971098,
+        "specificity": 0.810126582278481,
+        "band_coverage": 0.6309523809523809,
+        "band_deferral": 0.36904761904761907,
+        "band_accuracy": 0.8616352201257862,
+        "lower_exclusion_sensitivity": 0.9190751445086706,
+        "higher_inclusion_specificity": 0.8987341772151899,
+        "higher_precision": 0.9259259259259259,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6881641794158437,
+        "calibration_gap": 0.0016562429079071885,
+        "ece_10bins": 0.07221516748701001,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  },
+  {
+    "variant": "previous_rating",
+    "method": "enhancing_nadir",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.733165044755006,
+          "ci95": [
+            0.6595536242075868,
+            0.8093073719741557
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8546281589342762,
+          "ci95": [
+            0.7980994438374517,
+            0.9190885731709949
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.18605159819742856,
+          "ci95": [
+            0.15682428682748506,
+            0.21440145662847288
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7745664739884393,
+          "ci95": [
+            0.7137657933853585,
+            0.8362581750233572
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6540084388185654,
+          "ci95": [
+            0.4726977087952698,
+            0.8089726767520838
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.4523809523809524,
+          "ci95": [
+            0.36454409434958635,
+            0.5425860271115746
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.5476190476190477,
+          "ci95": [
+            0.45741397288842545,
+            0.6354559056504137
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7426900584795322,
+          "ci95": [
+            0.6648333604457278,
+            0.8345595145953119
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8998073217726397,
+          "ci95": [
+            0.8424162679425837,
+            0.9485989053345666
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8481012658227848,
+          "ci95": [
+            0.7149742562929061,
+            0.9639720077220078
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.8506224066390041,
+          "ci95": [
+            0.75,
+            0.966489051867934
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6882892884153253,
+          "ci95": [
+            0.6587430360256598,
+            0.7198973712804041
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.0017813519073887315,
+          "ci95": [
+            -0.08368310719304851,
+            0.09025090776226603
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.10107782460482927,
+          "ci95": [
+            0.06449507420563107,
+            0.16133446278411123
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.6069364161849711,
+          "ci95": [
+            0.5269303498266625,
+            0.6923192771084337
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.759493670886076,
+          "ci95": [
+            0.6034188871473354,
+            0.8961150918047469
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.664611914472871,
+          "ci95": [
+            0.5686017631924064,
+            0.7623322748533932
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6368843761267216,
+          "ci95": [
+            0.5387059501087689,
+            0.7965895359804966
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2604643468073529,
+          "ci95": [
+            0.21220782716261044,
+            0.305466364359021
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7068965517241379,
+          "ci95": [
+            0.5932046453232893,
+            0.8103692257644761
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6720430107526881,
+          "ci95": [
+            0.47700928381962865,
+            0.8299383904505199
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.3861111111111111,
+          "ci95": [
+            0.26546720458094747,
+            0.5206355765446675
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6138888888888889,
+          "ci95": [
+            0.4793644234553326,
+            0.7345327954190525
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.6258992805755396,
+          "ci95": [
+            0.5033545935374906,
+            0.7787657196087564
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8908045977011494,
+          "ci95": [
+            0.8,
+            0.9597701149425287
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8225806451612904,
+          "ci95": [
+            0.6484586247086247,
+            0.9635063686613793
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.6413043478260869,
+          "ci95": [
+            0.48622542595019663,
+            0.8929041353383457
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6540948326439288,
+          "ci95": [
+            0.6176770351515202,
+            0.6987856260108812
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.1707614993105953,
+          "ci95": [
+            0.03932631980918464,
+            0.27043218419677234
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.18737878918539475,
+          "ci95": [
+            0.11117456313147946,
+            0.2918974322379758
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.5,
+          "ci95": [
+            0.38181818181818183,
+            0.6227004716981128
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.7419354838709677,
+          "ci95": [
+            0.549921875,
+            0.894752141982864
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7319821467769079,
+        "average_precision": 0.850405483824915,
+        "brier": 0.18822075614713502,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6582278481012658,
+        "band_coverage": 0.4722222222222222,
+        "band_deferral": 0.5277777777777778,
+        "band_accuracy": 0.7310924369747899,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.810126582278481,
+        "higher_precision": 0.8235294117647058,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6891282234882643,
+        "calibration_gap": 0.002620286980327801,
+        "ece_10bins": 0.11881000260499917,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      },
+      "1729": {
+        "auroc": 0.7402868222726275,
+        "average_precision": 0.8578594778233366,
+        "brier": 0.18485305520420517,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6455696202531646,
+        "band_coverage": 0.4246031746031746,
+        "band_deferral": 0.5753968253968254,
+        "band_accuracy": 0.7663551401869159,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.8987341772151899,
+        "higher_precision": 0.8918918918918919,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6877074584475716,
+        "calibration_gap": 0.001199521939635185,
+        "ece_10bins": 0.07648795405849262,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      },
+      "2026": {
+        "auroc": 0.7335186946659837,
+        "average_precision": 0.8579943977357118,
+        "brier": 0.18508098324094555,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6582278481012658,
+        "band_coverage": 0.4603174603174603,
+        "band_deferral": 0.5396825396825397,
+        "band_accuracy": 0.7327586206896551,
+        "lower_exclusion_sensitivity": 0.8959537572254336,
+        "higher_inclusion_specificity": 0.8354430379746836,
+        "higher_precision": 0.8414634146341463,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6880321833101398,
+        "calibration_gap": 0.001524246802203197,
+        "ece_10bins": 0.10793551715099599,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      }
+    }
+  },
+  {
+    "variant": "previous_rating",
+    "method": "enhancing_previous",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.7477094054616554,
+          "ci95": [
+            0.690638434755145,
+            0.8095878309851005
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8727529192984298,
+          "ci95": [
+            0.8110568864203938,
+            0.9322370859686866
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.1854860430084623,
+          "ci95": [
+            0.15335502553526364,
+            0.21345868773110066
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5857418111753372,
+          "ci95": [
+            0.5235501918158568,
+            0.6533440860215053
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8396624472573839,
+          "ci95": [
+            0.7604013480392157,
+            0.9152542372881356
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.6031746031746031,
+          "ci95": [
+            0.5185185185185185,
+            0.6811132170281688
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.3968253968253968,
+          "ci95": [
+            0.3188867829718311,
+            0.48148148148148145
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8135964912280702,
+          "ci95": [
+            0.7552455948160515,
+            0.8826843505760738
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8901734104046243,
+          "ci95": [
+            0.8441719311284529,
+            0.9421971740526655
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8818565400843882,
+          "ci95": [
+            0.8055448717948718,
+            0.9491579060287492
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.910828025477707,
+          "ci95": [
+            0.8533441917687385,
+            0.964790107834507
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6862035643609359,
+          "ci95": [
+            0.6691104433340188,
+            0.705807044579861
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.000304372147000634,
+          "ci95": [
+            -0.0806151262349489,
+            0.08560266818204662
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.10190340045121163,
+          "ci95": [
+            0.06910232385760791,
+            0.17805314080014503
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.47398843930635837,
+          "ci95": [
+            0.405125,
+            0.5503065774804905
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.9240506329113924,
+          "ci95": [
+            0.8571428571428571,
+            0.9827586206896551
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6996817451489309,
+          "ci95": [
+            0.6013496668561323,
+            0.8000398173981423
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.7194562138737203,
+          "ci95": [
+            0.5923226430931552,
+            0.8565685058751924
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2680894127931677,
+          "ci95": [
+            0.22070257173147856,
+            0.3040917357434916
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5747126436781609,
+          "ci95": [
+            0.46267854277002085,
+            0.6851939203354298
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7956989247311828,
+          "ci95": [
+            0.6797262301146874,
+            0.8888888888888888
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.525,
+          "ci95": [
+            0.400440303494909,
+            0.6635714285714281
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.475,
+          "ci95": [
+            0.33642857142857147,
+            0.5995596965050909
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7248677248677249,
+          "ci95": [
+            0.6229484777517564,
+            0.8421282129742961
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8620689655172413,
+          "ci95": [
+            0.7543859649122807,
+            0.95
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8494623655913979,
+          "ci95": [
+            0.7343489583333334,
+            0.9342159188955996
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7723577235772358,
+          "ci95": [
+            0.6518518518518519,
+            0.9
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6795173149549394,
+          "ci95": [
+            0.6528203435662042,
+            0.7068144859507133
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.19618398162160602,
+          "ci95": [
+            0.07354157623977997,
+            0.2917737986430207
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.21997110167510825,
+          "ci95": [
+            0.14650177611677234,
+            0.32814527223477974
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.41379310344827586,
+          "ci95": [
+            0.3,
+            0.5357142857142857
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.9032258064516129,
+          "ci95": [
+            0.8055386178861789,
+            0.9729907539118064
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7500914611838736,
+        "average_precision": 0.8743979487136193,
+        "brier": 0.18522729571261382,
+        "sensitivity": 0.6011560693641619,
+        "specificity": 0.8227848101265823,
+        "band_coverage": 0.6031746031746031,
+        "band_deferral": 0.3968253968253968,
+        "band_accuracy": 0.8157894736842105,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8860759493670886,
+        "higher_precision": 0.9150943396226415,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6856545976329209,
+        "calibration_gap": -0.0008533388750155227,
+        "ece_10bins": 0.12098229437540334,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      },
+      "1729": {
+        "auroc": 0.7487378356625448,
+        "average_precision": 0.8711481662830437,
+        "brier": 0.18574907350338202,
+        "sensitivity": 0.5895953757225434,
+        "specificity": 0.8354430379746836,
+        "band_coverage": 0.6071428571428571,
+        "band_deferral": 0.39285714285714285,
+        "band_accuracy": 0.8104575163398693,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8734177215189873,
+        "higher_precision": 0.9038461538461539,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6867428371535106,
+        "calibration_gap": 0.00023490064557406772,
+        "ece_10bins": 0.10614629390556692,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      },
+      "2026": {
+        "auroc": 0.7507865661813127,
+        "average_precision": 0.8762843599520412,
+        "brier": 0.18548175980939113,
+        "sensitivity": 0.5664739884393064,
+        "specificity": 0.8607594936708861,
+        "band_coverage": 0.5992063492063492,
+        "band_deferral": 0.4007936507936508,
+        "band_accuracy": 0.8145695364238411,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8860759493670886,
+        "higher_precision": 0.9134615384615384,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6862132582963761,
+        "calibration_gap": -0.0002946782115604505,
+        "ece_10bins": 0.09878279660976316,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      }
+    }
+  },
+  {
+    "variant": "previous_rating",
+    "method": "logistic",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.8080778517597131,
+          "ci95": [
+            0.7395219768620122,
+            0.8698890232598557
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.9028696686831086,
+          "ci95": [
+            0.8432561847278962,
+            0.9490677743494738
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.16578957202167116,
+          "ci95": [
+            0.13658069039270335,
+            0.1955277377803597
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7302504816955684,
+          "ci95": [
+            0.6645819978632478,
+            0.7858413310566809
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8059071729957806,
+          "ci95": [
+            0.6915331431079894,
+            0.898989898989899
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.6216931216931217,
+          "ci95": [
+            0.5501908030528488,
+            0.6944524265644955
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.3783068783068783,
+          "ci95": [
+            0.3055475734355045,
+            0.4498091969471511
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8276595744680851,
+          "ci95": [
+            0.7650366541353384,
+            0.8846174004192872
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8998073217726397,
+          "ci95": [
+            0.8615952760689602,
+            0.9343588322246859
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8776371308016878,
+          "ci95": [
+            0.7857041969330105,
+            0.9490760357815442
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.911042944785276,
+          "ci95": [
+            0.8494476714033814,
+            0.9626168224299065
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6854657850523692,
+          "ci95": [
+            0.6485521731951239,
+            0.7238289361224749
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.001042151455567319,
+          "ci95": [
+            -0.06333627003084617,
+            0.05823831275344808
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.08054481559089875,
+          "ci95": [
+            0.05445341032216375,
+            0.13124319976268856
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6484674329501916,
+          "ci95": [
+            0.5281650079431829,
+            0.7745556458093141
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6378170518991351,
+          "ci95": [
+            0.510549027496878,
+            0.8147486314185202
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.24326699782778782,
+          "ci95": [
+            0.20035624338792227,
+            0.2837877537503387
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.3390804597701149,
+          "ci95": [
+            0.24404761904761904,
+            0.4406825223254966
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8978494623655914,
+          "ci95": [
+            0.7972924010967489,
+            0.9736910635964913
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.4861111111111111,
+          "ci95": [
+            0.3678087238432066,
+            0.5967406624383368
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.5138888888888888,
+          "ci95": [
+            0.40325933756166316,
+            0.6321912761567934
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.6628571428571428,
+          "ci95": [
+            0.499910071942446,
+            0.8000207468879668
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.7413793103448276,
+          "ci95": [
+            0.6384180790960452,
+            0.8395061728395061
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9247311827956989,
+          "ci95": [
+            0.83647512864494,
+            0.988515325670498
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.6888888888888889,
+          "ci95": [
+            0.4821146021699819,
+            0.9362953692115137
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.548344108071571,
+          "ci95": [
+            0.5101117685530733,
+            0.5948176229845199
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.06501077473823767,
+          "ci95": [
+            -0.05218417120359471,
+            0.15312658138062615
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.12928486177524395,
+          "ci95": [
+            0.08403985086391652,
+            0.21312096603959016
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7976146923245775,
+        "average_precision": 0.892749000503375,
+        "brier": 0.16789248366203247,
+        "sensitivity": 0.6994219653179191,
+        "specificity": 0.810126582278481,
+        "band_coverage": 0.6190476190476191,
+        "band_deferral": 0.38095238095238093,
+        "band_accuracy": 0.8205128205128205,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.8607594936708861,
+        "higher_precision": 0.8981481481481481,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6817721427470996,
+        "calibration_gap": -0.0047357937608368626,
+        "ece_10bins": 0.06781249769306541,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.8187605180361455,
+        "average_precision": 0.9073023223313109,
+        "brier": 0.1620803141550698,
+        "sensitivity": 0.791907514450867,
+        "specificity": 0.7721518987341772,
+        "band_coverage": 0.6388888888888888,
+        "band_deferral": 0.3611111111111111,
+        "band_accuracy": 0.8322981366459627,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.8734177215189873,
+        "higher_precision": 0.911504424778761,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.690873509043553,
+        "calibration_gap": 0.004365572535616417,
+        "ece_10bins": 0.10516425088270917,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.8089558791248994,
+        "average_precision": 0.9118140795913734,
+        "brier": 0.16739591824791125,
+        "sensitivity": 0.6994219653179191,
+        "specificity": 0.8354430379746836,
+        "band_coverage": 0.6071428571428571,
+        "band_deferral": 0.39285714285714285,
+        "band_accuracy": 0.8300653594771242,
+        "lower_exclusion_sensitivity": 0.8959537572254336,
+        "higher_inclusion_specificity": 0.8987341772151899,
+        "higher_precision": 0.9238095238095239,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.683751703366455,
+        "calibration_gap": -0.0027562331414815173,
+        "ece_10bins": 0.09307166391317165,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  },
+  {
+    "variant": "previous_rating",
+    "method": "previous_rating_rule",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.6915359787972651,
+          "ci95": [
+            0.6008589600412918,
+            0.7679112502279506
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8029140259474349,
+          "ci95": [
+            0.7294150630558324,
+            0.8733970311243019
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.17921770315136007,
+          "ci95": [
+            0.14913995559663318,
+            0.2087273765676484
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.6647398843930635,
+          "ci95": [
+            0.5804152637485971,
+            0.7305749302510961
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7848101265822784,
+          "ci95": [
+            0.6571205357142857,
+            0.8823529411764706
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": null,
+          "ci95": null,
+          "valid_bootstraps": 0
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": null,
+          "ci95": null,
+          "valid_bootstraps": 0
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.68621938575541,
+          "ci95": [
+            0.6508512446221695,
+            0.720000734280234
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.0002885507525264562,
+          "ci95": [
+            -0.06159126624946446,
+            0.057310269307819156
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.018052760722518383,
+          "ci95": [
+            0.013191455011543464,
+            0.0907011945062358
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.6647398843930635,
+          "ci95": [
+            0.5804152637485971,
+            0.7305749302510961
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.7848101265822784,
+          "ci95": [
+            0.6571205357142857,
+            0.8823529411764706
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.4376004202199975,
+          "ci95": [
+            0.33953959388747446,
+            0.5453733029874364
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.4422791902053013,
+          "ci95": [
+            0.33063188499362894,
+            0.6280174267535903
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.25149284482381706,
+          "ci95": [
+            0.24719948407511214,
+            0.2565198633712795
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": null,
+          "ci95": null,
+          "valid_bootstraps": 0
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": null,
+          "ci95": null,
+          "valid_bootstraps": 0
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.48242690235471125,
+          "ci95": [
+            0.4781635272455586,
+            0.4864037187123395
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.0009064309786220556,
+          "ci95": [
+            -0.1338701498588292,
+            0.10346361520745037
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.0376103231189721,
+          "ci95": [
+            0.013239383100126751,
+            0.16328290563068773
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.694080632179703,
+        "average_precision": 0.8021397564920385,
+        "brier": 0.17908808125085013,
+        "sensitivity": 0.6647398843930635,
+        "specificity": 0.7848101265822784,
+        "band_coverage": 0.0,
+        "band_deferral": 1.0,
+        "band_accuracy": null,
+        "lower_exclusion_sensitivity": 1.0,
+        "higher_inclusion_specificity": 1.0,
+        "higher_precision": null,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.68662760102042,
+        "calibration_gap": 0.00011966451248344098,
+        "ece_10bins": 0.016565121886169366,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6647398843930635,
+        "fixed_rule_specificity": 0.7848101265822784
+      },
+      "1729": {
+        "auroc": 0.6906782761396063,
+        "average_precision": 0.7997773607052304,
+        "brier": 0.17924290534312812,
+        "sensitivity": 0.6647398843930635,
+        "specificity": 0.7848101265822784,
+        "band_coverage": 0.0,
+        "band_deferral": 1.0,
+        "band_accuracy": null,
+        "lower_exclusion_sensitivity": 1.0,
+        "higher_inclusion_specificity": 1.0,
+        "higher_precision": null,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6862747047726374,
+        "calibration_gap": -0.00023323173529901344,
+        "ece_10bins": 0.016107341836246247,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6647398843930635,
+        "fixed_rule_specificity": 0.7848101265822784
+      },
+      "2026": {
+        "auroc": 0.6930196824467696,
+        "average_precision": 0.8077695938819799,
+        "brier": 0.17932212286010205,
+        "sensitivity": 0.6647398843930635,
+        "specificity": 0.7848101265822784,
+        "band_coverage": 0.0,
+        "band_deferral": 1.0,
+        "band_accuracy": null,
+        "lower_exclusion_sensitivity": 1.0,
+        "higher_inclusion_specificity": 1.0,
+        "higher_precision": null,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6857558514731728,
+        "calibration_gap": -0.0007520850347638032,
+        "ece_10bins": 0.021843166621011836,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6647398843930635,
+        "fixed_rule_specificity": 0.7848101265822784
+      }
+    }
+  },
+  {
+    "variant": "volumes",
+    "method": "boosted",
+    "all": {
+      "patients": 79,
+      "unique_assessments": 371,
+      "positive_unique_assessments": 233,
+      "prediction_rows": 1113,
+      "metrics": {
+        "auroc": {
+          "value": 0.8108477949866268,
+          "ci95": [
+            0.7582676581275773,
+            0.8585760556830436
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8727013425959957,
+          "ci95": [
+            0.8122194372630844,
+            0.9213385928169524
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.16923419132315695,
+          "ci95": [
+            0.1449724780019702,
+            0.19693660905363494
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7181688125894135,
+          "ci95": [
+            0.6683242324960562,
+            0.763713820416019
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7657004830917874,
+          "ci95": [
+            0.6666666666666666,
+            0.8608756038647343
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.5947888589398024,
+          "ci95": [
+            0.5475383049138158,
+            0.6463347255273338
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.4052111410601977,
+          "ci95": [
+            0.35366527447266605,
+            0.452461695086184
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.824773413897281,
+          "ci95": [
+            0.777597243176519,
+            0.866009341400507
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8927038626609443,
+          "ci95": [
+            0.8544025661587811,
+            0.9262239017673799
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9009661835748792,
+          "ci95": [
+            0.8507442786069652,
+            0.9478458049886621
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.8962025316455696,
+          "ci95": [
+            0.8373936471922859,
+            0.9465739477163205
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.628032345013477,
+          "ci95": [
+            0.5626818270165209,
+            0.6895606143220647
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6259803361886269,
+          "ci95": [
+            0.5961405502315712,
+            0.6562339979252985
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.002052008824850178,
+          "ci95": [
+            -0.05774499658691143,
+            0.06011147361555862
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.03869950782939775,
+          "ci95": [
+            0.03432506477765053,
+            0.0853207070564708
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.7481615375108145,
+          "ci95": [
+            0.6538129587650625,
+            0.838059957660652
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.7231557883248417,
+          "ci95": [
+            0.5982709209097745,
+            0.8701207845018402
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.22409065658221264,
+          "ci95": [
+            0.16899296351663023,
+            0.2732820271523838
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7011494252873564,
+          "ci95": [
+            0.6,
+            0.8022598870056498
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6935483870967742,
+          "ci95": [
+            0.528683908045977,
+            0.8571623731459795
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.55,
+          "ci95": [
+            0.47619047619047616,
+            0.6350615376274127
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.45,
+          "ci95": [
+            0.3649384623725873,
+            0.5238095238095238
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7575757575757576,
+          "ci95": [
+            0.6608140827181075,
+            0.855072463768116
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8793103448275862,
+          "ci95": [
+            0.8064418377321603,
+            0.9462413594470046
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8548387096774194,
+          "ci95": [
+            0.758594566353187,
+            0.9468812162546176
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7692307692307693,
+          "ci95": [
+            0.6428571428571429,
+            0.9120879120879121
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6259185789702668,
+          "ci95": [
+            0.5695211028460233,
+            0.6834280940758265
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.14258524563693353,
+          "ci95": [
+            0.02985147915037235,
+            0.23592636324297303
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.14689331365011626,
+          "ci95": [
+            0.07675952196214829,
+            0.23940428210004477
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.8174721652049511,
+        "average_precision": 0.8675839042669788,
+        "brier": 0.1657286580866516,
+        "sensitivity": 0.703862660944206,
+        "specificity": 0.7681159420289855,
+        "band_coverage": 0.568733153638814,
+        "band_deferral": 0.431266846361186,
+        "band_accuracy": 0.8293838862559242,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.9057971014492754,
+        "higher_precision": 0.8925619834710744,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6257532939553629,
+        "calibration_gap": -0.0022790510581142116,
+        "ece_10bins": 0.03681352327822091,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.8002114822417118,
+        "average_precision": 0.8722847999372403,
+        "brier": 0.1742663280288168,
+        "sensitivity": 0.7167381974248928,
+        "specificity": 0.7681159420289855,
+        "band_coverage": 0.568733153638814,
+        "band_deferral": 0.431266846361186,
+        "band_accuracy": 0.8151658767772512,
+        "lower_exclusion_sensitivity": 0.8969957081545065,
+        "higher_inclusion_specificity": 0.8913043478260869,
+        "higher_precision": 0.8872180451127819,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6349142758811537,
+        "calibration_gap": 0.0068819308676765865,
+        "ece_10bins": 0.05617737154261726,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.8156061454251415,
+        "average_precision": 0.8810369168069266,
+        "brier": 0.16770758785400244,
+        "sensitivity": 0.7339055793991416,
+        "specificity": 0.7608695652173914,
+        "band_coverage": 0.6469002695417789,
+        "band_deferral": 0.353099730458221,
+        "band_accuracy": 0.8291666666666667,
+        "lower_exclusion_sensitivity": 0.8798283261802575,
+        "higher_inclusion_specificity": 0.9057971014492754,
+        "higher_precision": 0.9078014184397163,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6172734387293642,
+        "calibration_gap": -0.010758906284112918,
+        "ece_10bins": 0.06585747067554619,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  },
+  {
+    "variant": "volumes",
+    "method": "enhancing_nadir",
+    "all": {
+      "patients": 79,
+      "unique_assessments": 371,
+      "positive_unique_assessments": 233,
+      "prediction_rows": 1113,
+      "metrics": {
+        "auroc": {
+          "value": 0.7049390779097814,
+          "ci95": [
+            0.6419319766082191,
+            0.7663942111467489
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8031201496993896,
+          "ci95": [
+            0.7400789765422315,
+            0.8632448280907442
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.20580734046652577,
+          "ci95": [
+            0.18723968499829569,
+            0.22518189220217627
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7138769670958512,
+          "ci95": [
+            0.65379113018598,
+            0.7742785094688276
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6086956521739131,
+          "ci95": [
+            0.4753372352285396,
+            0.7322853803858459
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.42138364779874216,
+          "ci95": [
+            0.35662653701702934,
+            0.48915176463644944
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.5786163522012578,
+          "ci95": [
+            0.5108482353635505,
+            0.6433734629829706
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7505330490405118,
+          "ci95": [
+            0.677342132505176,
+            0.8276778465079059
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9027181688125894,
+          "ci95": [
+            0.8544308038779489,
+            0.9472136222910216
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8816425120772947,
+          "ci95": [
+            0.8071031746031746,
+            0.9495666606584955
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.8439490445859873,
+          "ci95": [
+            0.7595469847775175,
+            0.9307240500463392
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.628032345013477,
+          "ci95": [
+            0.5626818270165209,
+            0.6895606143220647
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6288422804951301,
+          "ci95": [
+            0.607614586303418,
+            0.651797724287967
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.0008099354816531462,
+          "ci95": [
+            -0.06267124402564438,
+            0.06667792458027635
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.0462957790924746,
+          "ci95": [
+            0.032831031330873305,
+            0.10892452002694591
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.6008583690987125,
+          "ci95": [
+            0.5296384561729831,
+            0.6746041239462293
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.7101449275362319,
+          "ci95": [
+            0.595548153471915,
+            0.8165137614678899
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6711006056111729,
+          "ci95": [
+            0.5771228848832514,
+            0.765466492917468
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6371091758569919,
+          "ci95": [
+            0.5369854831106334,
+            0.7948869369506839
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.24518591824569805,
+          "ci95": [
+            0.2102475664564747,
+            0.2775011947068198
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.6609195402298851,
+          "ci95": [
+            0.5519125683060109,
+            0.761943164362519
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6827956989247311,
+          "ci95": [
+            0.4827409372236959,
+            0.8426215277777775
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.32222222222222224,
+          "ci95": [
+            0.2242950370609088,
+            0.43537568180425323
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6777777777777778,
+          "ci95": [
+            0.5646243181957468,
+            0.7757049629390912
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.6637931034482759,
+          "ci95": [
+            0.5396520146520146,
+            0.816933418693982
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9195402298850575,
+          "ci95": [
+            0.8456679894179894,
+            0.9824561403508771
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8655913978494624,
+          "ci95": [
+            0.7424170954831332,
+            0.9692324561403509
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.6875,
+          "ci95": [
+            0.5287247885491216,
+            0.9091314935064932
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.608435628645241,
+          "ci95": [
+            0.5774244346316033,
+            0.6477751369064613
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.12510229531190767,
+          "ci95": [
+            -0.0033591843764423173,
+            0.22378771980838216
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.1375595375227694,
+          "ci95": [
+            0.07335966659757655,
+            0.2391388536618887
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.5,
+          "ci95": [
+            0.38181818181818183,
+            0.6227004716981128
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.7419354838709677,
+          "ci95": [
+            0.549921875,
+            0.894752141982864
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7061640853393046,
+        "average_precision": 0.8045789896645326,
+        "brier": 0.20604657340221613,
+        "sensitivity": 0.6909871244635193,
+        "specificity": 0.6086956521739131,
+        "band_coverage": 0.42857142857142855,
+        "band_deferral": 0.5714285714285714,
+        "band_accuracy": 0.7421383647798742,
+        "lower_exclusion_sensitivity": 0.9055793991416309,
+        "higher_inclusion_specificity": 0.8623188405797102,
+        "higher_precision": 0.8240740740740741,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6302376777236796,
+        "calibration_gap": 0.0022053327102024597,
+        "ece_10bins": 0.044548042387298176,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6008583690987125,
+        "fixed_rule_specificity": 0.7101449275362319
+      },
+      "1729": {
+        "auroc": 0.7016389873732661,
+        "average_precision": 0.7967607131573593,
+        "brier": 0.20638743404038531,
+        "sensitivity": 0.7167381974248928,
+        "specificity": 0.6159420289855072,
+        "band_coverage": 0.41778975741239893,
+        "band_deferral": 0.5822102425876011,
+        "band_accuracy": 0.7483870967741936,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.8840579710144928,
+        "higher_precision": 0.8446601941747572,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6283333488844908,
+        "calibration_gap": 0.0003010038710137015,
+        "ece_10bins": 0.05265027371451862,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6008583690987125,
+        "fixed_rule_specificity": 0.7101449275362319
+      },
+      "2026": {
+        "auroc": 0.7071903962181999,
+        "average_precision": 0.8080014825765556,
+        "brier": 0.20498801395697586,
+        "sensitivity": 0.7339055793991416,
+        "specificity": 0.6014492753623188,
+        "band_coverage": 0.41778975741239893,
+        "band_deferral": 0.5822102425876011,
+        "band_accuracy": 0.7612903225806451,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.8985507246376812,
+        "higher_precision": 0.8640776699029126,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6279558148772204,
+        "calibration_gap": -7.653013625672236e-05,
+        "ece_10bins": 0.04910218870414679,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6008583690987125,
+        "fixed_rule_specificity": 0.7101449275362319
+      }
+    }
+  },
+  {
+    "variant": "volumes",
+    "method": "enhancing_previous",
+    "all": {
+      "patients": 79,
+      "unique_assessments": 371,
+      "positive_unique_assessments": 233,
+      "prediction_rows": 1113,
+      "metrics": {
+        "auroc": {
+          "value": 0.6794402631779008,
+          "ci95": [
+            0.6190403039941,
+            0.7374876490869966
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.7743343875645954,
+          "ci95": [
+            0.705479876268902,
+            0.8359454854006931
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2142170080907622,
+          "ci95": [
+            0.19649655164837912,
+            0.2316139641001759
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5693848354792561,
+          "ci95": [
+            0.5129197997366955,
+            0.631272335061661
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7439613526570048,
+          "ci95": [
+            0.6492971054572272,
+            0.8230772439105771
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.40610961365678344,
+          "ci95": [
+            0.3440796714926763,
+            0.47619047619047616
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.5938903863432166,
+          "ci95": [
+            0.5238095238095238,
+            0.6559203285073236
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7367256637168141,
+          "ci95": [
+            0.6653904367051502,
+            0.8039310562934852
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.894134477825465,
+          "ci95": [
+            0.856046787618676,
+            0.9295799409678889
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8913043478260869,
+          "ci95": [
+            0.8291064863445379,
+            0.9425351689826728
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.832089552238806,
+          "ci95": [
+            0.7509430455214983,
+            0.9067270788912579
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.628032345013477,
+          "ci95": [
+            0.5626818270165209,
+            0.6895606143220647
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6272639034148991,
+          "ci95": [
+            0.6161293853032124,
+            0.639763469327841
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.0007684415985778938,
+          "ci95": [
+            -0.06075335892731322,
+            0.06180092306541092
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.06994715874702404,
+          "ci95": [
+            0.04052512381545168,
+            0.13040936217190782
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.4978540772532189,
+          "ci95": [
+            0.43589449541284403,
+            0.5637070368688015
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.8043478260869565,
+          "ci95": [
+            0.7155926008801373,
+            0.875915424986427
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.703482264244222,
+          "ci95": [
+            0.6007349401509238,
+            0.8030777790869695
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.7128812157063618,
+          "ci95": [
+            0.5878867682282759,
+            0.8576872037544412
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2456747427295135,
+          "ci95": [
+            0.21425503131204904,
+            0.2702795064683297
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5402298850574713,
+          "ci95": [
+            0.43281739450893675,
+            0.6600094339622641
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8494623655913979,
+          "ci95": [
+            0.7333333333333333,
+            0.9343544137022397
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.30833333333333335,
+          "ci95": [
+            0.2086263713344179,
+            0.4151112463650503
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6916666666666667,
+          "ci95": [
+            0.5848887536349496,
+            0.791373628665582
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7477477477477478,
+          "ci95": [
+            0.6,
+            0.8989654699917781
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.867816091954023,
+          "ci95": [
+            0.7627118644067796,
+            0.9532163742690059
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9731182795698925,
+          "ci95": [
+            0.9308176100628931,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.9056603773584906,
+          "ci95": [
+            0.7726948051948052,
+            1.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.612228489620925,
+          "ci95": [
+            0.5941961491373259,
+            0.6320718190624823
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.1288951562875916,
+          "ci95": [
+            0.007272487417704348,
+            0.22534217597876607
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.19480461760250728,
+          "ci95": [
+            0.11958603280196255,
+            0.2899864950089656
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.41379310344827586,
+          "ci95": [
+            0.3,
+            0.5357142857142857
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.9032258064516129,
+          "ci95": [
+            0.8055386178861789,
+            0.9729907539118064
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.6814237730919948,
+        "average_precision": 0.7790858363573149,
+        "brier": 0.21453114295121453,
+        "sensitivity": 0.5665236051502146,
+        "specificity": 0.7391304347826086,
+        "band_coverage": 0.39892183288409705,
+        "band_deferral": 0.601078167115903,
+        "band_accuracy": 0.7297297297297297,
+        "lower_exclusion_sensitivity": 0.8884120171673819,
+        "higher_inclusion_specificity": 0.8985507246376812,
+        "higher_precision": 0.8390804597701149,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6274065645547159,
+        "calibration_gap": -0.000625780458761199,
+        "ece_10bins": 0.08716130194371711,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.4978540772532189,
+        "fixed_rule_specificity": 0.8043478260869565
+      },
+      "1729": {
+        "auroc": 0.6779249860048516,
+        "average_precision": 0.7725581165610232,
+        "brier": 0.21384989335905594,
+        "sensitivity": 0.5708154506437768,
+        "specificity": 0.7318840579710145,
+        "band_coverage": 0.40161725067385445,
+        "band_deferral": 0.5983827493261455,
+        "band_accuracy": 0.7449664429530202,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.8913043478260869,
+        "higher_precision": 0.8333333333333334,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6275944509128286,
+        "calibration_gap": -0.0004378941006484929,
+        "ece_10bins": 0.0674796317197918,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.4978540772532189,
+        "fixed_rule_specificity": 0.8043478260869565
+      },
+      "2026": {
+        "auroc": 0.6784847919387945,
+        "average_precision": 0.7731812824354782,
+        "brier": 0.21426998796201607,
+        "sensitivity": 0.5708154506437768,
+        "specificity": 0.7608695652173914,
+        "band_coverage": 0.41778975741239893,
+        "band_deferral": 0.5822102425876011,
+        "band_accuracy": 0.7354838709677419,
+        "lower_exclusion_sensitivity": 0.8927038626609443,
+        "higher_inclusion_specificity": 0.8840579710144928,
+        "higher_precision": 0.8241758241758241,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6267906947771531,
+        "calibration_gap": -0.001241650236323993,
+        "ece_10bins": 0.06796190035074666,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.4978540772532189,
+        "fixed_rule_specificity": 0.8043478260869565
+      }
+    }
+  },
+  {
+    "variant": "volumes",
+    "method": "logistic",
+    "all": {
+      "patients": 79,
+      "unique_assessments": 371,
+      "positive_unique_assessments": 233,
+      "prediction_rows": 1113,
+      "metrics": {
+        "auroc": {
+          "value": 0.7722246411367516,
+          "ci95": [
+            0.7148552912520921,
+            0.8273074370791876
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8435675457774928,
+          "ci95": [
+            0.7749292392419996,
+            0.9045185667178747
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.18409160533100777,
+          "ci95": [
+            0.1627827630760395,
+            0.20629154661277416
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.6208869814020028,
+          "ci95": [
+            0.5396053100498931,
+            0.700333557673007
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7898550724637681,
+          "ci95": [
+            0.6919815241017773,
+            0.8759211641967116
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.522911051212938,
+          "ci95": [
+            0.4648310919900469,
+            0.5830936578171092
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.477088948787062,
+          "ci95": [
+            0.41690634218289085,
+            0.5351689080099531
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8178694158075601,
+          "ci95": [
+            0.7616067172344635,
+            0.8684655931059002
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9027181688125894,
+          "ci95": [
+            0.863246855345912,
+            0.9388894422310757
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9082125603864735,
+          "ci95": [
+            0.8295710205746926,
+            0.9661880069139741
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.8935574229691877,
+          "ci95": [
+            0.8181756422924902,
+            0.960452836020813
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.628032345013477,
+          "ci95": [
+            0.5626818270165209,
+            0.6895606143220647
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6251291448531539,
+          "ci95": [
+            0.5964230993810378,
+            0.65336036469169
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.002903200160323222,
+          "ci95": [
+            -0.06288776891158593,
+            0.061577426511149
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.056905794130849806,
+          "ci95": [
+            0.043105411342820234,
+            0.10919472289313546
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6905821282906933,
+          "ci95": [
+            0.586967211126875,
+            0.7837939826383105
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.669859447261173,
+          "ci95": [
+            0.5538403155045042,
+            0.8326441813820892
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.24503905067288667,
+          "ci95": [
+            0.20530843845555707,
+            0.28165635362882835
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5862068965517241,
+          "ci95": [
+            0.46991988515328337,
+            0.6935483870967742
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7526881720430108,
+          "ci95": [
+            0.6029082974653276,
+            0.8718055555555555
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.37222222222222223,
+          "ci95": [
+            0.2769934994582882,
+            0.483575647432985
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6277777777777778,
+          "ci95": [
+            0.516424352567015,
+            0.7230065005417118
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7089552238805971,
+          "ci95": [
+            0.5785699527744983,
+            0.8411317093100453
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.896551724137931,
+          "ci95": [
+            0.8103448275862069,
+            0.9661016949152542
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8870967741935484,
+          "ci95": [
+            0.7543859649122807,
+            0.9714366424535915
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.75,
+          "ci95": [
+            0.5982121995994659,
+            0.9240506329113924
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6215285359273106,
+          "ci95": [
+            0.5774941534028318,
+            0.6688733654776493
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.1381952025939773,
+          "ci95": [
+            0.01848747511430145,
+            0.22718708505225607
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.15893451333202469,
+          "ci95": [
+            0.1013771277151425,
+            0.2549036417328441
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7813646824656342,
+        "average_precision": 0.8500835082296467,
+        "brier": 0.18111183537675807,
+        "sensitivity": 0.6008583690987125,
+        "specificity": 0.8333333333333334,
+        "band_coverage": 0.5121293800539084,
+        "band_deferral": 0.48787061994609165,
+        "band_accuracy": 0.8157894736842105,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.9130434782608695,
+        "higher_precision": 0.8918918918918919,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6194178228170978,
+        "calibration_gap": -0.008614522196379244,
+        "ece_10bins": 0.06897015705937677,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.7525968775269017,
+        "average_precision": 0.8316275297303152,
+        "brier": 0.19085463462520577,
+        "sensitivity": 0.6437768240343348,
+        "specificity": 0.7028985507246377,
+        "band_coverage": 0.5013477088948787,
+        "band_deferral": 0.49865229110512127,
+        "band_accuracy": 0.8172043010752689,
+        "lower_exclusion_sensitivity": 0.9055793991416309,
+        "higher_inclusion_specificity": 0.9130434782608695,
+        "higher_precision": 0.896551724137931,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6277430884801657,
+        "calibration_gap": -0.0002892565333114463,
+        "ece_10bins": 0.0646680569762977,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.781613485102942,
+        "average_precision": 0.8495229329819387,
+        "brier": 0.18030834599105935,
+        "sensitivity": 0.6180257510729614,
+        "specificity": 0.8333333333333334,
+        "band_coverage": 0.555256064690027,
+        "band_deferral": 0.444743935309973,
+        "band_accuracy": 0.8203883495145631,
+        "lower_exclusion_sensitivity": 0.9012875536480687,
+        "higher_inclusion_specificity": 0.8985507246376812,
+        "higher_precision": 0.8923076923076924,
+        "prevalence": 0.628032345013477,
+        "mean_probability": 0.6282265232621982,
+        "calibration_gap": 0.00019417824872102797,
+        "ece_10bins": 0.05378824325974239,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  },
+  {
+    "variant": "volumes_matched_previous",
+    "method": "boosted",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.781143549344325,
+          "ci95": [
+            0.7119961839705535,
+            0.8501147647738179
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8773857489610641,
+          "ci95": [
+            0.814078821300503,
+            0.9326441591733655
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.17003141450926207,
+          "ci95": [
+            0.13927408611350142,
+            0.20157865778992756
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7090558766859345,
+          "ci95": [
+            0.6368997458533975,
+            0.7785565786688439
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.70042194092827,
+          "ci95": [
+            0.580952380952381,
+            0.8288398154251811
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.5515873015873016,
+          "ci95": [
+            0.47488986238986236,
+            0.6271727155566641
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.44841269841269843,
+          "ci95": [
+            0.3728272844433358,
+            0.5251101376101375
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8201438848920863,
+          "ci95": [
+            0.7588184584178499,
+            0.8783244437584322
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9094412331406551,
+          "ci95": [
+            0.8690418586789554,
+            0.9456249366190042
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8818565400843882,
+          "ci95": [
+            0.808201492057367,
+            0.9496176127365175
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.9017543859649123,
+          "ci95": [
+            0.8355448028673835,
+            0.9592642642642643
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6933784408154254,
+          "ci95": [
+            0.6613003183811378,
+            0.726665580277687
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.006870504307488981,
+          "ci95": [
+            -0.06459014834519361,
+            0.07981035608282626
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.02807447771643412,
+          "ci95": [
+            0.027591206440017918,
+            0.09699030312082187
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.7305184773204796,
+          "ci95": [
+            0.6340468220178187,
+            0.8237368616773356
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6933944970244829,
+          "ci95": [
+            0.5840822266749716,
+            0.8304768023801362
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.23381311759707787,
+          "ci95": [
+            0.1805173593650827,
+            0.27808848185650337
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.6494252873563219,
+          "ci95": [
+            0.5416666666666666,
+            0.7526928068223953
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6881720430107527,
+          "ci95": [
+            0.5444362745098039,
+            0.8288346038346037
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.5277777777777778,
+          "ci95": [
+            0.4260829307568438,
+            0.6408051545932459
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.4722222222222222,
+          "ci95": [
+            0.35919484540675395,
+            0.5739170692431562
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7526315789473684,
+          "ci95": [
+            0.6407685175084543,
+            0.850012886597938
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8793103448275862,
+          "ci95": [
+            0.8055316091954023,
+            0.9464345238095238
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8602150537634409,
+          "ci95": [
+            0.7450980392156863,
+            0.9427201704545455
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7346938775510204,
+          "ci95": [
+            0.5894590643274853,
+            0.8901132404181183
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6358644671218893,
+          "ci95": [
+            0.5830918863542438,
+            0.6892774461231932
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.15253113378855593,
+          "ci95": [
+            0.04174540410346968,
+            0.2422707342990546
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.1549033940157715,
+          "ci95": [
+            0.08858239872014674,
+            0.2483901292162893
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7862003365771566,
+        "average_precision": 0.8778690459382711,
+        "brier": 0.1681678794007245,
+        "sensitivity": 0.7283236994219653,
+        "specificity": 0.6962025316455697,
+        "band_coverage": 0.5396825396825397,
+        "band_deferral": 0.4603174603174603,
+        "band_accuracy": 0.8455882352941176,
+        "lower_exclusion_sensitivity": 0.930635838150289,
+        "higher_inclusion_specificity": 0.8860759493670886,
+        "higher_precision": 0.9081632653061225,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6998679535889367,
+        "calibration_gap": 0.013360017081000243,
+        "ece_10bins": 0.05283479687061859,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.8014194775737177,
+        "average_precision": 0.8923493587841785,
+        "brier": 0.16561082998395926,
+        "sensitivity": 0.7283236994219653,
+        "specificity": 0.6708860759493671,
+        "band_coverage": 0.5555555555555556,
+        "band_deferral": 0.4444444444444444,
+        "band_accuracy": 0.8285714285714286,
+        "lower_exclusion_sensitivity": 0.9075144508670521,
+        "higher_inclusion_specificity": 0.8987341772151899,
+        "higher_precision": 0.9166666666666666,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6977623965225772,
+        "calibration_gap": 0.011254460014640717,
+        "ece_10bins": 0.05953410577786874,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.757518109314407,
+        "average_precision": 0.8638180307795743,
+        "brier": 0.1763155341431024,
+        "sensitivity": 0.6705202312138728,
+        "specificity": 0.7341772151898734,
+        "band_coverage": 0.5595238095238095,
+        "band_deferral": 0.44047619047619047,
+        "band_accuracy": 0.7872340425531915,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8607594936708861,
+        "higher_precision": 0.8791208791208791,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6825049723347624,
+        "calibration_gap": -0.004002964173174028,
+        "ece_10bins": 0.03779054219001526,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  },
+  {
+    "variant": "volumes_matched_previous",
+    "method": "enhancing_nadir",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.733165044755006,
+          "ci95": [
+            0.6595536242075868,
+            0.8093073719741557
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8546281589342762,
+          "ci95": [
+            0.7980994438374517,
+            0.9190885731709949
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.18605159819742856,
+          "ci95": [
+            0.15682428682748506,
+            0.21440145662847288
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7745664739884393,
+          "ci95": [
+            0.7137657933853585,
+            0.8362581750233572
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6540084388185654,
+          "ci95": [
+            0.4726977087952698,
+            0.8089726767520838
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.4523809523809524,
+          "ci95": [
+            0.36454409434958635,
+            0.5425860271115746
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.5476190476190477,
+          "ci95": [
+            0.45741397288842545,
+            0.6354559056504137
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7426900584795322,
+          "ci95": [
+            0.6648333604457278,
+            0.8345595145953119
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8998073217726397,
+          "ci95": [
+            0.8424162679425837,
+            0.9485989053345666
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8481012658227848,
+          "ci95": [
+            0.7149742562929061,
+            0.9639720077220078
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.8506224066390041,
+          "ci95": [
+            0.75,
+            0.966489051867934
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6882892884153253,
+          "ci95": [
+            0.6587430360256598,
+            0.7198973712804041
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.0017813519073887315,
+          "ci95": [
+            -0.08368310719304851,
+            0.09025090776226603
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.10107782460482927,
+          "ci95": [
+            0.06449507420563107,
+            0.16133446278411123
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.6069364161849711,
+          "ci95": [
+            0.5269303498266625,
+            0.6923192771084337
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.759493670886076,
+          "ci95": [
+            0.6034188871473354,
+            0.8961150918047469
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.664611914472871,
+          "ci95": [
+            0.5686017631924064,
+            0.7623322748533932
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6368843761267216,
+          "ci95": [
+            0.5387059501087689,
+            0.7965895359804966
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2604643468073529,
+          "ci95": [
+            0.21220782716261044,
+            0.305466364359021
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.7068965517241379,
+          "ci95": [
+            0.5932046453232893,
+            0.8103692257644761
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.6720430107526881,
+          "ci95": [
+            0.47700928381962865,
+            0.8299383904505199
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.3861111111111111,
+          "ci95": [
+            0.26546720458094747,
+            0.5206355765446675
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6138888888888889,
+          "ci95": [
+            0.4793644234553326,
+            0.7345327954190525
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.6258992805755396,
+          "ci95": [
+            0.5033545935374906,
+            0.7787657196087564
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8908045977011494,
+          "ci95": [
+            0.8,
+            0.9597701149425287
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8225806451612904,
+          "ci95": [
+            0.6484586247086247,
+            0.9635063686613793
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.6413043478260869,
+          "ci95": [
+            0.48622542595019663,
+            0.8929041353383457
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6540948326439288,
+          "ci95": [
+            0.6176770351515202,
+            0.6987856260108812
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.1707614993105953,
+          "ci95": [
+            0.03932631980918464,
+            0.27043218419677234
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.18737878918539475,
+          "ci95": [
+            0.11117456313147946,
+            0.2918974322379758
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.5,
+          "ci95": [
+            0.38181818181818183,
+            0.6227004716981128
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.7419354838709677,
+          "ci95": [
+            0.549921875,
+            0.894752141982864
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7319821467769079,
+        "average_precision": 0.850405483824915,
+        "brier": 0.18822075614713502,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6582278481012658,
+        "band_coverage": 0.4722222222222222,
+        "band_deferral": 0.5277777777777778,
+        "band_accuracy": 0.7310924369747899,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.810126582278481,
+        "higher_precision": 0.8235294117647058,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6891282234882643,
+        "calibration_gap": 0.002620286980327801,
+        "ece_10bins": 0.11881000260499917,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      },
+      "1729": {
+        "auroc": 0.7402868222726275,
+        "average_precision": 0.8578594778233366,
+        "brier": 0.18485305520420517,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6455696202531646,
+        "band_coverage": 0.4246031746031746,
+        "band_deferral": 0.5753968253968254,
+        "band_accuracy": 0.7663551401869159,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.8987341772151899,
+        "higher_precision": 0.8918918918918919,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6877074584475716,
+        "calibration_gap": 0.001199521939635185,
+        "ece_10bins": 0.07648795405849262,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      },
+      "2026": {
+        "auroc": 0.7335186946659837,
+        "average_precision": 0.8579943977357118,
+        "brier": 0.18508098324094555,
+        "sensitivity": 0.7745664739884393,
+        "specificity": 0.6582278481012658,
+        "band_coverage": 0.4603174603174603,
+        "band_deferral": 0.5396825396825397,
+        "band_accuracy": 0.7327586206896551,
+        "lower_exclusion_sensitivity": 0.8959537572254336,
+        "higher_inclusion_specificity": 0.8354430379746836,
+        "higher_precision": 0.8414634146341463,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6880321833101398,
+        "calibration_gap": 0.001524246802203197,
+        "ece_10bins": 0.10793551715099599,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.6069364161849711,
+        "fixed_rule_specificity": 0.759493670886076
+      }
+    }
+  },
+  {
+    "variant": "volumes_matched_previous",
+    "method": "enhancing_previous",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.7477094054616554,
+          "ci95": [
+            0.690638434755145,
+            0.8095878309851005
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.8727529192984298,
+          "ci95": [
+            0.8110568864203938,
+            0.9322370859686866
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.1854860430084623,
+          "ci95": [
+            0.15335502553526364,
+            0.21345868773110066
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5857418111753372,
+          "ci95": [
+            0.5235501918158568,
+            0.6533440860215053
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8396624472573839,
+          "ci95": [
+            0.7604013480392157,
+            0.9152542372881356
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.6031746031746031,
+          "ci95": [
+            0.5185185185185185,
+            0.6811132170281688
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.3968253968253968,
+          "ci95": [
+            0.3188867829718311,
+            0.48148148148148145
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8135964912280702,
+          "ci95": [
+            0.7552455948160515,
+            0.8826843505760738
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8901734104046243,
+          "ci95": [
+            0.8441719311284529,
+            0.9421971740526655
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8818565400843882,
+          "ci95": [
+            0.8055448717948718,
+            0.9491579060287492
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.910828025477707,
+          "ci95": [
+            0.8533441917687385,
+            0.964790107834507
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6862035643609359,
+          "ci95": [
+            0.6691104433340188,
+            0.705807044579861
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.000304372147000634,
+          "ci95": [
+            -0.0806151262349489,
+            0.08560266818204662
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.10190340045121163,
+          "ci95": [
+            0.06910232385760791,
+            0.17805314080014503
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.47398843930635837,
+          "ci95": [
+            0.405125,
+            0.5503065774804905
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.9240506329113924,
+          "ci95": [
+            0.8571428571428571,
+            0.9827586206896551
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6996817451489309,
+          "ci95": [
+            0.6013496668561323,
+            0.8000398173981423
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.7194562138737203,
+          "ci95": [
+            0.5923226430931552,
+            0.8565685058751924
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2680894127931677,
+          "ci95": [
+            0.22070257173147856,
+            0.3040917357434916
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5747126436781609,
+          "ci95": [
+            0.46267854277002085,
+            0.6851939203354298
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.7956989247311828,
+          "ci95": [
+            0.6797262301146874,
+            0.8888888888888888
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.525,
+          "ci95": [
+            0.400440303494909,
+            0.6635714285714281
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.475,
+          "ci95": [
+            0.33642857142857147,
+            0.5995596965050909
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7248677248677249,
+          "ci95": [
+            0.6229484777517564,
+            0.8421282129742961
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8620689655172413,
+          "ci95": [
+            0.7543859649122807,
+            0.95
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.8494623655913979,
+          "ci95": [
+            0.7343489583333334,
+            0.9342159188955996
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7723577235772358,
+          "ci95": [
+            0.6518518518518519,
+            0.9
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6795173149549394,
+          "ci95": [
+            0.6528203435662042,
+            0.7068144859507133
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.19618398162160602,
+          "ci95": [
+            0.07354157623977997,
+            0.2917737986430207
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.21997110167510825,
+          "ci95": [
+            0.14650177611677234,
+            0.32814527223477974
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_sensitivity": {
+          "value": 0.41379310344827586,
+          "ci95": [
+            0.3,
+            0.5357142857142857
+          ],
+          "valid_bootstraps": 2000
+        },
+        "fixed_rule_specificity": {
+          "value": 0.9032258064516129,
+          "ci95": [
+            0.8055386178861789,
+            0.9729907539118064
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7500914611838736,
+        "average_precision": 0.8743979487136193,
+        "brier": 0.18522729571261382,
+        "sensitivity": 0.6011560693641619,
+        "specificity": 0.8227848101265823,
+        "band_coverage": 0.6031746031746031,
+        "band_deferral": 0.3968253968253968,
+        "band_accuracy": 0.8157894736842105,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8860759493670886,
+        "higher_precision": 0.9150943396226415,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6856545976329209,
+        "calibration_gap": -0.0008533388750155227,
+        "ece_10bins": 0.12098229437540334,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      },
+      "1729": {
+        "auroc": 0.7487378356625448,
+        "average_precision": 0.8711481662830437,
+        "brier": 0.18574907350338202,
+        "sensitivity": 0.5895953757225434,
+        "specificity": 0.8354430379746836,
+        "band_coverage": 0.6071428571428571,
+        "band_deferral": 0.39285714285714285,
+        "band_accuracy": 0.8104575163398693,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8734177215189873,
+        "higher_precision": 0.9038461538461539,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6867428371535106,
+        "calibration_gap": 0.00023490064557406772,
+        "ece_10bins": 0.10614629390556692,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      },
+      "2026": {
+        "auroc": 0.7507865661813127,
+        "average_precision": 0.8762843599520412,
+        "brier": 0.18548175980939113,
+        "sensitivity": 0.5664739884393064,
+        "specificity": 0.8607594936708861,
+        "band_coverage": 0.5992063492063492,
+        "band_deferral": 0.4007936507936508,
+        "band_accuracy": 0.8145695364238411,
+        "lower_exclusion_sensitivity": 0.8901734104046243,
+        "higher_inclusion_specificity": 0.8860759493670886,
+        "higher_precision": 0.9134615384615384,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6862132582963761,
+        "calibration_gap": -0.0002946782115604505,
+        "ece_10bins": 0.09878279660976316,
+        "quality_admitted_coverage": 0.0,
+        "fixed_rule_sensitivity": 0.47398843930635837,
+        "fixed_rule_specificity": 0.9240506329113924
+      }
+    }
+  },
+  {
+    "variant": "volumes_matched_previous",
+    "method": "logistic",
+    "all": {
+      "patients": 62,
+      "unique_assessments": 252,
+      "positive_unique_assessments": 173,
+      "prediction_rows": 756,
+      "metrics": {
+        "auroc": {
+          "value": 0.7572173036430005,
+          "ci95": [
+            0.6673293638105942,
+            0.8383589699254186
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.859030969232332,
+          "ci95": [
+            0.7810909704096037,
+            0.930458010340992
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.18453870831962585,
+          "ci95": [
+            0.1545133346517432,
+            0.21245023585271638
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.5761078998073218,
+          "ci95": [
+            0.4751311768881756,
+            0.6750039808917198
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8607594936708861,
+          "ci95": [
+            0.7655643738977072,
+            0.9400804963944323
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.49603174603174605,
+          "ci95": [
+            0.42220959595959595,
+            0.5663988624864789
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.503968253968254,
+          "ci95": [
+            0.4336011375135211,
+            0.5777904040404039
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.8266666666666667,
+          "ci95": [
+            0.7514563526361279,
+            0.8997352502555336
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.9132947976878613,
+          "ci95": [
+            0.8696419757241256,
+            0.9538076379066477
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9156118143459916,
+          "ci95": [
+            0.8352039788973461,
+            0.9771766629643341
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.9227799227799228,
+          "ci95": [
+            0.856247859589041,
+            0.9794238683127572
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.6865079365079365,
+          "ci95": [
+            0.5992498216515071,
+            0.776071996366114
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.6833285240417886,
+          "ci95": [
+            0.6581810947942128,
+            0.7092359406173186
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": -0.003179412466147872,
+          "ci95": [
+            -0.0792150512002089,
+            0.07218741124591219
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.09766229114151759,
+          "ci95": [
+            0.06623767426862587,
+            0.16340830425026862
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "new_progression": {
+      "patients": 49,
+      "unique_assessments": 120,
+      "positive_unique_assessments": 58,
+      "prediction_rows": 360,
+      "metrics": {
+        "auroc": {
+          "value": 0.6796749474725003,
+          "ci95": [
+            0.551949509749834,
+            0.7997184613824943
+          ],
+          "valid_bootstraps": 2000
+        },
+        "average_precision": {
+          "value": 0.6524989553151165,
+          "ci95": [
+            0.5224444925849587,
+            0.8325329935979796
+          ],
+          "valid_bootstraps": 2000
+        },
+        "brier": {
+          "value": 0.2566576355371518,
+          "ci95": [
+            0.21315244026986224,
+            0.29323527239781233
+          ],
+          "valid_bootstraps": 2000
+        },
+        "sensitivity": {
+          "value": 0.4367816091954023,
+          "ci95": [
+            0.32075471698113206,
+            0.5572961566091953
+          ],
+          "valid_bootstraps": 2000
+        },
+        "specificity": {
+          "value": 0.8602150537634409,
+          "ci95": [
+            0.7368421052631579,
+            0.951755707038681
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_coverage": {
+          "value": 0.39444444444444443,
+          "ci95": [
+            0.29319670280036136,
+            0.4956540319583798
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_deferral": {
+          "value": 0.6055555555555555,
+          "ci95": [
+            0.5043459680416202,
+            0.7068032971996386
+          ],
+          "valid_bootstraps": 2000
+        },
+        "band_accuracy": {
+          "value": 0.7464788732394366,
+          "ci95": [
+            0.5848984034833091,
+            0.8889069264069263
+          ],
+          "valid_bootstraps": 2000
+        },
+        "lower_exclusion_sensitivity": {
+          "value": 0.8908045977011494,
+          "ci95": [
+            0.8022598870056498,
+            0.9611111111111111
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_inclusion_specificity": {
+          "value": 0.9086021505376344,
+          "ci95": [
+            0.8043246005202527,
+            0.9814814814814815
+          ],
+          "valid_bootstraps": 2000
+        },
+        "higher_precision": {
+          "value": 0.7702702702702703,
+          "ci95": [
+            0.5937120752427184,
+            0.9434028700504916
+          ],
+          "valid_bootstraps": 2000
+        },
+        "prevalence": {
+          "value": 0.48333333333333334,
+          "ci95": [
+            0.3806360745115856,
+            0.6146033653846154
+          ],
+          "valid_bootstraps": 2000
+        },
+        "mean_probability": {
+          "value": 0.64580265187581,
+          "ci95": [
+            0.6111076118716828,
+            0.6820165571729659
+          ],
+          "valid_bootstraps": 2000
+        },
+        "calibration_gap": {
+          "value": 0.16246931854247676,
+          "ci95": [
+            0.04768311705830141,
+            0.24827873387424398
+          ],
+          "valid_bootstraps": 2000
+        },
+        "ece_10bins": {
+          "value": 0.1914501210526767,
+          "ci95": [
+            0.12098540170043039,
+            0.27212473754070005
+          ],
+          "valid_bootstraps": 2000
+        },
+        "quality_admitted_coverage": {
+          "value": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "valid_bootstraps": 2000
+        }
+      }
+    },
+    "by_seed": {
+      "71": {
+        "auroc": 0.7529084656471794,
+        "average_precision": 0.845277107897718,
+        "brier": 0.18639361030871937,
+        "sensitivity": 0.5780346820809249,
+        "specificity": 0.8354430379746836,
+        "band_coverage": 0.5238095238095238,
+        "band_deferral": 0.47619047619047616,
+        "band_accuracy": 0.8257575757575758,
+        "lower_exclusion_sensitivity": 0.9248554913294798,
+        "higher_inclusion_specificity": 0.8734177215189873,
+        "higher_precision": 0.8924731182795699,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6835540419306578,
+        "calibration_gap": -0.0029538945772785547,
+        "ece_10bins": 0.09268478514599826,
+        "quality_admitted_coverage": 0.0
+      },
+      "1729": {
+        "auroc": 0.7591278261505817,
+        "average_precision": 0.8636348180418171,
+        "brier": 0.1827259198315988,
+        "sensitivity": 0.5722543352601156,
+        "specificity": 0.8481012658227848,
+        "band_coverage": 0.503968253968254,
+        "band_deferral": 0.49603174603174605,
+        "band_accuracy": 0.8188976377952756,
+        "lower_exclusion_sensitivity": 0.9017341040462428,
+        "higher_inclusion_specificity": 0.9240506329113924,
+        "higher_precision": 0.9333333333333333,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6874099516029044,
+        "calibration_gap": 0.000902015094967957,
+        "ece_10bins": 0.10820847166999459,
+        "quality_admitted_coverage": 0.0
+      },
+      "2026": {
+        "auroc": 0.7696641545328162,
+        "average_precision": 0.8771099379530602,
+        "brier": 0.18449659481855943,
+        "sensitivity": 0.5780346820809249,
+        "specificity": 0.8987341772151899,
+        "band_coverage": 0.4603174603174603,
+        "band_deferral": 0.5396825396825397,
+        "band_accuracy": 0.8362068965517241,
+        "lower_exclusion_sensitivity": 0.9132947976878613,
+        "higher_inclusion_specificity": 0.9493670886075949,
+        "higher_precision": 0.9473684210526315,
+        "prevalence": 0.6865079365079365,
+        "mean_probability": 0.6790215785918035,
+        "calibration_gap": -0.00748635791613302,
+        "ece_10bins": 0.10558263308472311,
+        "quality_admitted_coverage": 0.0
+      }
+    }
+  }
+]

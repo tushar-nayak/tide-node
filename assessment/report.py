@@ -28,12 +28,14 @@ def measure(payload):
     for i, scan in enumerate(history):
         if not isinstance(scan, dict):
             raise ValueError(f'visit {i} must be an object')
+        if scan.get('rating') is not None and not isinstance(scan.get('rating'), str):
+            raise ValueError('rating must be text when supplied')
         week = number(scan.get('week'), f'visit {i} week')
         if weeks and week <= weeks[-1]:
             raise ValueError('Visits must have strictly increasing weeks')
-        if i and scan.get('rating', '').startswith('Post-Op'):
+        if i and (scan.get('rating') or '').startswith('Post-Op'):
             raise ValueError('History crosses surgery; start a new segment at the postoperative visit')
-        if scan.get('rating', '').startswith('Pre-Op'):
+        if (scan.get('rating') or '').startswith('Pre-Op'):
             raise ValueError('Preoperative scans are outside this workflow')
         if i == len(history) - 1 and scan.get('rating') not in (None, '', 'unknown'):
             raise ValueError('Current-visit rating must be withheld from assessment inputs')
@@ -72,12 +74,16 @@ def measure(payload):
 
 def markdown(report):
     lines = ['# Current-visit tumor measurements', '',
-             f"Visit: week {report['assessed_week']:g}; interval: {report['interval_weeks']:g} weeks.", '',
+             f"Visit week: {report['assessed_week']}; interval weeks: {report['interval_weeks']}.", '',
              '| Compartment | Current mL | Previous mL | Change mL |',
              '| --- | ---: | ---: | ---: |']
     for name, x in report['measurements'].items():
         lines.append(f"| {name} | {x['current_ml']:.3f} | {x['previous_ml']:.3f} | {x['delta_previous_ml']:+.3f} |")
-    lines += ['', 'Assessment: insufficient evidence. No assessment model is attached.', '']
+    a = report['assessment']
+    lines += ['', f"Assessment: {a['status']}. {a['reason']}", '']
+    if a.get('probability_pd') is not None:
+        lines += [f"Research probability of expert PD rating: {a['probability_pd']:.4f}; research band: {a['research_band']}.",
+                  f"Training-selected thresholds: {a['thresholds']}", '']
     lines += [f'- {warning}' for warning in report['warnings']]
     return '\n'.join(lines) + '\n'
 
@@ -86,13 +92,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--history', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True, help='New output directory')
+    parser.add_argument('--model', type=Path, help='Local trusted assessment pickle bundle')
+    parser.add_argument('--trust-model', action='store_true', help='Authorize loading this trusted pickle (may execute code)')
     args = parser.parse_args()
     try:
         raw = args.history.read_bytes()
         payload = json.loads(raw)
         if not isinstance(payload, dict):
             raise ValueError('manifest must be an object')
-        result = measure(payload)
+        from .inference import assess, load_bundle
+        bundle = load_bundle(args.model, args.trust_model) if args.model else None
+        result = assess(payload, bundle)
+        if args.model:
+            import hashlib
+            result['model_sha256'] = hashlib.sha256(args.model.read_bytes()).hexdigest()
         import hashlib
         result['input_sha256'] = hashlib.sha256(raw).hexdigest()
         args.output.mkdir(parents=True, exist_ok=False)

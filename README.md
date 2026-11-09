@@ -1,41 +1,92 @@
-# Longitudinal tumor assessment — fresh direction
+# Longitudinal tumor assessment
 
-The active work on `main` now focuses on **assessing the scan that has just been
-acquired**, using longitudinal tumor measurements, explicit quality checks and
-uncertainty. Optional future-volume ranges are secondary. Neural ODEs and future
-MRI/mask generation are no longer the organizing approach.
+The active workflow on `main` estimates the **current expert PD rating** from
+current and historical automated tumor-compartment volumes. The first CPU baseline
+has been implemented and actually run on existing LUMIERE data. All results are
+exploratory internal evaluation; there are **no fresh independent patients**.
+These research estimates are not diagnoses or evidence of clinical readiness.
 
-The previous project is preserved at branch `archive/tide-forecasting-2026-11-09`,
-commit `1ca3176`. Its code and evidence remain here for reference; see
-[LEGACY_README.md](LEGACY_README.md). Existing data, registration caches and model
-artifacts have not been deleted. The separate manuscript still describes the prior
-study and is not evidence for a newly validated system.
+The prior forecasting project is preserved at
+`archive/tide-forecasting-2026-11-09`, commit `1ca3176`; see
+[LEGACY_README.md](LEGACY_README.md). Its results, data, caches, models and manuscript
+remain unchanged. The old manuscript does not validate this assessment workflow.
 
-## First working component
+## Completed baseline
+
+The structurally eligible cohort contains **371 assessments from 79 patients**,
+including 233 expert PD ratings. Three predefined seeds each use five outer patient
+folds and three inner patient folds. All scaling, modest-grid model selection,
+Platt calibration and decision-band cutoffs use outer training patients only.
+Uncertainty resamples whole patients 2000 times. All eligible patients contribute
+to internal evaluation; `main` is not an untouched independent cohort.
+
+| Volumes-only comparator | AUROC (95% patient-bootstrap CI) | Average precision | Brier | Sensitivity / specificity at training-selected cutoff |
+| --- | --- | --- | --- | --- |
+| Enhancing versus previous | 0.679 (0.619–0.737) | 0.774 | 0.214 | 0.569 / 0.744 |
+| Enhancing versus historical nadir | 0.705 (0.642–0.766) | 0.803 | 0.206 | 0.714 / 0.609 |
+| Regularized logistic | 0.772 (0.715–0.827) | 0.844 | 0.184 | 0.621 / 0.790 |
+| Small gradient boosting | 0.811 (0.758–0.859) | 0.873 | 0.169 | 0.718 / 0.766 |
+
+The optional previous-rating analysis has 252 visits from 62 patients, with a
+matched automated ablation using identical visits and splits. Boosting AUROC is
+0.781 without previous rating and 0.839 with it; this is internal evidence, not a
+claim of generalizable superiority. The previous-rating rule is also evaluated.
+Among 120 visits from 49 patients after SD/PR/CR (58 new PD ratings), full-cohort
+volumes-only boosting AUROC is 0.748 (0.654–0.838), with sensitivity 0.701 and
+specificity 0.694. The optional-rating boosted model's sensitivity on this subset
+is only 0.489. Overall performance does not establish new-progression detection.
+
+Anatomical alignment and segmentation quality are **unverified**. Structural checks
+do not certify anatomy. Research-band coverage is 59.5% for automated boosting,
+but quality-admitted assessment coverage is **0%**. CLI reports retain an explicit
+`insufficient_evidence` status even when displaying a research probability/band.
+No formal conformal guarantee is claimed. Independent validation and anatomical
+review remain necessary.
+
+See [complete results and intervals](results/assessment_v1/REPORT.md),
+[comparison plot](results/assessment_v1/comparison.png),
+[calibration plot](results/assessment_v1/calibration.png),
+[frozen protocol](assessment/PROTOCOL.md) and [execution runbook](assessment/RUNBOOK.md).
+All 65 repository tests passed, including historical timing, surgery boundaries,
+patient separation, training-derived thresholds, serialization and CLI equivalence.
+A real-history CPU inference with no current rating supplied also passed.
+
+## Exact execution commands
+
+From this repository root, the completed evaluation used the existing `.venv`:
 
 ```bash
-python -m assessment --history assessment/example.json --output runs/assessment-example
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 .venv/bin/python -u -m assessment.evaluate > runs/assessment_v1/execution.log 2>&1
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 .venv/bin/python -m unittest discover -s tests -v > runs/assessment_build/full_tests.log 2>&1
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 .venv/bin/python -m assessment.audit
 ```
 
-This standard-library-only command accepts at least two ordered visits in one
-surgery-free segment. It reports compartment volumes and changes versus the previous
-scan and historical nadir in `report.json` and `report.md`. Input volumes are in mm³;
-reports use mL. The example is synthetic. Use a new output directory for each run.
+An existing frozen evaluation cannot be overwritten. Use fresh `--results` and
+`--run` paths to reproduce it; see the runbook. Configuration, feature/source
+hashes, exact input hashes and outer/inner splits were saved before fitting.
+Results live in `results/assessment_v1/`; local logs, environment, source snapshots,
+training audits and bundles live in `runs/assessment_v1/`. Completion details and
+commit IDs are in `runs/assessment_build/FINAL_REPORT.md`.
 
-No future image or label is needed. The current rating must be omitted. The tool
-checks measurements but does not certify registration or segmentation quality.
-It reports insufficient evidence for a progression classification because no new
-assessment model is attached yet.
+## Offline current-visit report
 
-## What comes next
+```bash
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 .venv/bin/python -m assessment \
+  --history runs/assessment_v1/real_history_no_current_label.json \
+  --model runs/assessment_v1/all_cohort_logistic.pkl --trust-model \
+  --output runs/assessment-new-report
+```
 
-See [assessment/PROTOCOL.md](assessment/PROTOCOL.md). Build geometry and measurement
-quality checks, freeze patient manifests and feature definitions, then compare
-regularized logistic regression and small boosted trees against explicit volume
-rules. Fit calibration and decision thresholds inside training patients only.
-Provide clear deferral behavior and patient-level evaluation of both accuracy and
-coverage. Current LUMIERE estimates are exploratory; reusing it does not create a
-new independent test cohort.
+Pickle loading requires explicit trust because pickle can execute code. This
+bundle is the predefined **all-cohort logistic refit**, with no independent accuracy
+claim. The smoke history comes from its training cohort. Use only trusted local
+bundles and their recorded environment/checksums. This command writes JSON and
+Markdown with measurements, provenance, missingness, quality and research estimates.
 
-The research goal is a reproducible assessment tool. Clinical utility and external
-generalization remain unestablished. No accuracy advantage is promised by the reset.
+For measurements without a model, omit `--model` and `--trust-model`; a synthetic
+manifest is in `assessment/example.json`. Inputs require at least two ordered
+visits within one surgery-free segment, finite nonnegative volumes in mm³ and no
+current rating. Zero reference volumes produce null ordinary percentage changes
+and finite model features. The optional previous-rating variant requires an
+observed earlier rating; missing ratings are not silently treated as clinical
+observations. No registration or expensive image models are needed.

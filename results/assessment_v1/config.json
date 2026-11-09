@@ -1,0 +1,114 @@
+{
+  "version": "assessment_v1",
+  "seeds": [
+    71,
+    1729,
+    2026
+  ],
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "grid": {
+    "logistic": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "boosted": [
+      1.0,
+      10.0
+    ],
+    "enhancing_previous": [
+      null
+    ],
+    "enhancing_nadir": [
+      null
+    ],
+    "previous_rating_rule": [
+      null
+    ]
+  },
+  "feature_names": {
+    "volumes": [
+      "interval_weeks",
+      "elapsed_weeks",
+      "history_count",
+      "Necrotic_NonEnhancing_log_current_ml",
+      "Necrotic_NonEnhancing_log_previous_ml",
+      "Necrotic_NonEnhancing_log_nadir_ml",
+      "Necrotic_NonEnhancing_delta_previous_ml",
+      "Necrotic_NonEnhancing_delta_nadir_ml",
+      "Necrotic_NonEnhancing_log_change_previous",
+      "Necrotic_NonEnhancing_log_change_nadir",
+      "Necrotic_NonEnhancing_slope_ml_week",
+      "Enhancing_Core_log_current_ml",
+      "Enhancing_Core_log_previous_ml",
+      "Enhancing_Core_log_nadir_ml",
+      "Enhancing_Core_delta_previous_ml",
+      "Enhancing_Core_delta_nadir_ml",
+      "Enhancing_Core_log_change_previous",
+      "Enhancing_Core_log_change_nadir",
+      "Enhancing_Core_slope_ml_week",
+      "Edema_Compartment_log_current_ml",
+      "Edema_Compartment_log_previous_ml",
+      "Edema_Compartment_log_nadir_ml",
+      "Edema_Compartment_delta_previous_ml",
+      "Edema_Compartment_delta_nadir_ml",
+      "Edema_Compartment_log_change_previous",
+      "Edema_Compartment_log_change_nadir",
+      "Edema_Compartment_slope_ml_week"
+    ],
+    "previous_rating": [
+      "interval_weeks",
+      "elapsed_weeks",
+      "history_count",
+      "Necrotic_NonEnhancing_log_current_ml",
+      "Necrotic_NonEnhancing_log_previous_ml",
+      "Necrotic_NonEnhancing_log_nadir_ml",
+      "Necrotic_NonEnhancing_delta_previous_ml",
+      "Necrotic_NonEnhancing_delta_nadir_ml",
+      "Necrotic_NonEnhancing_log_change_previous",
+      "Necrotic_NonEnhancing_log_change_nadir",
+      "Necrotic_NonEnhancing_slope_ml_week",
+      "Enhancing_Core_log_current_ml",
+      "Enhancing_Core_log_previous_ml",
+      "Enhancing_Core_log_nadir_ml",
+      "Enhancing_Core_delta_previous_ml",
+      "Enhancing_Core_delta_nadir_ml",
+      "Enhancing_Core_log_change_previous",
+      "Enhancing_Core_log_change_nadir",
+      "Enhancing_Core_slope_ml_week",
+      "Edema_Compartment_log_current_ml",
+      "Edema_Compartment_log_previous_ml",
+      "Edema_Compartment_log_nadir_ml",
+      "Edema_Compartment_delta_previous_ml",
+      "Edema_Compartment_delta_nadir_ml",
+      "Edema_Compartment_log_change_previous",
+      "Edema_Compartment_log_change_nadir",
+      "Edema_Compartment_slope_ml_week",
+      "previous_SD",
+      "previous_PR",
+      "previous_CR",
+      "previous_PD"
+    ]
+  },
+  "ablation": "Volumes on previous-rating-available cohort uses identical outer/inner patient splits and training visits to optional-rating models",
+  "target": "current expert PD versus SD/PR/CR; postoperative visits excluded",
+  "rule": "enhancing (current+1mL)/(current+reference+2mL); fixed 25% increase separately reported",
+  "preprocessing": "log1p mL and signed changes; StandardScaler fitted inside logistic pipeline only",
+  "calibration": "Platt logistic C=1 on selected candidate patient inner OOF logit scores; no class weighting",
+  "selection": "minimum pooled inner OOF raw Brier; fixed grid order breaks ties",
+  "thresholds": "inner OOF calibrated probabilities: max low threshold sensitivity>=.90; min high threshold specificity>=.90; ordered min/max; binary max balanced accuracy, smallest tie",
+  "calibration_limitation": "Calibration and bands fitted on same training OOF labels after candidate selection; only outer evaluation estimates their achieved performance",
+  "bootstrap": {
+    "unit": "whole patient, pooled across all predefined repeats",
+    "resamples": 2000,
+    "seed": 90210,
+    "intervals": "percentile 2.5/97.5; one-class samples omitted for ranking metrics"
+  },
+  "quality": "structural eligibility only; anatomical alignment/segmentation UNVERIFIED; clinical-admitted coverage zero",
+  "duplicate_ratings": "identical ratings collapsed; conflicting targets excluded; any surgery resets history even with ambiguous label",
+  "discovery": "highest acquisition suffix per week regardless of modalities; boundaries reset before missing-volume exclusion",
+  "exclusions": "preop, surgery assessments, missing invalid volumes, missing current expert label, no prior valid visit in segment",
+  "prohibited": "no future scans/labels, survival, clinical flag columns, mask margins, registration caches",
+  "refit": "all-cohort logistic volumes; same fixed inner recipe with seed71; no independent performance claim"
+}

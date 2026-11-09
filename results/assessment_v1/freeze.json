@@ -1,0 +1,22 @@
+{
+  "frozen_at_utc": "2026-11-09T20:29:25.084283+00:00",
+  "config_sha256": "a4e8231559d43ef3633e1a8921a4ff67739710d5b607255693215057af5c6253",
+  "cohort_sha256": "b50a869030be4441ff07c117b7d8d7f33ba4e9b61fd3a506e7c2b0e66fb74fd8",
+  "inputs_sha256": "cda860e63b96b341f11a03d274dc2af17afbe3bc20506fce20b88823be79b42e",
+  "splits_sha256": "fa4b57104d1fffae65497cab07e8f89ef670b45790a87536357db6eaecae1517",
+  "ratings_file_sha256": "2215db82453a3315d5b5f0e519849bd5079b25e6e4e555f3f7237cf77f7cd952",
+  "source_sha256": {
+    "assessment/__init__.py": "9441d459bddc745d4b0136592dc2e6ca6b89d39e7c869cfd1a7245506149fc58",
+    "assessment/__main__.py": "55e9d1e860f97b8c310ff18baee674133e7fbfe30942cab6f82dd3fa7053eee4",
+    "assessment/audit.py": "b773f0f0bc9c5ab0aa2d7054f2c2d87bfb7cde28f2c67ec9ced5b8fb7ad48749",
+    "assessment/cohort.py": "ea96e6127e874d1442b4271aa19bd9a20af07bf3ed446bbc02efdee3badea24d",
+    "assessment/evaluate.py": "1f2772f5907ec3b09a092158aaa909d6a79ad80cba66c61f0110e4ff8cd839e0",
+    "assessment/features.py": "5196f6b5c1628bd07e23fe970be9435e6dc6127c0ed31701cabb0dc62ac12ef0",
+    "assessment/inference.py": "76139400cb9f91a112d9cc1948bce4662514e8996dc8f0a0f8657bbec29dba84",
+    "assessment/model.py": "f583926165b1d38f6290d5642807294cd7f2a81aa43b717c1aca38db49bb23f1",
+    "assessment/report.py": "b705f87895deb41632b8cbf417611f739e6160080c8245467b7cd523207384ec",
+    "assessment/summarize.py": "b386bd406faea9ff129708e69c6e427c78842379317a2fc0f4b71e4848a642b7",
+    "scripts/lumiere_weeks.py": "89acf31bb6f82178748db51921d53bdaf8232b2d53e55e15087f7895a94cdcd4"
+  },
+  "scope": "All available eligible LUMIERE patients, internally evaluated; no untouched independent cohort"
+}
