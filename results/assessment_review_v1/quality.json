@@ -1,0 +1,3570 @@
+{
+  "selection": "single preselected seed 71 by default; volumes/boosted; hash-ordered patient-diverse cases per error group; retrospective labels used only to select review cases",
+  "seed": 71,
+  "group_counts": {
+    "false_negative": 69,
+    "false_positive": 32,
+    "true_positive": 164,
+    "true_negative": 106
+  },
+  "quality": [
+    {
+      "patient_id": "Patient-001",
+      "visit": "week-044",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-001",
+      "visit": "week-056",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-002",
+      "visit": "week-021",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-002",
+      "visit": "week-037",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-002",
+      "visit": "week-047",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-003",
+      "visit": "week-014",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-003",
+      "visit": "week-027",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-003",
+      "visit": "week-038",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-004",
+      "visit": "week-020",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-004",
+      "visit": "week-038",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-004",
+      "visit": "week-057",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-004",
+      "visit": "week-071",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-004",
+      "visit": "week-086",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-005",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-027",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-039",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-053",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-067",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-083",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-097",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-112",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-121",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-131",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-006",
+      "visit": "week-135",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-015",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-028",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-041",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-064",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-075",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-089",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-007",
+      "visit": "week-105",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-008",
+      "visit": "week-017",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-008",
+      "visit": "week-066",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-008",
+      "visit": "week-085",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-009",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-009",
+      "visit": "week-024",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-009",
+      "visit": "week-066",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-010",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-011",
+      "visit": "week-021",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-011",
+      "visit": "week-028",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-012",
+      "visit": "week-016",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-012",
+      "visit": "week-048",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-012",
+      "visit": "week-073",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-012",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-013",
+      "visit": "week-017",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-013",
+      "visit": "week-030",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-014",
+      "visit": "week-012",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-021",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-037",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-056",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-078",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-083",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-099",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-111",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-126",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-140",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-015",
+      "visit": "week-145",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-017",
+      "visit": "week-016",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-017",
+      "visit": "week-035",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-018",
+      "visit": "week-017",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-018",
+      "visit": "week-034",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-018",
+      "visit": "week-063",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-018",
+      "visit": "week-082",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-022",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-031",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-061",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-075",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-090",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-117",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-137",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-138",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-021",
+      "visit": "week-022",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-021",
+      "visit": "week-035",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-022",
+      "visit": "week-037",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-022",
+      "visit": "week-045",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-022",
+      "visit": "week-053",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-024",
+      "flags": [
+        "empty_current_tumor_review",
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-039",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-059",
+      "flags": [
+        "empty_current_tumor_review",
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-084",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-097",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-111",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-115",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-024",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-024",
+      "visit": "week-031",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-024",
+      "visit": "week-043",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-024",
+      "visit": "week-060",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-019",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-030",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-043",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-070",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-027",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-028",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-028",
+      "visit": "week-030",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-028",
+      "visit": "week-038",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-010",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-022",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-033",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-045",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-059",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-100",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-112",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-152",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-165",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-207",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-223",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-017",
+      "flags": [
+        "empty_current_tumor_review",
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-025",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-041",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-052",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-067",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-030",
+      "visit": "week-085",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-032",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-059",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-074",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-087",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-105",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-123",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-142",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-151",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-165",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-184",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-031",
+      "visit": "week-190",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-013",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-027",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-040",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-044",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-067",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-075",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-085",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-096",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-006",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-031",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-049",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-063",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-076",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-033",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-034",
+      "visit": "week-014",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-034",
+      "visit": "week-028",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-034",
+      "visit": "week-040",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-034",
+      "visit": "week-058",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-035",
+      "visit": "week-008",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-035",
+      "visit": "week-019",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-035",
+      "visit": "week-024",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-035",
+      "visit": "week-036",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-035",
+      "visit": "week-050",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-036",
+      "visit": "week-005",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-037",
+      "visit": "week-002",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-037",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-037",
+      "visit": "week-025",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-037",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-037",
+      "visit": "week-037",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-038",
+      "visit": "week-023",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-039",
+      "visit": "week-017",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-039",
+      "visit": "week-044",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-040",
+      "visit": "week-015",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-040",
+      "visit": "week-028",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-041",
+      "visit": "week-020",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-041",
+      "visit": "week-038",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-004",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-022",
+      "flags": [
+        "empty_current_tumor_review",
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-035",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-060",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-078",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-042",
+      "visit": "week-081",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-018",
+      "flags": [
+        "empty_current_tumor_review",
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-030",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-041",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-053",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-067",
+      "flags": [
+        "empty_current_tumor_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-098",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-043",
+      "visit": "week-116",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-045",
+      "visit": "week-017",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-045",
+      "visit": "week-028",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-046",
+      "visit": "week-016",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-046",
+      "visit": "week-064",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-048",
+      "visit": "week-013",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-048",
+      "visit": "week-023",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-048",
+      "visit": "week-045",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-048",
+      "visit": "week-049",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-049",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-049",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-050",
+      "visit": "week-048",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-050",
+      "visit": "week-061",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-012",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-023",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-036",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-050",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-064",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-077",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-089",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-051",
+      "visit": "week-103",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-052",
+      "visit": "week-089",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-052",
+      "visit": "week-115",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-052",
+      "visit": "week-133",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-052",
+      "visit": "week-148",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-052",
+      "visit": "week-168",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-026",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-036",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-043",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-053",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-066",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-077",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-017",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-039",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-054",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-067",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-099",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-055",
+      "visit": "week-118",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-058",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-058",
+      "visit": "week-027",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-058",
+      "visit": "week-036",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-014",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-024",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-040",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-068",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-100",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-116",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-059",
+      "visit": "week-136",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-060",
+      "visit": "week-031",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-060",
+      "visit": "week-052",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-060",
+      "visit": "week-065",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-060",
+      "visit": "week-088",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-061",
+      "visit": "week-022",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-061",
+      "visit": "week-027",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-061",
+      "visit": "week-034",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-061",
+      "visit": "week-054",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-015",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-030",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-042",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-050",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-057",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-062",
+      "visit": "week-064",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-015",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-034",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-047",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-077",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-091",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-105",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-118",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-130",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-063",
+      "visit": "week-168",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-064",
+      "visit": "week-020",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-064",
+      "visit": "week-033",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-064",
+      "visit": "week-049",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-064",
+      "visit": "week-062",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-065",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-065",
+      "visit": "week-021",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-065",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-065",
+      "visit": "week-079",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-065",
+      "visit": "week-102",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-016",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-031",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-068",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-084",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-066",
+      "visit": "week-101",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-013",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-033",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-042",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-053",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-068",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-073",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-077",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-079",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-092",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-109",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-124",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-136",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-152",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-156",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-067",
+      "visit": "week-167",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-068",
+      "visit": "week-004",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-068",
+      "visit": "week-010",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-068",
+      "visit": "week-022",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-068",
+      "visit": "week-035",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-068",
+      "visit": "week-047",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-070",
+      "visit": "week-005",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-070",
+      "visit": "week-019",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-070",
+      "visit": "week-044",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-070",
+      "visit": "week-061",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-071",
+      "visit": "week-024",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-071",
+      "visit": "week-027",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-071",
+      "visit": "week-052",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-071",
+      "visit": "week-058",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-071",
+      "visit": "week-062",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-013",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-021",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-037",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-055",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-064",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-073",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-078",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-090",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-105",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-015",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-032",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-046",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-060",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-087",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-100",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-119",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-135",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-155",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-169",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-186",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-202",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-216",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-228",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-242",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-074",
+      "visit": "week-026",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-074",
+      "visit": "week-039",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-075",
+      "visit": "week-020",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-075",
+      "visit": "week-032",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-075",
+      "visit": "week-044",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-014",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-026",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-048",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-062",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-070",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-077",
+      "visit": "week-083",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-005",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-019",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-037",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-039",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-041",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-045",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-056",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-062",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-076",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-088",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-106",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-113",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-116",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-078",
+      "visit": "week-119",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-079",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-080",
+      "visit": "week-018",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-081",
+      "visit": "week-006",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-082",
+      "visit": "week-003",
+      "flags": [
+        "large_volume_change_review"
+      ],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-084",
+      "visit": "week-012",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-085",
+      "visit": "week-018",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-085",
+      "visit": "week-042",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-085",
+      "visit": "week-050",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-086",
+      "visit": "week-181",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-087",
+      "visit": "week-024",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-089",
+      "visit": "week-045",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-089",
+      "visit": "week-056",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-089",
+      "visit": "week-064",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-090",
+      "visit": "week-029",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-091",
+      "visit": "week-014",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-091",
+      "visit": "week-026",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-091",
+      "visit": "week-036",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    },
+    {
+      "patient_id": "Patient-091",
+      "visit": "week-043",
+      "flags": [],
+      "header_checks": "passed",
+      "voxel_checks": "not_performed",
+      "anatomical_review": "pending",
+      "quality_admitted": false
+    }
+  ],
+  "sheets": [
+    {
+      "patient_id": "Patient-023",
+      "visit": "week-059",
+      "group": "false_negative",
+      "image": "false_negative_Patient-023_week-059.png",
+      "flags": [
+        "week-059:empty_tumor_mask_review"
+      ],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-089",
+      "visit": "week-056",
+      "group": "false_negative",
+      "image": "false_negative_Patient-089_week-056.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-072",
+      "visit": "week-021",
+      "group": "false_negative",
+      "image": "false_negative_Patient-072_week-021.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-019",
+      "visit": "week-015",
+      "group": "false_positive",
+      "image": "false_positive_Patient-019_week-015.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-054",
+      "visit": "week-036",
+      "group": "false_positive",
+      "image": "false_positive_Patient-054_week-036.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-045",
+      "group": "false_positive",
+      "image": "false_positive_Patient-029_week-045.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-073",
+      "visit": "week-216",
+      "group": "true_positive",
+      "image": "true_positive_Patient-073_week-216.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-032",
+      "visit": "week-067",
+      "group": "true_positive",
+      "image": "true_positive_Patient-032_week-067.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-061",
+      "visit": "week-034",
+      "group": "true_positive",
+      "image": "true_positive_Patient-061_week-034.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-003",
+      "visit": "week-014",
+      "group": "true_negative",
+      "image": "true_negative_Patient-003_week-014.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-025",
+      "visit": "week-030",
+      "group": "true_negative",
+      "image": "true_negative_Patient-025_week-030.png",
+      "flags": [],
+      "error": null
+    },
+    {
+      "patient_id": "Patient-029",
+      "visit": "week-152",
+      "group": "true_negative",
+      "image": "true_negative_Patient-029_week-152.png",
+      "flags": [],
+      "error": null
+    }
+  ],
+  "anatomical_acceptance": "pending_human_review",
+  "quality_admitted_coverage": 0.0,
+  "input_sha256": {
+    "cohort.json": "b50a869030be4441ff07c117b7d8d7f33ba4e9b61fd3a506e7c2b0e66fb74fd8",
+    "outer_predictions.csv": "cc5017323d70e013e040948788f2ac2709eb3a86f3cc5c45b66b7735999d9bc6"
+  }
+}

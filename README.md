@@ -13,6 +13,18 @@ remain unchanged. The old manuscript does not validate this assessment workflow.
 
 ## Completed baseline
 
+Case-review sheets and structural quality checks are available:
+
+```bash
+.venv/bin/python -m assessment.review --output runs/my-assessment-review
+```
+
+The completed [review report](results/assessment_review_v1/REPORT.md) links to
+12 previous/current MRI sheets, structural flags, and a blank human review form.
+These retrospective out-of-fold examples do not change benchmark scores or
+certify anatomical accuracy. See [the runbook](assessment/RUNBOOK.md) for the
+coverage and selection rules.
+
 The structurally eligible cohort contains **371 assessments from 79 patients**,
 including 233 expert PD ratings. Three predefined seeds each use five outer patient
 folds and three inner patient folds. All scaling, modest-grid model selection,

@@ -1,5 +1,36 @@
 # Running the current-visit baseline
 
+## Case review and structural quality checks
+
+```bash
+OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MPLCONFIGDIR=/tmp/tide-review-mpl \
+  .venv/bin/python -m assessment.review --output results/assessment_review_v1
+```
+
+Use a new output directory to rerun. The command checks current-scan modality/mask
+headers, nondegenerate affines, spacing and within-scan grid agreement for the frozen
+cohort. It flags missing data and large volume changes for investigation; a large
+change alone is not evidence of a bad segmentation. It does not certify longitudinal
+registration or clinical plausibility.
+
+The review sample uses volumes-only boosting, seed 71, with three patient-diverse
+hash-ordered examples from each binary confusion group. It uses each fold's saved
+training-selected binary threshold, not a new threshold fitted on review cases.
+Expert labels select retrospective error examples only. These sheets are an audit,
+not a new test set or a basis for claiming independent validation.
+
+Sheets show previous/current FLAIR and contrast-enhanced T1 with label contours.
+Each visit uses its own maximal-tumor axial slice and supplied atlas frame; panels
+are not registered image differences or an anatomical orientation certification.
+Only those selected FLAIR/CT1 volumes and masks are checked for nonfinite voxels;
+the whole cohort receives header checks only. `quality.json` records exact coverage
+and source hashes. `human_review.csv` provides blank reviewer, date, alignment,
+segmentation and surgery-history fields. Anatomical acceptance remains pending and
+quality-admitted coverage remains zero until an appropriate review is completed.
+
+This is an offline audit module; its flags do not silently change the inference
+CLI's existing deferral policy or the benchmark predictions.
+
 Run from the repository root with the existing `.venv`. Assessment-only dependency
 minimums are in `assessment/requirements.txt`; exact executed versions are saved in
 `runs/assessment_v1/requirements.freeze.txt`. No GPU, registration, image generation,
