@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "patient_id": "synthetic-example",
+  "history": [
+    {"week": 0, "rating": "Post-Op", "volumes_mm3": {"Necrotic_NonEnhancing": 3000, "Enhancing_Core": 2000, "Edema_Compartment": 15000}},
+    {"week": 12, "volumes_mm3": {"Necrotic_NonEnhancing": 3500, "Enhancing_Core": 2600, "Edema_Compartment": 17000}}
+  ]
+}

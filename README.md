@@ -1,206 +1,41 @@
-# Tumor Interval Dynamics Estimation via Neural ODE Sequences
-## (previously glioblastoma-evolution)
+# Longitudinal tumor assessment — fresh direction
 
-Longitudinal glioblastoma MRI analysis on the LUMIERE dataset (79 patients, 399
-scan-to-scan transitions, 374 expert-rated follow-up scans). Every experiment is scored on
-patients the model never saw, against the trivial rule for that question, with
-patient-level bootstrap confidence intervals.
+The active work on `main` now focuses on **assessing the scan that has just been
+acquired**, using longitudinal tumor measurements, explicit quality checks and
+uncertainty. Optional future-volume ranges are secondary. Neural ODEs and future
+MRI/mask generation are no longer the organizing approach.
 
-**What works: an automated progression call.** The released model reads the automated tumor
-volumes of the current and earlier scans, the previous expert rating, and age, sex and MGMT.
-If the atlas segmentations of the last two scans are given, it also reads the new tumor
-outside the prior tumor. It estimates whether an expert would rate the current scan as
-progressive disease (PD) under RANO.
-* On held-out patients, AUROC is **0.835** [0.80, 0.87] with segmentations and 0.82 [0.77,
-  0.86] from volumes alone. Carrying the previous rating forward scores 0.68 (difference
-  +0.15 [+0.09, +0.21]).
-* For new progression (previous scan not PD), it scores 0.76 with segmentations and 0.73
-  without. An enhancing-volume rule scores 0.65.
-* About half of all scans fall in its "likely PD" band, and 85-86% of those were rated PD.
-* It runs on CPU in a few seconds (see Run the models below).
+The previous project is preserved at branch `archive/tide-forecasting-2026-11-09`,
+commit `1ca3176`. Its code and evidence remain here for reference; see
+[LEGACY_README.md](LEGACY_README.md). Existing data, registration caches and model
+artifacts have not been deleted. The separate manuscript still describes the prior
+study and is not evidence for a newly validated system.
 
-**Survival check.** A fully automated version of the call (no expert rating) was tested
-against overall survival. It is as prognostic as the expert's call: time-dependent C-index
-0.53-0.54 vs 0.54, with a difference near 0. In about half of patients it flags the same
-first-progression scan as the expert, and earlier or later about equally often in the
-rest. Neither is a strong survival marker in LUMIERE. A simple volumetric rule (enhancing
-tumor ≥ 40% above nadir) did better than the expert: C-index 0.61 vs 0.54 (CI excludes 0).
-
-**What does not work: forecasting the next visit.** Once the evaluation is leakage-free,
-the scans are aligned and trivial controls are included, carrying the last scan forward is
-close to the best next-visit forecast. This holds for intensity, the 3D tumor mask and the
-next RANO rating. No Neural ODE model beats the best simple baseline for its target. The
-volume forecast gains a modest 5-7%, now with calibrated ranges. Full details, numbers and
-commands are in [EXPERIMENTS.md](EXPERIMENTS.md). The draft paper
-[MANUSCRIPT.md](MANUSCRIPT.md) covers both parts: forecasting, and assessment with the
-survival check.
-
-## Findings
-
-| Question | Result | EXPERIMENTS.md § |
-| :--- | :--- | :---: |
-| Does the original "+6.7% over persistence" hold on unseen patients? | The number holds: whole-slice MSE is +8.7% [+5.7, +11.7]. The tumor-forecasting reading does not: in the tumor region it is +2.5% [-1.0, +6.0], and a 1-pixel blur of the last scan does at least as well (+4.1%). | 8 |
-| Can tumor volume be forecast? | Learned models cut volume error 5-7% below persistence (CIs exclude 0). A population Gompertz fit alone gets 3.4%, and the Neural ODE is tied with ridge regression and gradient boosting. | 7 |
-| Can the 3D tumor mask be forecast? | In LUMIERE's atlas space, consecutive scans are misaligned by a median 2.5 mm. That misalignment was 40-45% of the change the first models appeared to predict. After registration, Dice is 0.573 vs 0.570 for copy-last-mask (+0.003 [-0.003, +0.010]). | 2b, 7 |
-| How reliable are the mask labels? | Two automatic segmenters on the *same* scan agree only to whole-tumor Dice 0.65. Visits rated stable at most 12 weeks apart overlap at 0.58. Much of the visit-to-visit difference may be labelling and alignment rather than tumor change. | 9a |
-| Where does the mask model help? | Nowhere specific. It enlarges the tumor in about 80% of cases (truth: 53%), including tumors that later shrank. Its sense of direction is "small tumors grow, big ones shrink." | 9b |
-| Can the next RANO rating be forecast? | The last visit's rating alone gives AUROC 0.684. No learned model beats it significantly (best +0.04 [-0.015, +0.092]). For patients not currently progressing, every score is ≤ 0.61. | 10 |
-| Can the volume forecast give a trustworthy range? | Yes. On unseen patients, the 80/90/95% ranges held 80/89/95% of next-visit total volumes. Centred on the model, they score 16% better (interval score, CI excludes 0) than equally calibrated ranges around the last scan. They are wide: a typical 80% range spans ×0.53 to ×2.1 of the forecast. | 11 |
-| Which other questions can this data answer? | **Is the current scan PD?** Yes: AUROC 0.82 vs 0.68 (CI excludes 0). Remaining survival from each visit: modestly, C-index 0.68 vs 0.60 for clinical factors and time (CI excludes 0). Volume 6-12+ months ahead: beats copy-last by 14-16%, but a 2-parameter population Gompertz model does about as well (CIs include 0). | 12 |
-| How good is the progression call? | From volumes + previous rating + clinical: AUROC 0.820 [0.774, 0.862], 69% of PD scans found at 80% specificity. With the new-tumor features from the two atlas segmentations (8 mm margin, no registration): 0.835 [0.796, 0.871], 73% found; new progression 0.760 vs 0.728. A post-radiotherapy flag in the rating file would add more, but raters set it selectively, so it leaks the label and is excluded. | 12b |
-| Does the automated call predict survival like the expert's? | Equally well, and equally weakly. Time-dependent C-index is 0.530-0.544 (automated) vs 0.539 (expert), differences near 0 with CIs including 0. The first-progression scan matches in 34 of 65 patients, with the rest split evenly earlier and later. A simple volume rule is more prognostic than the expert: 0.607, +0.068 [+0.008, +0.132]. | 12c |
-
-Figures: `results/figures/`, listed at the end of EXPERIMENTS.md.
-
-## Run the models
-
-Both released models take a small JSON file and run on CPU in seconds. The input is
-DeepBraTumIA volumes in mm³ for each visit since the last surgery. See
-[PREDICTION.md](PREDICTION.md) for the formats and every check.
-
-**Progression call.** The last visit in `history` is the scan to assess, with no rating.
-The visit before it needs its expert rating (`PD`, `SD`, `PR`, `CR`, `Post-Op` or
-`unknown`). For new-lesion detection, add `"segmentation": "<path to the atlas-space
-seg_mask.nii.gz>"` to the last two visits. The tool then uses its `volumes_masks` model:
-
-```json
-{"version": 1, "patient_id": "example",
- "history": [
-   {"week": 0,  "rating": "Post-Op", "volumes_mm3": {"Necrotic_NonEnhancing": 3000, "Enhancing_Core": 2500, "Edema_Compartment": 20000}},
-   {"week": 12, "rating": "SD",      "volumes_mm3": {"Necrotic_NonEnhancing": 2800, "Enhancing_Core": 2000, "Edema_Compartment": 15000}},
-   {"week": 24,                      "volumes_mm3": {"Necrotic_NonEnhancing": 4200, "Enhancing_Core": 5200, "Edema_Compartment": 26000}}],
- "clinical": {"Age at surgery (years)": "61", "Sex": "male", "MGMT qualitative": "not methylated"}}
-```
+## First working component
 
 ```bash
-.venv/bin/python scripts/predict.py --history scan.json \
-  --bundle runs/packaging/release-20261103/progression-gbm --trust-progression-bundle --output-dir runs/my-call
+python -m assessment --history assessment/example.json --output runs/assessment-example
 ```
 
-```text
-Scan at week 24: probability of RANO progression 0.89 -> likely PD (on held-out patients, 85% of scans in this band were rated PD)
-  Model: volumes (volumes, previous rating and clinical; add both segmentations for new-lesion detection)
-  'likely PD' at >= 0.70 (held-out specificity 80%, sensitivity 69%); 'PD less likely' below 0.42 (sensitivity 90%, specificity 44%); held-out AUROC 0.82
-  Enhancing tumor 5.2 mL: +160% vs previous (2.0), +160% vs nadir (2.0); total 35.4 mL (+79% vs previous). Previous rating: SD
-```
+This standard-library-only command accepts at least two ordered visits in one
+surgery-free segment. It reports compartment volumes and changes versus the previous
+scan and historical nadir in `report.json` and `report.md`. Input volumes are in mm³;
+reports use mL. The example is synthetic. Use a new output directory for each run.
 
-With segmentations, the output adds a line such as `Outside the prior tumor (+8 mm): new
-enhancing 0.08 mL in 0 new component(s); new FLAIR abnormality 6.7 mL`. On held-out
-patients the three bands were:
+No future image or label is needed. The current rating must be omitted. The tool
+checks measurements but does not certify registration or segmentation quality.
+It reports insufficient evidence for a progression classification because no new
+assessment model is attached yet.
 
-| band | volumes model | volumes_masks model |
-| :--- | :--- | :--- |
-| "likely PD" | 51% of scans, 85% rated PD | 53%, 86% PD |
-| "uncertain" | 26%, 49% PD | 26%, 41% PD |
-| "PD less likely" | 23%, 28% PD | 20%, 32% PD |
+## What comes next
 
-Subtle T2/FLAIR progression is mostly missed (39% found). A stable scan usually lands in
-"uncertain" rather than "PD less likely".
+See [assessment/PROTOCOL.md](assessment/PROTOCOL.md). Build geometry and measurement
+quality checks, freeze patient manifests and feature definitions, then compare
+regularized logistic regression and small boosted trees against explicit volume
+rules. Fit calibration and decision thresholds inside training patients only.
+Provide clear deferral behavior and patient-level evaluation of both accuracy and
+coverage. Current LUMIERE estimates are exploratory; reusing it does not create a
+new independent test cohort.
 
-**Volume forecast with ranges.** This gives next-visit compartment volumes:
-
-```bash
-.venv/bin/python scripts/predict.py --history volume-history.json --horizon-weeks 12 \
-  --bundle runs/packaging/release-20261103/volume-all --trust-volume-bundle \
-  --intervals runs/packaging/release-20261103/volume-intervals.json --output-dir runs/my-forecast
-```
-
-```text
-Forecast for week 22 (12 weeks after the last scan), mL:
-  ...
-  Total                  last    36.5  forecast    40.1  ranges 50% 30.6-56.9  80% 22.1-80.2  90% 13.7-120.6  95% 9.9-150.5
-```
-
-* `runs/packaging/` is not in git. Build it with `scripts/build_research_release.sh <new dir>`.
-* The 3D mask forecast (`--bundle .../atlas-ode-cv-ensemble.json` with an imaging history) also
-  runs, but in held-out testing it was no better than copying the last mask (section 7).
-* Inputs must already be LUMIERE-style: atlas-space images and DeepBraTumIA labels. No
-  segmentation or registration of raw MRI is included.
-* Research use only; not clinically validated.
-
-### What changed from the earlier claim
-
-Earlier versions of this README reported a +6.7% mean MSE improvement over persistence
-across 81 patient-level runs (`results/lumiere_full_v1_metrics.*`, kept for reference).
-Every row of that table was scored on the patient's own training pairs
-(`metric_split=all`). Re-tested on held-out patients, the number survives, but the gain is
-smoothing and global intensity correction, not tumor forecasting (section 8).
-
-Three data issues found along the way are documented in EXPERIMENTS.md:
-* **Duplicate scans per week** were resolved by filesystem order. Fixed in
-  `lumiere_weeks.py` (section 1).
-* **Atlas-space misalignment** between visits. Fixed by `register_step2_pairs.py`
-  (section 2b).
-* **LUMIERE's HD-GLIO native-space masks are mis-oriented** for many scans. Worked around by
-  image registration (section 9a).
-
-## Repository map
-
-| Step | Script | Output |
-| :--- | :--- | :--- |
-| cohort rules (no pre-op scans, no forecasting across surgery) | `scripts/lumiere_cohort.py`, `scripts/lumiere_weeks.py` | - |
-| original intensity model, held-out retest + blur control | `scripts/intensity_forecast_cv.py` (model: `scripts/run_neural_ode_pipeline.py`) | `results/intensity_forecast/` |
-| step 1: volume trajectory | `scripts/volume_trajectory_experiment.py` | `results/volume_trajectory/` |
-| step 2: 3D mask forecast (atlas or registered frame) | `scripts/build_atlas_cache.py`, `scripts/register_step2_pairs.py`, `scripts/mask_forecast_experiment.py` | `results/mask_forecast{,_registered}/` |
-| alignment check | `scripts/alignment_check.py` | `results/alignment/` |
-| inter-segmenter agreement + stratified step 2 | `scripts/step2_followup_analysis.py` | `results/step2_followups/` |
-| step 3: next-visit RANO rating | `scripts/rano_forecast_experiment.py` | `results/rano_forecast/` |
-| volume forecast ranges (evaluation + calibration) | `scripts/volume_intervals.py` | `results/volume_intervals/`, `runs/packaging/*/volume-intervals.json` |
-| approach screen: which questions the data can answer | `scripts/approach_screen.py` | `results/approach_screen/` |
-| progression call: evaluation, then released model | `scripts/progression_call_experiment.py`, `scripts/progression_model.py` | `results/progression_call/`, `runs/packaging/*/progression-gbm` |
-| progression call vs survival (expert vs automated) | `scripts/progression_survival.py` | `results/progression_survival/` |
-| CLI (packaged models) | `scripts/predict.py`, `scripts/prediction.py`, `scripts/package_models.py` | user-chosen output directory |
-| figures | `scripts/plot_step_results.py`, `scripts/visualize_mask_forecasts.py` | `results/figures/` |
-
-## Reproducing
-
-Data: see [DATA_SETUP.md](DATA_SETUP.md). LUMIERE is not redistributed here.
-
-Long jobs run in tmux with logs in `runs/logs/` and a `*.DONE` sentinel. All are resumable,
-and registrations are cached and never repeated. The exact commands are in
-EXPERIMENTS.md section 6. In short:
-
-```bash
-.venv/bin/python scripts/volume_trajectory_experiment.py           # step 1, CPU
-.venv/bin/python scripts/build_atlas_cache.py                      # step 2 input cache, once (CPU)
-.venv/bin/python scripts/register_step2_pairs.py                   # step 2 registration, once (~1 h CPU)
-tmux new -d -s gbm_followups 'bash scripts/run_followup_experiments.sh'   # intensity retest + step 2 registered (GPU, ~6 h)
-.venv/bin/python scripts/step2_followup_analysis.py ceiling        # ~1 h CPU
-.venv/bin/python scripts/step2_followup_analysis.py report
-.venv/bin/python scripts/rano_forecast_experiment.py               # step 3, ~1 min CPU
-.venv/bin/python scripts/volume_intervals.py evaluate              # volume ranges, held-out check, ~25 s CPU
-.venv/bin/python scripts/approach_screen.py                        # alternative tasks screen, ~6 min CPU
-.venv/bin/python scripts/progression_call_experiment.py            # progression call, ~1 min CPU (needs the step 2 caches)
-tmux new -d -s gbm_survival '.venv/bin/python scripts/progression_survival.py > runs/logs/progression_survival.log 2>&1'   # ~3 min
-.venv/bin/python scripts/plot_step_results.py
-```
-
-Tests:
-
-```bash
-python3 -m py_compile scripts/*.py
-python3 -m unittest discover -s tests
-```
-
-## Legacy pipeline
-
-`scripts/run_neural_ode_pipeline.py` is the original 2D Attention U-Net + Neural ODE
-intensity forecaster (per-patient runs, `results/lumiere_full_v1_metrics.*`). It still
-runs, and the smoke test below exercises it on synthetic data, but its per-patient
-evaluation scores training pairs. Use `scripts/intensity_forecast_cv.py` for held-out
-numbers.
-
-```bash
-python3 scripts/generate_dummy_lumiere.py --output-dir test_data --num-weeks 3
-python3 scripts/run_neural_ode_pipeline.py --lumiere --data-dir test_data --patients Patient-999 \
-  --epochs 1 --batch-size 1 --model-size tiny --run-name smoke_default_holdout_3wk
-```
-
-## Status and limitations
-
-* One dataset (LUMIERE, single centre), 79 patients. There is no external validation.
-* All tumor labels are automated (DeepBraTumIA). Their reliability is the main limit on any
-  mask-level claim (section 9a).
-* Results are complete and frozen for the analyses above. `PUBLICATION_PROTOCOL.md`
-  describes the original intensity-forecasting protocol and is superseded by
-  EXPERIMENTS.md for what is reported here.
+The research goal is a reproducible assessment tool. Clinical utility and external
+generalization remain unestablished. No accuracy advantage is promised by the reset.
