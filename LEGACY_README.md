@@ -17,7 +17,18 @@ progressive disease (PD) under RANO.
 * For new progression (previous scan not PD), it scores 0.76 with segmentations and 0.73
   without. An enhancing-volume rule scores 0.65.
 * About half of all scans fall in its "likely PD" band, and 85-86% of those were rated PD.
+* Trained on one automatic segmenter and tested on LUMIERE's other one (HD-GLIO), it keeps
+  its accuracy: AUROC 0.829 vs 0.826.
+* Without the previous expert rating it loses 0.04 overall but nothing for new progression.
+* It finds 93% of PD scans with measurable growth. Its misses are mostly new lesions,
+  non-measurable lesions and T2/FLAIR-only progression. A third of its false alarms are
+  growth that the expert attributed to treatment.
 * It runs on CPU in a few seconds (see Run the models below).
+* **It did not transfer to a second centre.** A pre-specified test on MU-Glioma-Post scored
+  AUROC 0.56 [0.47, 0.66] against clinically documented progression, against 0.73 on
+  comparable LUMIERE scans. A model trained within MU did no better (0.57). Volumes don't
+  track MU's documented progression, so LUMIERE alone cannot establish a transferable
+  call (EXPERIMENTS.md 12h).
 
 **Survival check.** A fully automated version of the call (no expert rating) was tested
 against overall survival. It is as prognostic as the expert's call: time-dependent C-index
@@ -25,6 +36,11 @@ against overall survival. It is as prognostic as the expert's call: time-depende
 first-progression scan as the expert, and earlier or later about equally often in the
 rest. Neither is a strong survival marker in LUMIERE. A simple volumetric rule (enhancing
 tumor ≥ 40% above nadir) did better than the expert: C-index 0.61 vs 0.54 (CI excludes 0).
+* It holds with the second segmenter: 0.60.
+* It needs at least about 0.5 mL of absolute growth.
+* Landmark analyses do not confirm it.
+* It did not replicate on MU-Glioma-Post. There, documented progression was the stronger
+  marker: C-index 0.67 vs 0.61 for the rule.
 
 **What does not work: forecasting the next visit.** Once the evaluation is leakage-free,
 the scans are aligned and trivial controls are included, carrying the last scan forward is
@@ -49,6 +65,11 @@ survival check.
 | Which other questions can this data answer? | **Is the current scan PD?** Yes: AUROC 0.82 vs 0.68 (CI excludes 0). Remaining survival from each visit: modestly, C-index 0.68 vs 0.60 for clinical factors and time (CI excludes 0). Volume 6-12+ months ahead: beats copy-last by 14-16%, but a 2-parameter population Gompertz model does about as well (CIs include 0). | 12 |
 | How good is the progression call? | From volumes + previous rating + clinical: AUROC 0.820 [0.774, 0.862], 69% of PD scans found at 80% specificity. With the new-tumor features from the two atlas segmentations (8 mm margin, no registration): 0.835 [0.796, 0.871], 73% found; new progression 0.760 vs 0.728. A post-radiotherapy flag in the rating file would add more, but raters set it selectively, so it leaks the label and is excluded. | 12b |
 | Does the automated call predict survival like the expert's? | Equally well, and equally weakly. Time-dependent C-index is 0.530-0.544 (automated) vs 0.539 (expert), differences near 0 with CIs including 0. The first-progression scan matches in 34 of 65 patients, with the rest split evenly earlier and later. A simple volume rule is more prognostic than the expert: 0.607, +0.068 [+0.008, +0.132]. | 12c |
+| Does the call depend on one segmenter, or on the expert? | No. Trained on DeepBraTumIA and tested on HD-GLIO volumes of the same held-out scans, AUROC is 0.829 vs 0.826 (+0.003 [-0.028, +0.035]), and the fixed thresholds keep their specificity (0.79) and sensitivity (0.69). The two segmenters' growth measurements correlate only 0.83-0.88. Without the previous rating, AUROC drops 0.04 overall but not for new progression (0.734 vs 0.728). | 12d |
+| Where does it disagree with the expert? | Of 64 misses, 24 are new lesions (70% of new-lesion PD found), 23 non-measurable lesions (57% found) and 11 T2/FLAIR-only progression (39% found); measurable growth is found 93% of the time. Of 28 false alarms, a third are growth the expert attributed to treatment (< 3 months or irradiated field; 24 of 30 such scans were PD or re-operated at the next visit), and a third are partial responses. Segmenter disagreement matters little. | 12e |
+| Is the volume rule's survival advantage robust? | Partly. With HD-GLIO volumes it is +0.058 [0.000, +0.114] (DeepBraTumIA +0.068), and any relative threshold from 25% to 65% gives the same. Without a minimum absolute growth (≥ 0.5 mL) it disappears. The PFS–OS correlation points the same way (0.31 vs 0.21, CI includes 0), and landmark analyses show no advantage. | 12f |
+| Would more patients help the call? | Not the fully automated one: its AUROC is flat from 32 training patients on (0.797 at 32, 47 and 63). The models with the previous rating still gain about 0.007 per 16 patients. A second dataset is mainly for validation. A temporal split is impossible (no calendar dates in LUMIERE). | 12g |
+| Does the call transfer to another centre? | No. In a pre-specified test on MU-Glioma-Post (76 patients with glioblastoma, 145 calls, clinically documented first progression), AUROC is 0.563 [0.467, 0.658] against 0.725 on LUMIERE, with specificity 0.51 at the frozen 80%-specificity threshold. A model trained within MU scores 0.572; growth was as common before documented progression as at it. The volume rule's survival advantage does not replicate: −0.058 [−0.161, +0.039] against documented progression. | 12h |
 
 Figures: `results/figures/`, listed at the end of EXPERIMENTS.md.
 
@@ -95,7 +116,7 @@ patients the three bands were:
 | "PD less likely" | 23%, 28% PD | 20%, 32% PD |
 
 Subtle T2/FLAIR progression is mostly missed (39% found). A stable scan usually lands in
-"uncertain" rather than "PD less likely".
+"uncertain" rather than "PD less likely". EXPERIMENTS.md section 12e analyses every error.
 
 **Volume forecast with ranges.** This gives next-visit compartment volumes:
 
@@ -149,6 +170,11 @@ Three data issues found along the way are documented in EXPERIMENTS.md:
 | approach screen: which questions the data can answer | `scripts/approach_screen.py` | `results/approach_screen/` |
 | progression call: evaluation, then released model | `scripts/progression_call_experiment.py`, `scripts/progression_model.py` | `results/progression_call/`, `runs/packaging/*/progression-gbm` |
 | progression call vs survival (expert vs automated) | `scripts/progression_survival.py` | `results/progression_survival/` |
+| progression call: segmenter swap, dependence on the expert | `scripts/progression_robustness.py` | `results/progression_robustness/` |
+| progression call: where it disagrees with the expert | `scripts/progression_errors.py` | `results/progression_errors/` |
+| volume rule vs survival: segmenter, thresholds, surrogacy | `scripts/volume_rule_robustness.py` | `results/volume_rule_robustness/` |
+| progression call: learning curve | `scripts/progression_learning_curve.py` | `results/progression_learning_curve/` |
+| external test on MU-Glioma-Post (plan, freeze, run, exploratory) | `scripts/mu_freeze_model.py`, `scripts/mu_validation.py`, `scripts/mu_validation_explore.py` | `results/mu_validation/`, `runs/mu_validation/` |
 | CLI (packaged models) | `scripts/predict.py`, `scripts/prediction.py`, `scripts/package_models.py` | user-chosen output directory |
 | figures | `scripts/plot_step_results.py`, `scripts/visualize_mask_forecasts.py` | `results/figures/` |
 
@@ -172,6 +198,13 @@ tmux new -d -s gbm_followups 'bash scripts/run_followup_experiments.sh'   # inte
 .venv/bin/python scripts/approach_screen.py                        # alternative tasks screen, ~6 min CPU
 .venv/bin/python scripts/progression_call_experiment.py            # progression call, ~1 min CPU (needs the step 2 caches)
 tmux new -d -s gbm_survival '.venv/bin/python scripts/progression_survival.py > runs/logs/progression_survival.log 2>&1'   # ~3 min
+tmux new -d -s prog_robust '.venv/bin/python scripts/progression_robustness.py > runs/logs/progression_robustness.log 2>&1'   # a few min
+.venv/bin/python scripts/progression_errors.py                     # error analysis, < 1 min (after progression_robustness.py)
+tmux new -d -s vol_rule '.venv/bin/python scripts/volume_rule_robustness.py > runs/logs/volume_rule_robustness.log 2>&1'   # ~2 min (after progression_robustness.py)
+tmux new -d -s prog_lc '.venv/bin/python scripts/progression_learning_curve.py > runs/logs/progression_learning_curve.log 2>&1'   # ~6 min
+# external test: the freeze already exists and refuses to overwrite; mu_validation.py reads results/mu_validation/mask_volumes.csv
+tmux new -d -s mu_val '.venv/bin/python scripts/mu_validation.py > runs/logs/mu_validation.log 2>&1'   # ~1 min
+.venv/bin/python scripts/mu_validation_explore.py                  # exploratory follow-up, < 1 min
 .venv/bin/python scripts/plot_step_results.py
 ```
 

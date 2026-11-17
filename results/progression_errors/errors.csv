@@ -1,0 +1,93 @@
+patient_id,prev_source,cur_source,error,expert_rating,previous_rating,probability_pd,reason_group,rationale,weeks_since_surgery,enhancing_log_change_vs_nadir,new_enhancing_ml,segmenter_disagreement,next_scan,weeks_to_next_scan
+Patient-001,week-044,week-056,miss,PD,SD,0.331,new lesion,"Target L.: 1 12mm x 13mm, new non-target L.",56,1.52,3.24,0.111,no later scan,
+Patient-003,week-014,week-027,miss,PD,SD,0.349,new lesion,New non-measurable L.,27,-0.057,0.0,0.055,PD,11
+Patient-004,week-000-2,week-020,miss,PD,Post-Op,0.188,new lesion,"T2-Progr., new non-target L.: 1",20,1.454,0.0,1.474,PD,18
+Patient-006,week-027,week-039,false alarm,SD,SD,0.736,no rationale,,38,2.13,0.01,0.316,not PD,14
+Patient-006,week-083,week-097,miss,PD,SD,0.438,new lesion,New non-Target L.: 1,96,0.773,0.0,0.256,PD,15
+Patient-007,week-001,week-015,miss,PD,Post-Op,0.027,T2/FLAIR progression only,T2-Progr.,14,-0.041,0.0,0.041,PD,13
+Patient-007,week-015,week-028,miss,PD,PD,0.471,T2/FLAIR progression only,T2-Progr.,27,0.0,0.0,0.0,PD,13
+Patient-007,week-028,week-041,miss,PD,PD,0.636,non-measurable / non-target lesion,Non-measurable L.,40,0.0,0.0,0.0,PD,14
+Patient-008,week-002,week-017,miss,PD,Post-Op,0.332,new lesion,New non-Target L.,15,2.58,6.04,1.219,PD,49
+Patient-008,week-017,week-066,miss,PD,PD,0.261,non-measurable / non-target lesion,"T2-Progr., progressing non-target L.",64,-0.233,0.0,1.61,PD,19
+Patient-009,week-000-2,week-014,false alarm,SD,Post-Op,0.764,growth attributed to treatment (<3 months / irradiated field),"Less than 3 months, target L. 11.5mm x 19.5mm, 13mm x 17mm, T2-Progr., new non-measurable non-target L.",14,2.356,1.42,0.186,re-operation,1
+Patient-012,week-022,week-048,miss,PD,Post-Op,0.376,T2/FLAIR progression only,T2-Progr.,26,-0.491,0.0,0.379,PD,25
+Patient-012,week-048,week-073,miss,PD,PD,0.626,new lesion,"T2-Progr., new non-target L.",51,-0.013,0.0,0.014,PD,11
+Patient-015,week-037,week-056,miss,PD,CR,0.689,T2/FLAIR progression only,T2-Progr.,56,0.01,0.01,0.011,PD,22
+Patient-015,week-084,week-099,miss,PD,Post-Op,0.206,new lesion,"T2-Progr., new non-target L.",15,-0.007,0.0,0.038,PD,12
+Patient-015,week-099,week-111,miss,PD,PD,0.54,new lesion,"T2-Progr., new non-target L.",27,0.0,0.0,0.031,PD,15
+Patient-015,week-111,week-126,miss,PD,PD,0.517,new lesion,"T2-Progr., new non-target L.",42,0.0,0.0,0.0,PD,14
+Patient-017,week-001,week-016,false alarm,SD,Post-Op,0.929,growth attributed to treatment (<3 months / irradiated field),"less than 3 months, new target L. 17mm x 12mm, new non-target L., T2-Progr. in the high-dose field",15,0.708,4.62,0.546,PD,19
+Patient-017,week-016,week-035,miss,PD,SD,0.617,new lesion,"T2-Progr, target L. 31mm x 17mm, new non-measurable L.",34,1.103,1.09,0.439,no later scan,
+Patient-019,week-005,week-015,false alarm,SD,Post-Op,0.711,growth attributed to treatment (<3 months / irradiated field),"Less than 3 months, target L. 60mm x 26mm, T2-Progr. in the high-dose feld",10,0.716,5.34,1.596,not PD,7
+Patient-019,week-015,week-022,false alarm,SD,SD,0.764,growth attributed to treatment (<3 months / irradiated field),"Less than 3 months, target L. 71mm x 41mm, T2-Progr.",17,1.287,3.54,0.158,PD,9
+Patient-019,week-022,week-031,miss,PD,SD,0.534,measurable lesion growth,Target L. 57mm x 33mm,26,0.057,0.0,0.091,PD,24
+Patient-019,week-061,week-075,false alarm,PR,PD,0.743,other rationale,"T2-Progr. stable wrt. Previous, target L. 45mm x 17mm (64% wrt. 20100824)",70,0.107,0.02,0.122,not PD,15
+Patient-019,week-075,week-090,false alarm,PR,PR,0.729,other rationale,"Target L. 23mm x 13mm, T2-Progr. Stable to previous",85,-0.615,0.01,0.194,not PD,27
+Patient-019,week-090,week-117,false alarm,PR,PR,0.846,other rationale,"T2-Regression, target L. to non-measurable L.",112,-1.437,0.0,0.202,not PD,20
+Patient-019,week-117,week-137,false alarm,PR,PR,0.979,other rationale,"T2-Progr., new measurable target L. 55mm x 32mm",132,2.715,17.43,0.248,PD,1
+Patient-022,week-039,week-045,miss,PD,Post-Op,0.141,new lesion,"New non-measurable non-target L., example of a hypoperfusion of new lesions with Avastin, wrongly classified as radiation necrosis",6,-0.079,0.0,0.311,PD,8
+Patient-023,week-039,week-046,miss,PD,SD,0.252,non-measurable / non-target lesion,Non-Target L.: 1,45,0.0,0.0,0.009,PD,13
+Patient-023,week-059,week-084,false alarm,CR,PD,0.812,no rationale,,83,0.0,0.0,0.0,PD,13
+Patient-024,week-019,week-031,miss,PD,none,0.322,T2/FLAIR progression only,T2-Progr.,30,-0.873,0.0,0.803,PD,12
+Patient-027,week-000-2,week-014,miss,PD,Post-Op,0.585,measurable lesion growth,Target L.: 11mm x 14mm,14,0.867,2.19,1.738,no later scan,
+Patient-028,week-000-2,week-015,miss,PD,Post-Op,0.465,non-measurable / non-target lesion,Non-measurable L.,15,1.97,0.13,1.094,unrated,5
+Patient-029,week-022,week-033,false alarm,CR,PR,0.763,no rationale,,33,-0.113,0.0,0.111,not PD,12
+Patient-029,week-033,week-045,false alarm,CR,CR,0.716,no rationale,,45,-0.015,0.0,0.023,not PD,14
+Patient-030,week-025,week-041,miss,PD,SD,0.322,T2/FLAIR progression only,T2-Progr.,40,0.0,0.0,0.046,PD,11
+Patient-031,week-151,week-165,miss,PD,PD,0.66,non-measurable / non-target lesion,"T2-Progr., Non-Target L.: 1",17,0.109,0.0,0.236,re-operation,5
+Patient-032,week-027,week-040,false alarm,CR,CR,0.707,other rationale,"T2-Progr., new non-target L.",40,0.537,0.04,0.078,PD,4
+Patient-032,week-046,week-055,miss,PD,Post-Op,0.615,new lesion,New non-measurable non-target L.,9,0.443,0.08,0.561,PD,12
+Patient-032,week-085,week-096,miss,PD,CR,0.34,non-measurable / non-target lesion,"T2-Progr., non-target L.",27,0.037,0.0,0.037,no later scan,
+Patient-033,week-006,week-031,miss,PD,SD,0.54,new lesion,"Target L.: 1, new non-measurable L. dorsomedial resection cavity",29,-0.314,0.0,1.07,PD,18
+Patient-033,week-049,week-063,miss,PD,PD,0.36,T2/FLAIR progression only,T2-Progr.,61,-0.282,0.0,0.412,PD,13
+Patient-034,week-014,week-028,miss,PD,SD,0.292,new lesion,"T2-Progr., Non-Target L.: 1, new non-target L.",28,-0.503,0.0,0.256,PD,12
+Patient-034,week-044,week-058,miss,PD,Post-Op,0.489,T2/FLAIR progression only,T2-Progr.,14,-0.308,0.69,0.117,no later scan,
+Patient-035,week-000-2,week-008,false alarm,SD,Post-Op,0.861,growth attributed to treatment (<3 months / irradiated field),Progression probably within the irradiated area,8,2.237,2.59,0.402,not PD,11
+Patient-037,week-000-2,week-002,false alarm,SD,Post-Op,0.823,growth attributed to treatment (<3 months / irradiated field),"less than 3 months, new non-target lesion",2,1.773,5.18,0.412,not PD,13
+Patient-037,week-015,week-025,false alarm,SD,SD,0.711,other rationale,"New non-target L., T2-Progr.",25,-0.753,0.0,0.086,PD,4
+Patient-040,week-001,week-015,false alarm,SD,Post-Op,0.878,growth attributed to treatment (<3 months / irradiated field),Progression probably within the irradiated area,14,0.884,1.17,0.707,PD,13
+Patient-041,week-020,week-038,miss,PD,SD,0.323,non-measurable / non-target lesion,"T2-Progr., Non-Target L.: 3, non-target lesion regressing in size",36,0.208,0.0,0.386,no later scan,
+Patient-042,week-004,week-010,miss,PD,SD,0.235,non-measurable / non-target lesion,"T2-Progr., Non-Target L.: 1",10,-1.335,0.0,1.278,not PD,12
+Patient-043,week-053,week-067,miss,PD,SD,0.379,new lesion,New non-Target L.: 1,65,0.0,0.0,0.0,re-operation,3
+Patient-043,week-070,week-084,miss,PD,Post-Op,0.641,new lesion,Non-Target L.: 1 (new),14,-0.361,0.55,0.663,PD,14
+Patient-045,week-000-2,week-017,false alarm,SD,Post-Op,0.706,growth attributed to treatment (<3 months / irradiated field),Progression probably within the irradiated area,17,1.059,0.44,0.106,PD,11
+Patient-049,week-019,week-029,miss,PD,SD,0.638,new lesion,"T2-Progr., new non-target L.",10,-0.202,0.0,0.018,PD,17
+Patient-051,week-036,week-050,miss,PD,PD,0.554,non-measurable / non-target lesion,Non-Target L.: 1,50,0.303,0.0,0.017,PD,14
+Patient-052,week-002,week-089,miss,PD,Post-Op,0.583,non-measurable / non-target lesion,Non-Target L.: 1,87,-0.727,0.03,1.03,PD,26
+Patient-052,week-119,week-133,miss,PD,Post-Op,0.515,non-measurable / non-target lesion,Progressing non-Target L.,14,-0.603,0.01,0.582,PD,15
+Patient-054,week-002,week-014,false alarm,SD,Post-Op,0.697,growth attributed to treatment (<3 months / irradiated field),New non-target L. within the irradiated area,12,0.247,0.73,0.113,PD,12
+Patient-054,week-014,week-026,miss,PD,SD,0.527,measurable lesion growth,TL 10 x 16 mm,24,0.325,0.0,0.019,re-operation,2
+Patient-055,week-017,week-039,miss,PD,SD,0.498,T2/FLAIR progression only,T2-Progr.,39,-0.053,0.0,0.01,PD,15
+Patient-058,week-015,week-027,false alarm,PR,PD,0.835,no rationale,,25,-1.325,0.01,0.77,not PD,9
+Patient-058,week-027,week-036,false alarm,PR,PR,0.948,no rationale,,34,0.675,0.33,0.859,no later scan,
+Patient-059,week-055,week-068,miss,PD,PR,0.318,new lesion,New non-target L.,67,-0.67,0.0,0.136,PD,16
+Patient-062,week-042,week-050,miss,PD,SD,0.322,non-measurable / non-target lesion,Non-Target L.: 1,50,0.021,0.0,0.021,PD,7
+Patient-063,week-105,week-118,miss,PD,SD,0.355,new lesion,New non-target L.,116,0.0,0.0,0.0,unrated,5
+Patient-064,week-020,week-033,miss,PD,SD,0.562,new lesion,"T2-Progr., new non-target L.",31,0.453,0.1,0.153,not PD,16
+Patient-064,week-049,week-062,miss,PD,SD,0.684,new lesion,"T2-Progr., new non-target L.",60,0.244,0.0,0.263,no later scan,
+Patient-065,week-014,week-021,miss,PD,SD,0.672,non-measurable / non-target lesion,Non-Target L.: 1,21,0.129,0.01,0.295,re-operation,4
+Patient-065,week-025,week-029,miss,PD,Post-Op,0.46,non-measurable / non-target lesion,Non-Target L.: 1,4,-0.759,0.0,0.418,PD,50
+Patient-066,week-084,week-101,miss,PD,PD,0.431,measurable lesion growth,Target L.: 12mm x 25mm,51,0.742,0.0,0.245,no later scan,
+Patient-067,week-019-2,week-033,miss,PD,Post-Op,0.347,non-measurable / non-target lesion,Non-Target L.,14,-1.599,0.0,0.476,PD,9
+Patient-067,week-033,week-042,miss,PD,PD,0.147,non-measurable / non-target lesion,Non-Target L.,23,-0.463,0.0,0.466,PD,11
+Patient-067,week-077,week-079,false alarm,SD,SD,0.71,no rationale,,20,-0.462,0.0,0.205,not PD,13
+Patient-067,week-092,week-109,miss,PD,SD,0.523,T2/FLAIR progression only,T2-Progr.,50,-0.576,0.0,0.576,PD,15
+Patient-067,week-124,week-136,miss,PD,PD,0.472,T2/FLAIR progression only,T2-Progr.,77,-0.349,0.0,0.347,PD,16
+Patient-070,week-019,week-044,miss,PD,SD,0.363,measurable lesion growth,"T2-Progr., target L. 12mm x 10mm",40,0.0,0.0,0.0,PD,17
+Patient-071,week-000-2,week-024,miss,PD,Post-Op,0.325,non-measurable / non-target lesion,Non-Target L.: 1,24,0.105,0.09,0.137,PD,3
+Patient-072,week-029,week-037,false alarm,PR,PD,0.874,other rationale,"Target L. to non-target L. (>50%), T2w stable compared to previous",37,0.537,0.0,0.014,PD,9
+Patient-072,week-090,week-105,miss,PD,PD,0.686,new lesion,"T2-Progr., target L. 13mm x 11mm, new non-target L.",105,0.199,0.0,0.126,unrated,15
+Patient-073,week-073,week-087,miss,PD,none,0.608,non-measurable / non-target lesion,Non-Target L.: 1,86,1.232,0.0,0.356,PD,13
+Patient-073,week-100,week-119,miss,PD,PD,0.664,non-measurable / non-target lesion,"Only non-Target L. remaining, pseudo-progression",118,1.795,0.0,0.492,not PD,16
+Patient-073,week-155,week-169,false alarm,SD,SD,0.697,no rationale,,168,1.569,0.04,0.507,not PD,17
+Patient-073,week-186,week-202,false alarm,SD,SD,0.788,no rationale,,201,0.549,0.07,0.559,PD,14
+Patient-075,week-032,week-044,false alarm,PR,PD,0.826,other rationale,with residual non-measurable non-target L. (PD according to clinic),42,-0.146,0.32,1.997,no later scan,
+Patient-077,week-033,week-048,miss,PD,none,0.495,new lesion,"PD, new non-measurable L.",47,-0.701,0.0,0.534,PD,14
+Patient-078,week-088,week-106,false alarm,PR,PD,0.93,other rationale,60% SPD reduction to the maximum measured on 20110720,105,-0.063,0.0,0.017,PD,7
+Patient-081,week-000-2,week-006,miss,PD,Post-Op,0.405,non-measurable / non-target lesion,Non-Target L.: 1,6,1.795,0.86,1.259,no later scan,
+Patient-084,week-000-2,week-012,false alarm,SD,Post-Op,0.765,growth attributed to treatment (<3 months / irradiated field),"less than 3 months, new target L. 15.5mm x 10mm, 17mm x 29.5mm, new non-target L.",12,3.176,16.3,0.371,no later scan,
+Patient-085,week-001,week-018,miss,PD,Post-Op,0.453,non-measurable / non-target lesion,Non-measurable L.,17,0.653,0.02,0.301,unrated,7
+Patient-087,week-000-2,week-024,miss,PD,Post-Op,0.626,non-measurable / non-target lesion,Non-Target L.: 1,24,-0.435,0.0,0.066,no later scan,
+Patient-089,week-000-2,week-045,miss,PD,Post-Op,0.44,measurable lesion growth,Target L.: 19mm x 24mm,45,2.412,0.7,0.005,re-operation,1
+Patient-089,week-046,week-056,miss,PD,Post-Op,0.185,new lesion,New target L.: 14mm x 18mm,10,-0.028,0.0,0.245,PD,8
+Patient-091,week-001,week-014,miss,PD,Post-Op,0.177,non-measurable / non-target lesion,Non-measurable L.,13,-0.126,0.0,0.081,PD,12

@@ -1,0 +1,181 @@
+{
+  "rows": 374,
+  "patients": 79,
+  "fractions": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "repeats": 10,
+  "models": {
+    "released: V+R+S": [
+      {
+        "fraction": 0.25,
+        "training_patients": 16.0,
+        "auroc_mean": 0.767174834193073,
+        "auroc_sd": 0.012372831278959825,
+        "auroc_min": 0.7421702284450995,
+        "auroc_max": 0.7804900515843773,
+        "auroc_new_progression_mean": 0.6962323446327684,
+        "auroc_new_progression_sd": 0.013699392447448085
+      },
+      {
+        "fraction": 0.5,
+        "training_patients": 32.0,
+        "auroc_mean": 0.8046487349545567,
+        "auroc_sd": 0.01790682473513241,
+        "auroc_min": 0.7726602800294768,
+        "auroc_max": 0.8269159911569639,
+        "auroc_new_progression_mean": 0.7246327683615819,
+        "auroc_new_progression_sd": 0.02052149661197755
+      },
+      {
+        "fraction": 0.75,
+        "training_patients": 47.2,
+        "auroc_mean": 0.8123203758290346,
+        "auroc_sd": 0.006442757114921585,
+        "auroc_min": 0.8009088676000983,
+        "auroc_max": 0.8241218373863916,
+        "auroc_new_progression_mean": 0.7234427966101695,
+        "auroc_new_progression_sd": 0.012213096081864706
+      },
+      {
+        "fraction": 1.0,
+        "training_patients": 63.2,
+        "auroc_mean": 0.8198538442643085,
+        "auroc_sd": 0.0,
+        "auroc_min": 0.8198538442643085,
+        "auroc_max": 0.8198538442643085,
+        "auroc_new_progression_mean": 0.7281073446327684,
+        "auroc_new_progression_sd": 0.0
+      }
+    ],
+    "released: V+R+S+M": [
+      {
+        "fraction": 0.25,
+        "training_patients": 16.0,
+        "auroc_mean": 0.7813129452223041,
+        "auroc_sd": 0.013476848849962086,
+        "auroc_min": 0.759334315892901,
+        "auroc_max": 0.8059444853844264,
+        "auroc_new_progression_mean": 0.7194985875706215,
+        "auroc_new_progression_sd": 0.01902480709896715
+      },
+      {
+        "fraction": 0.5,
+        "training_patients": 32.0,
+        "auroc_mean": 0.8161277941537705,
+        "auroc_sd": 0.017623313055272743,
+        "auroc_min": 0.7874600835175632,
+        "auroc_max": 0.8404261852124785,
+        "auroc_new_progression_mean": 0.7446574858757062,
+        "auroc_new_progression_sd": 0.021739983436134733
+      },
+      {
+        "fraction": 0.75,
+        "training_patients": 47.2,
+        "auroc_mean": 0.8280290469172193,
+        "auroc_sd": 0.004472103075603295,
+        "auroc_min": 0.8228322279538197,
+        "auroc_max": 0.8360046671579464,
+        "auroc_new_progression_mean": 0.7520021186440677,
+        "auroc_new_progression_sd": 0.00889120351663864
+      },
+      {
+        "fraction": 1.0,
+        "training_patients": 63.2,
+        "auroc_mean": 0.8349914026037829,
+        "auroc_sd": 0.0,
+        "auroc_min": 0.8349914026037829,
+        "auroc_max": 0.8349914026037829,
+        "auroc_new_progression_mean": 0.7600988700564971,
+        "auroc_new_progression_sd": 0.0
+      }
+    ],
+    "fully automated: V": [
+      {
+        "fraction": 0.25,
+        "training_patients": 16.0,
+        "auroc_mean": 0.7543539670842545,
+        "auroc_sd": 0.01490511117570272,
+        "auroc_min": 0.7336956521739131,
+        "auroc_max": 0.7780950626381724,
+        "auroc_new_progression_mean": 0.7058474576271186,
+        "auroc_new_progression_sd": 0.019893170697376242
+      },
+      {
+        "fraction": 0.5,
+        "training_patients": 32.0,
+        "auroc_mean": 0.7854704003930238,
+        "auroc_sd": 0.01672529046488896,
+        "auroc_min": 0.7545443380004913,
+        "auroc_max": 0.8051154507492017,
+        "auroc_new_progression_mean": 0.7343997175141243,
+        "auroc_new_progression_sd": 0.01817863767305907
+      },
+      {
+        "fraction": 0.75,
+        "training_patients": 47.2,
+        "auroc_mean": 0.7806128715303366,
+        "auroc_sd": 0.00862094102047953,
+        "auroc_min": 0.7679624170965365,
+        "auroc_max": 0.7914210267747482,
+        "auroc_new_progression_mean": 0.7311440677966101,
+        "auroc_new_progression_sd": 0.0103551400413949
+      },
+      {
+        "fraction": 1.0,
+        "training_patients": 63.2,
+        "auroc_mean": 0.7850650945713584,
+        "auroc_sd": 0.0,
+        "auroc_min": 0.7850650945713584,
+        "auroc_max": 0.7850650945713584,
+        "auroc_new_progression_mean": 0.7341101694915254,
+        "auroc_new_progression_sd": 0.0
+      }
+    ],
+    "fully automated: V+M": [
+      {
+        "fraction": 0.25,
+        "training_patients": 16.0,
+        "auroc_mean": 0.7718558093834439,
+        "auroc_sd": 0.01238750599969227,
+        "auroc_min": 0.7576148366494718,
+        "auroc_max": 0.7922193564234832,
+        "auroc_new_progression_mean": 0.725388418079096,
+        "auroc_new_progression_sd": 0.01760382463843668
+      },
+      {
+        "fraction": 0.5,
+        "training_patients": 32.0,
+        "auroc_mean": 0.7970001228199459,
+        "auroc_sd": 0.01695423250455436,
+        "auroc_min": 0.764554163596168,
+        "auroc_max": 0.8182878899533285,
+        "auroc_new_progression_mean": 0.752683615819209,
+        "auroc_new_progression_sd": 0.018732491621582675
+      },
+      {
+        "fraction": 0.75,
+        "training_patients": 47.2,
+        "auroc_mean": 0.7971229427659052,
+        "auroc_sd": 0.0070232066275693035,
+        "auroc_min": 0.7843895848685827,
+        "auroc_max": 0.8064357651682633,
+        "auroc_new_progression_mean": 0.7533686440677967,
+        "auroc_new_progression_sd": 0.00918393217303199
+      },
+      {
+        "fraction": 1.0,
+        "training_patients": 63.2,
+        "auroc_mean": 0.7968558093834439,
+        "auroc_sd": 0.0,
+        "auroc_min": 0.7968558093834439,
+        "auroc_max": 0.7968558093834439,
+        "auroc_new_progression_mean": 0.7564971751412429,
+        "auroc_new_progression_sd": 0.0
+      }
+    ]
+  }
+}

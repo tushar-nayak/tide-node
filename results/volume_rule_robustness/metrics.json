@@ -1,0 +1,598 @@
+{
+  "patients": 73,
+  "bootstrap": 2000,
+  "main": {
+    "expert": {
+      "progressed": 67,
+      "median_weeks_start_to_call": 27.0,
+      "median_weeks_call_to_death": 48.0,
+      "hr": 2.1405928420348204,
+      "hr_ci95": [
+        0.841938219845468,
+        9.228423833207126
+      ],
+      "c_index": 0.5387864823348695,
+      "c_index_ci95": [
+        0.4855785506455525,
+        0.5928673448441029
+      ],
+      "c_minus_expert": 0.0,
+      "c_minus_expert_ci95": [
+        0.0,
+        0.0
+      ],
+      "median_pfs_weeks": 27.0,
+      "spearman_pfs_os": 0.21044385380890393,
+      "spearman_pfs_os_ci95": [
+        -0.0307180967460233,
+        0.425636820558387
+      ],
+      "spearman_minus_expert": 0.0,
+      "spearman_minus_expert_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "volume rule, DeepBraTumIA (atlas)": {
+      "progressed": 67,
+      "median_weeks_start_to_call": 23.0,
+      "median_weeks_call_to_death": 45.0,
+      "hr": 3.9116019400250517,
+      "hr_ci95": [
+        1.7830935839948288,
+        12.997993936189935
+      ],
+      "c_index": 0.6067588325652842,
+      "c_index_ci95": [
+        0.5483830031111838,
+        0.6628376917831391
+      ],
+      "c_minus_expert": 0.0679723502304147,
+      "c_minus_expert_ci95": [
+        0.008535184455822473,
+        0.13040593877035833
+      ],
+      "median_pfs_weeks": 25.0,
+      "spearman_pfs_os": 0.3093347073843133,
+      "spearman_pfs_os_ci95": [
+        0.06341500843215553,
+        0.5189129190104056
+      ],
+      "spearman_minus_expert": 0.09889085357540936,
+      "spearman_minus_expert_ci95": [
+        -0.12265060933160289,
+        0.3153215025715663
+      ]
+    },
+    "volume rule, DeepBraTumIA (native)": {
+      "progressed": 67,
+      "median_weeks_start_to_call": 23.0,
+      "median_weeks_call_to_death": 45.0,
+      "hr": 3.9116019400250517,
+      "hr_ci95": [
+        1.7830935839948288,
+        12.997993936189935
+      ],
+      "c_index": 0.6067588325652842,
+      "c_index_ci95": [
+        0.5483830031111838,
+        0.6628376917831391
+      ],
+      "c_minus_expert": 0.0679723502304147,
+      "c_minus_expert_ci95": [
+        0.008535184455822473,
+        0.13040593877035833
+      ],
+      "median_pfs_weeks": 25.0,
+      "spearman_pfs_os": 0.3093347073843133,
+      "spearman_pfs_os_ci95": [
+        0.06341500843215553,
+        0.5189129190104056
+      ],
+      "spearman_minus_expert": 0.09889085357540936,
+      "spearman_minus_expert_ci95": [
+        -0.12265060933160289,
+        0.3153215025715663
+      ]
+    },
+    "volume rule, HD-GLIO (native)": {
+      "progressed": 66,
+      "median_weeks_start_to_call": 25.5,
+      "median_weeks_call_to_death": 45.5,
+      "hr": 3.0912839957191403,
+      "hr_ci95": [
+        1.3903356842019396,
+        9.741033812633741
+      ],
+      "c_index": 0.5967741935483871,
+      "c_index_ci95": [
+        0.5376992716521465,
+        0.6507505888664168
+      ],
+      "c_minus_expert": 0.057987711213517645,
+      "c_minus_expert_ci95": [
+        0.00018932038834952342,
+        0.11359355778875443
+      ],
+      "median_pfs_weeks": 27.0,
+      "spearman_pfs_os": 0.24117702814402797,
+      "spearman_pfs_os_ci95": [
+        -0.0045233653554453785,
+        0.45599293425222903
+      ],
+      "spearman_minus_expert": 0.03073317433512404,
+      "spearman_minus_expert_ci95": [
+        -0.1881533840885249,
+        0.24123646964568604
+      ]
+    }
+  },
+  "grid": {
+    "DeepBraTumIA (atlas)": [
+      {
+        "relative": 0.25,
+        "absolute_ml": 0.0,
+        "progressed": 69,
+        "median_weeks_start_to_call": 22.0,
+        "c_index": 0.5464669738863287,
+        "c_minus_expert": 0.007680491551459223,
+        "c_minus_expert_ci95": [
+          -0.051857418737977466,
+          0.06546271999342508
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 0.5,
+        "progressed": 67,
+        "median_weeks_start_to_call": 23.0,
+        "c_index": 0.6036866359447005,
+        "c_minus_expert": 0.06490015360983103,
+        "c_minus_expert_ci95": [
+          0.006184831281768076,
+          0.12637046162965573
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 1.0,
+        "progressed": 67,
+        "median_weeks_start_to_call": 23.0,
+        "c_index": 0.6067588325652842,
+        "c_minus_expert": 0.0679723502304147,
+        "c_minus_expert_ci95": [
+          0.008535184455822473,
+          0.13040593877035833
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 2.0,
+        "progressed": 64,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.607910906298003,
+        "c_minus_expert": 0.06912442396313356,
+        "c_minus_expert_ci95": [
+          0.005654951042339071,
+          0.13302962505558366
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 0.0,
+        "progressed": 69,
+        "median_weeks_start_to_call": 22.0,
+        "c_index": 0.5466589861751152,
+        "c_minus_expert": 0.007872503840245737,
+        "c_minus_expert_ci95": [
+          -0.051852553031476886,
+          0.06565628888507173
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 0.5,
+        "progressed": 67,
+        "median_weeks_start_to_call": 23.0,
+        "c_index": 0.6036866359447005,
+        "c_minus_expert": 0.06490015360983103,
+        "c_minus_expert_ci95": [
+          0.006184831281768076,
+          0.12637046162965573
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 1.0,
+        "progressed": 67,
+        "median_weeks_start_to_call": 23.0,
+        "c_index": 0.6067588325652842,
+        "c_minus_expert": 0.0679723502304147,
+        "c_minus_expert_ci95": [
+          0.008535184455822473,
+          0.13040593877035833
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 2.0,
+        "progressed": 64,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.607910906298003,
+        "c_minus_expert": 0.06912442396313356,
+        "c_minus_expert_ci95": [
+          0.005654951042339071,
+          0.13302962505558366
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 0.0,
+        "progressed": 68,
+        "median_weeks_start_to_call": 23.5,
+        "c_index": 0.5453149001536098,
+        "c_minus_expert": 0.006528417818740362,
+        "c_minus_expert_ci95": [
+          -0.05393882907605833,
+          0.06559734197097113
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 0.5,
+        "progressed": 66,
+        "median_weeks_start_to_call": 24.5,
+        "c_index": 0.6013824884792627,
+        "c_minus_expert": 0.0625960061443932,
+        "c_minus_expert_ci95": [
+          0.000773843113499412,
+          0.12573006363174094
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 1.0,
+        "progressed": 66,
+        "median_weeks_start_to_call": 25.0,
+        "c_index": 0.6044546850998463,
+        "c_minus_expert": 0.06566820276497687,
+        "c_minus_expert_ci95": [
+          0.004321107654593812,
+          0.129818212853926
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 2.0,
+        "progressed": 64,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.6081029185867896,
+        "c_minus_expert": 0.06931643625192008,
+        "c_minus_expert_ci95": [
+          0.006629828622186607,
+          0.13302962505558366
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 0.0,
+        "progressed": 67,
+        "median_weeks_start_to_call": 24.0,
+        "c_index": 0.5362903225806451,
+        "c_minus_expert": -0.0024961597542243474,
+        "c_minus_expert_ci95": [
+          -0.05968876541367137,
+          0.04958203353110357
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 0.5,
+        "progressed": 65,
+        "median_weeks_start_to_call": 25.0,
+        "c_index": 0.5889016897081413,
+        "c_minus_expert": 0.0501152073732718,
+        "c_minus_expert_ci95": [
+          -0.004324218479985954,
+          0.1086143875869755
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 1.0,
+        "progressed": 65,
+        "median_weeks_start_to_call": 25.0,
+        "c_index": 0.5917818740399385,
+        "c_minus_expert": 0.05299539170506906,
+        "c_minus_expert_ci95": [
+          -0.0025379797632030156,
+          0.11256601018193142
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 2.0,
+        "progressed": 63,
+        "median_weeks_start_to_call": 26.0,
+        "c_index": 0.5952380952380952,
+        "c_minus_expert": 0.056451612903225756,
+        "c_minus_expert_ci95": [
+          -0.0021402658403438524,
+          0.11645995835138911
+        ]
+      }
+    ],
+    "HD-GLIO (native)": [
+      {
+        "relative": 0.25,
+        "absolute_ml": 0.0,
+        "progressed": 70,
+        "median_weeks_start_to_call": 15.5,
+        "c_index": 0.5240015360983102,
+        "c_minus_expert": -0.014784946236559238,
+        "c_minus_expert_ci95": [
+          -0.06766841668035128,
+          0.036740000922725606
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 0.5,
+        "progressed": 67,
+        "median_weeks_start_to_call": 22.0,
+        "c_index": 0.5975422427035331,
+        "c_minus_expert": 0.05875576036866359,
+        "c_minus_expert_ci95": [
+          0.0005818182350613932,
+          0.11511701286972235
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 1.0,
+        "progressed": 66,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.5967741935483871,
+        "c_minus_expert": 0.057987711213517645,
+        "c_minus_expert_ci95": [
+          0.00018932038834952342,
+          0.11359355778875443
+        ]
+      },
+      {
+        "relative": 0.25,
+        "absolute_ml": 2.0,
+        "progressed": 63,
+        "median_weeks_start_to_call": 29.0,
+        "c_index": 0.6017665130568356,
+        "c_minus_expert": 0.06298003072196612,
+        "c_minus_expert_ci95": [
+          0.006396613619131503,
+          0.11851807691838535
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 0.0,
+        "progressed": 70,
+        "median_weeks_start_to_call": 15.5,
+        "c_index": 0.5240015360983102,
+        "c_minus_expert": -0.014784946236559238,
+        "c_minus_expert_ci95": [
+          -0.06766841668035128,
+          0.036740000922725606
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 0.5,
+        "progressed": 67,
+        "median_weeks_start_to_call": 22.0,
+        "c_index": 0.5975422427035331,
+        "c_minus_expert": 0.05875576036866359,
+        "c_minus_expert_ci95": [
+          0.0005818182350613932,
+          0.11511701286972235
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 1.0,
+        "progressed": 66,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.5967741935483871,
+        "c_minus_expert": 0.057987711213517645,
+        "c_minus_expert_ci95": [
+          0.00018932038834952342,
+          0.11359355778875443
+        ]
+      },
+      {
+        "relative": 0.4,
+        "absolute_ml": 2.0,
+        "progressed": 63,
+        "median_weeks_start_to_call": 29.0,
+        "c_index": 0.6017665130568356,
+        "c_minus_expert": 0.06298003072196612,
+        "c_minus_expert_ci95": [
+          0.006396613619131503,
+          0.11851807691838535
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 0.0,
+        "progressed": 70,
+        "median_weeks_start_to_call": 16.0,
+        "c_index": 0.5263056835637481,
+        "c_minus_expert": -0.012480798771121404,
+        "c_minus_expert_ci95": [
+          -0.06572220062208403,
+          0.03933125276422356
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 0.5,
+        "progressed": 67,
+        "median_weeks_start_to_call": 22.0,
+        "c_index": 0.5994623655913979,
+        "c_minus_expert": 0.060675883256528396,
+        "c_minus_expert_ci95": [
+          0.0025086763016853174,
+          0.11759093491977923
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 1.0,
+        "progressed": 66,
+        "median_weeks_start_to_call": 25.5,
+        "c_index": 0.5967741935483871,
+        "c_minus_expert": 0.057987711213517645,
+        "c_minus_expert_ci95": [
+          0.00018932038834952342,
+          0.11359355778875443
+        ]
+      },
+      {
+        "relative": 0.65,
+        "absolute_ml": 2.0,
+        "progressed": 63,
+        "median_weeks_start_to_call": 29.0,
+        "c_index": 0.6017665130568356,
+        "c_minus_expert": 0.06298003072196612,
+        "c_minus_expert_ci95": [
+          0.006396613619131503,
+          0.11851807691838535
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 0.0,
+        "progressed": 69,
+        "median_weeks_start_to_call": 16.0,
+        "c_index": 0.5144009216589862,
+        "c_minus_expert": -0.024385560675883267,
+        "c_minus_expert_ci95": [
+          -0.0733838678920926,
+          0.02163407864729802
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 0.5,
+        "progressed": 66,
+        "median_weeks_start_to_call": 22.5,
+        "c_index": 0.5865975422427036,
+        "c_minus_expert": 0.047811059907834075,
+        "c_minus_expert_ci95": [
+          -0.004466033301838651,
+          0.09755198095766987
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 1.0,
+        "progressed": 65,
+        "median_weeks_start_to_call": 26.0,
+        "c_index": 0.5839093701996928,
+        "c_minus_expert": 0.045122887864823324,
+        "c_minus_expert_ci95": [
+          -0.005664214199534206,
+          0.09450625282427189
+        ]
+      },
+      {
+        "relative": 1.0,
+        "absolute_ml": 2.0,
+        "progressed": 63,
+        "median_weeks_start_to_call": 29.0,
+        "c_index": 0.6017665130568356,
+        "c_minus_expert": 0.06298003072196612,
+        "c_minus_expert_ci95": [
+          0.006396613619131503,
+          0.11851807691838535
+        ]
+      }
+    ]
+  },
+  "landmarks": {
+    "26": {
+      "alive_patients": 70,
+      "expert": {
+        "progressed": 32,
+        "hr": 1.0613582432696473,
+        "hr_ci95": [
+          0.6498795608348816,
+          1.7638175837835732
+        ]
+      },
+      "volume rule, DeepBraTumIA (atlas)": {
+        "progressed": 35,
+        "hr": 1.1035907692583982,
+        "hr_ci95": [
+          0.6564627734865022,
+          1.8021977492996184
+        ]
+      },
+      "volume rule, DeepBraTumIA (native)": {
+        "progressed": 35,
+        "hr": 1.1035907692583982,
+        "hr_ci95": [
+          0.6564627734865022,
+          1.8021977492996184
+        ]
+      },
+      "volume rule, HD-GLIO (native)": {
+        "progressed": 32,
+        "hr": 1.0217066772367651,
+        "hr_ci95": [
+          0.610089610190551,
+          1.6620037653341295
+        ]
+      }
+    },
+    "52": {
+      "alive_patients": 53,
+      "expert": {
+        "progressed": 44,
+        "hr": 1.8240860334700462,
+        "hr_ci95": [
+          0.702986729991956,
+          4.6042763037716306
+        ]
+      },
+      "volume rule, DeepBraTumIA (atlas)": {
+        "progressed": 36,
+        "hr": 1.4401226151305224,
+        "hr_ci95": [
+          0.7586262971060098,
+          2.565440876722061
+        ]
+      },
+      "volume rule, DeepBraTumIA (native)": {
+        "progressed": 36,
+        "hr": 1.4401226151305224,
+        "hr_ci95": [
+          0.7586262971060098,
+          2.565440876722061
+        ]
+      },
+      "volume rule, HD-GLIO (native)": {
+        "progressed": 34,
+        "hr": 1.088145207781783,
+        "hr_ci95": [
+          0.5393131771953156,
+          1.886717650798661
+        ]
+      }
+    }
+  },
+  "agreement_dbt_vs_hd": {
+    "both_progressed": 64,
+    "same_scan": 53,
+    "hd_earlier": 4,
+    "hd_later": 7
+  }
+}

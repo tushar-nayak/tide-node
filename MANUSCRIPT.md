@@ -24,7 +24,13 @@ cross-validation and patient-level bootstrap CIs.
   (PD). Its inputs are automated volumes, the previous rating, clinical factors, and new
   tumor found by comparing the current and previous segmentations. It was trained and
   tested on 374 rated follow-ups. We tested a fully automated version of the call against
-  overall survival in 73 patients.
+  overall survival in 73 patients. We also tested the call with a second automatic
+  segmenter and without the previous expert rating. We then explained each disagreement
+  with the expert using the expert's written rationale.
+* *External test.* Under a pre-specified plan, we froze the fully automated call and
+  tested it on a second dataset, MU-Glioma-Post: 76 patients with glioblastoma and 145
+  follow-ups. The references were clinically documented first progression and overall
+  survival.
 
 **Results.**
 * **Forecasting.** No Neural ODE model beats the best simple comparator.
@@ -40,13 +46,36 @@ cross-validation and patient-level bootstrap CIs.
   For new progression the call scores 0.760, against 0.649 for an enhancing-volume rule.
   A post-radiotherapy flag in the dataset's rating file would raise AUROC to 0.86, but it
   is annotated selectively and leaks the label.
+  * Trained on one segmenter and tested on another, the call kept its accuracy (AUROC
+    0.829 vs 0.826, difference +0.003 [-0.028, +0.035]). Its fixed thresholds kept their
+    specificity and sensitivity.
+  * Without the previous expert rating it lost 0.04 AUROC overall but nothing for new
+    progression (0.734 vs 0.728). That fully automated version stopped improving beyond
+    about 32 training patients.
+  * It found 93% of PD scans with measurable growth. Its misses are mostly new lesions,
+    non-measurable lesions and T2/FLAIR-only progression. A third of its false alarms are
+    growth that the expert attributed to treatment.
 * **Survival.** The fully automated call is as prognostic as the expert's: time-dependent
   C-index 0.530-0.544 vs 0.539. In this cohort both are weak. A simple volumetric rule did
   better than the expert: 0.607, +0.068 [+0.008, +0.132].
+  * The advantage held with the second segmenter (+0.058 [0.000, +0.114]) and across
+    relative thresholds.
+  * It needed a minimum absolute growth, and landmark analyses did not confirm it.
+* **External test.** The frozen call did not transfer: AUROC 0.563 [0.467, 0.658], against
+  0.725 on comparable LUMIERE scans.
+  * A model trained within MU did no better (0.572).
+  * Enhancing growth was as common before the documented progression as at it.
+  * MU's documented progression is therefore a different target from LUMIERE's per-scan
+    RANO reads.
+  * The volumetric rule did not beat documented progression for survival: C-index 0.613 vs
+    0.671, difference -0.058 [-0.161, +0.039].
 
 **Conclusion.** On LUMIERE, carrying the last observation forward is close to the best
-next-visit forecast. Reading the current scan's status, however, is feasible from
-automated measurements: the call approaches an expert reading and is as prognostic as one.
+next-visit forecast. Reading the current scan's status is feasible there from automated
+measurements: the call approaches an expert reading, is as prognostic as one, and is
+robust to a change of segmenter. It did not transfer to a second centre's clinically
+documented progression, and the volumetric rule's survival advantage did not replicate.
+Validating automated response assessment needs external data with per-scan RANO reads.
 Forecasting claims should be checked against held-out patients, registration and a
 smoothing control. Dataset annotations should be audited for label leakage before they
 are used as inputs.
@@ -74,10 +103,19 @@ chemotherapy cycles, second-line drugs and steroids, and LUMIERE does not record
 Response assessment does not depend on that missing information: whether the current scan
 shows progression is visible in the current scan and its predecessors. Automated volumetric
 response assessment has been proposed before. It was reported to be a better surrogate for
-overall survival than central RANO reading [2]. Once the forecasting results were clear, we
-therefore screened which questions LUMIERE can answer under the same rules. We then
-developed the one with real signal: an automated, RANO-style progression call. Finally, we
-asked whether that call carries the same survival information as the expert's.
+overall survival than central RANO reading [2]. On LUMIERE itself, two recent approaches
+show how hard the reading is to reproduce:
+* a deterministic RANO 2.0 pipeline applied to the dataset's masks agreed with the expert
+  on 48% of four-class per-timepoint ratings (κ 0.17) [6];
+* an image-based deep network reached a median balanced accuracy of 51% for four-class
+  RANO [7].
+
+Once the forecasting results were clear, we screened which questions LUMIERE can answer
+under the same rules. We then developed the one with real signal: an automated,
+RANO-style progression call. We asked whether that call carries the same survival
+information as the expert's, whether it depends on the segmenter or on the expert, and
+where it fails. Last, under a pre-specified plan, we tested whether it transfers to
+another centre.
 
 ## 2. Data and cohort
 
@@ -100,7 +138,8 @@ asked whether that call carries the same survival information as the expert's.
   recorded survival time. 3 of these are excluded because their recorded death precedes
   their last scan, leaving 73.
 * **Folds.** Patient-level 5-fold assignment with seed 0, shared by all experiments. The
-  volume, RANO, interval, screen and progression-call experiments add fold seeds 1 and 2.
+  volume, RANO, interval, screen, progression-call and robustness experiments add fold seeds
+  1 and 2.
   Inner validation splits differ between experiments.
 * **Reporting.** Differences are reported as the mean over patients of the per-patient
   difference, with 95% bootstrap CIs over patients.
@@ -244,6 +283,72 @@ A re-operation counts as progression if none was called before. Progression ente
 Breslow Cox model as a time-varying covariate. We also report a time-dependent C-index,
 landmark analyses at 26 and 52 weeks, and 2,000 patient-bootstrap resamples. Survival is
 never used for model fitting.
+
+The volumetric rule was then checked in three ways (`volume_rule_robustness.py`):
+* recomputed from HD-GLIO volumes;
+* recomputed over a grid of relative (25-100%) and absolute (0-2 mL) thresholds;
+* compared with the expert on a second measure of surrogacy, the patient-level Spearman
+  correlation between progression-free and overall survival.
+
+**J. Robustness** (`progression_robustness.py`). Same rows, folds and bootstrap as H.
+* *Segmenter swap.* LUMIERE provides a second automatic segmentation of every scan,
+  HD-GLIO-AUTO.
+  * HD-GLIO has no necrosis label, so these models use two compartments: enhancing tumor,
+    and non-enhancing abnormality (DeepBraTumIA necrosis plus edema).
+  * Both segmenters' volumes are counted on each scan's native contrast-enhanced T1 grid.
+    DeepBraTumIA's atlas-space volumes are also used, to separate a change of measurement
+    space from a change of segmenter.
+  * A model is trained on one source and tested on another for the held-out patients. Its
+    thresholds are fixed on the training source's held-out scores.
+* *Dependence on the expert.* The released models are refitted without R, and without R
+  and S.
+* *Learning curve* (`progression_learning_curve.py`). Each outer fold trains on a random 25,
+  50, 75 or 100% of its training patients, with 10 subsets per fraction, and is scored on
+  the whole held-out fold.
+
+**K. Error analysis** (`progression_errors.py`). Misses and false alarms are defined by the
+released mask model's held-out probabilities at the "likely PD" threshold. They are
+explained by four things:
+* the expert's written rationale, grouped by keyword rules:
+  * for PD: measurable lesion growth, new lesion, non-measurable or non-target lesion, or
+    T2/FLAIR-only progression;
+  * for non-PD: whether the expert attributed growth to treatment, meaning within three
+    months of radiotherapy or within the irradiated field;
+* the rating of the next scan;
+* agreement between the two segmenters;
+* time since surgery.
+
+Neither the rationale nor the next scan is ever an input.
+
+**L. External test** (`mu_freeze_model.py`, `mu_validation.py`). The plan
+(`results/mu_validation/PLAN.md`) was hashed before the model was applied.
+* *Data.* MU-Glioma-Post [8, 9] contains post-treatment MRI of 203 glioma patients from
+  one US centre. Each patient has up to six follow-ups.
+  * The masks come from nnU-Net and were refined by neuroradiologists.
+  * A clinical table gives days from diagnosis to each MRI, surgery, radiotherapy, first
+    progression and death.
+  * Progression was documented from clinical notes, imaging and the care team's impression.
+    There are no per-scan RANO reads.
+* *Model.* The fully automated two-compartment call (J), trained on all 374 LUMIERE
+  follow-ups with DeepBraTumIA volumes. A copy trained on HD-GLIO volumes is secondary.
+  Thresholds come from LUMIERE held-out scores on follow-ups whose previous scan was not PD.
+* *Mapping.* Enhancing tumor is MU's enhancing tissue. Non-enhancing abnormality is MU's
+  non-enhancing core plus FLAIR hyperintensity. The segment starts at the first surgery.
+* *Labels.* The cohort is patients with glioblastoma and at least two scans.
+  * The scan within 14 days of the documented first progression is PD.
+  * Earlier scans, and all scans of patients without progression, are non-PD.
+  * Later scans are excluded.
+  * Each call needs an earlier MU scan.
+* *Endpoints.*
+  * Primary: AUROC. The hypothesis is that the lower 95% bound exceeds 0.5. The result is
+    called consistent with LUMIERE if the interval contains LUMIERE's 0.725 for the same
+    model on comparable scans.
+  * Secondary: operating points, comparators, sensitivity analyses, and the 12 weeks after
+    radiotherapy.
+  * Survival: the censoring-aware time-dependent C-index of the volumetric rule minus that
+    of documented progression, both read at MU scans.
+* *Exploratory follow-up* (`mu_validation_explore.py`, written after the result). It
+  examines growth before documented progression, and the same model trained within MU.
 
 ## 4. Results
 
@@ -437,7 +542,8 @@ Held-out results for total tumor volume at the 80% level:
 * **What is missed.** PD called for T2 progression alone (18 scans) is mostly missed: 39%
   are found. Near-stable scans after a non-PD rating are over-called: across 28 scans, 25%
   were rated PD, but the mean probability is 0.44 with masks (0.48 without). Two of them
-  cross the "likely PD" threshold with masks, none without.
+  cross the "likely PD" threshold with masks, none without. Section 4.11 analyses every
+  error.
 * **An annotation that leaks the label.** The rating file's `LessThan3Months` flag marks
   scans within three months of radiotherapy, where RANO does not allow a PD call on
   enhancement growth alone. Adding it raised AUROC to 0.86. But it is annotated
@@ -472,10 +578,152 @@ scans whose previous rating was not PD (B).*
 * **The volumetric rule.** It is more prognostic than the expert while calling progression
   *earlier* (median 23 vs 27 weeks after the segment start). So its higher HR is not an
   artifact of late calls. It is one of several comparisons and its lower bound is near 0.
+* **How robust the rule's advantage is.**
+  * *Segmenter.* With HD-GLIO volumes the rule scores C-index 0.597, +0.058 [0.000,
+    +0.114] over the expert. The two segmenters' rules call progression on the same scan in
+    53 of 64 patients.
+  * *Thresholds.* Any relative threshold from 25% to 65% above the nadir gives +0.063 to
+    +0.069. The absolute floor is what matters: without a minimum growth in mL the advantage
+    disappears (+0.008; -0.015 with HD-GLIO). The signal is, in effect, "at least about
+    0.5-2 mL of new enhancing growth above the nadir."
+  * *Other measures.* The patient-level correlation between progression-free and overall
+    survival points the same way, 0.31 vs 0.21, but the difference is +0.099 [-0.123,
+    +0.315]. The landmark analyses show no advantage.
+
+  The advantage is consistent, but only one of three measures shows it significantly. It
+  did not replicate on external data (4.12).
 
 ![Figure 9](results/figures/progression_survival_landmark.png)
 *Figure 9. Survival after a 26-week landmark by progression status: expert call (A) and
 fully automated call (B).*
+
+### 4.10 Does the call depend on the segmenter or on the expert? (J)
+
+| train → test (two compartments, with rating and clinical factors) | AUROC [95% CI] | minus DeepBraTumIA → DeepBraTumIA [95% CI] | specificity / sensitivity at the fixed 80%-specificity threshold |
+| :--- | :---: | :---: | :---: |
+| DeepBraTumIA → DeepBraTumIA | 0.826 [0.779, 0.867] | - | 0.80 / 0.67 |
+| DeepBraTumIA → HD-GLIO | 0.829 [0.776, 0.873] | +0.003 [-0.028, +0.035] | 0.79 / 0.69 |
+| HD-GLIO → HD-GLIO | 0.815 [0.766, 0.858] | -0.011 [-0.036, +0.016] | 0.80 / 0.68 |
+| HD-GLIO → DeepBraTumIA | 0.819 [0.769, 0.866] | -0.007 [-0.034, +0.021] | 0.77 / 0.71 |
+
+* **Segmenter.** The model trained on DeepBraTumIA kept its accuracy on HD-GLIO inputs.
+  * The two segmenters measure growth differently: correlation 0.83-0.88 for the change
+    features and 0.92 for enhancing volume.
+  * The fixed thresholds kept their operating points.
+  * The fully automated version behaves the same: 0.797 vs 0.785.
+  * Thresholds set on HD-GLIO were slightly permissive on DeepBraTumIA inputs: specificity
+    0.77, and 0.74 for volumes only.
+  * Measuring in atlas space or on the native grid changed AUROC by at most 0.003.
+  * Merging necrosis into the non-enhancing compartment costs nothing. On the same rows the
+    released three-compartment model scores 0.820.
+* **Expert.** Removing the previous rating lowers AUROC overall but not for new
+  progression:
+
+| inputs | AUROC | minus released [95% CI] | AUROC, previous scan not PD | minus released [95% CI] |
+| :--- | :---: | :---: | :---: | :---: |
+| V+R+S (released) | 0.820 | - | 0.728 | - |
+| V+S | 0.779 | -0.041 [-0.060, -0.022] | 0.725 | -0.003 [-0.019, +0.014] |
+| V | 0.785 | -0.035 [-0.050, -0.019] | 0.734 | +0.006 [-0.009, +0.022] |
+| V+R+S+M (released) | 0.835 | - | 0.760 | - |
+| V+M | 0.797 | -0.038 [-0.054, -0.020] | 0.756 | -0.004 [-0.017, +0.013] |
+
+  Each model is compared with the released model of its own input family, with or without
+  masks. The rating helps only to recognise that an existing progression persists.
+* **More patients.** Held-out AUROC with 16, 32, 47 and 63 training patients per fold:
+
+| model | 16 | 32 | 47 | 63 |
+| :--- | :---: | :---: | :---: | :---: |
+| released: V+R+S+M | 0.781 | 0.816 | 0.828 | 0.835 |
+| fully automated: V+M | 0.772 | 0.797 | 0.797 | 0.797 |
+
+  The fully automated call is flat from 32 patients on, so more scans of the same kind
+  will not raise it. The released model still gains about 0.007 per 16 more patients.
+
+### 4.11 Where does the call disagree with the expert? (K)
+
+At the "likely PD" threshold, the released mask model made 172 hits, 64 misses, 28 false
+alarms and 110 correct non-PD calls on held-out patients.
+
+| expert's reason for PD | PD scans | misses | found | median enhancing log-change vs nadir |
+| :--- | ---: | ---: | ---: | ---: |
+| measurable lesion growth | 83 | 6 | 93% | +1.84 |
+| new lesion | 80 | 24 | 70% | +0.48 |
+| non-measurable or non-target lesion | 54 | 23 | 57% | +0.24 |
+| T2/FLAIR progression only | 18 | 11 | 39% | -0.07 |
+
+| expert's reason for not calling PD | non-PD scans | false alarms |
+| :--- | ---: | ---: |
+| growth attributed to treatment (< 3 months, or within the irradiated field) | 34 | 10 (29%) |
+| another rationale | 15 | 9 (60%) |
+| no rationale written | 89 | 9 (10%) |
+
+* **Misses.** 58 of the 64 misses fall where volumes carry little information:
+  * new lesions (24), which are often small (median 0.3 mL of new enhancing tumor);
+  * non-measurable or non-target lesions (23);
+  * T2/FLAIR-only progression (11), where the enhancing volume did not grow.
+
+  Measurable growth is found 93% of the time.
+* **False alarms: growth attributed to treatment.** A third are growth the expert saw and
+  attributed to treatment, so RANO does not count it as progression. Applying that rule
+  needs radiotherapy dates and fields, which LUMIERE does not record.
+  * Most such scans progressed anyway: 24 of 30 with a known next scan were rated PD or
+    re-operated at the next visit.
+  * The call did not separate these cases: 6 of 9 called vs 18 of 21 not called.
+* **False alarms: partial responses.** Another third are scans rated PR, a rating with only
+  20 scans in the cohort. Five follow a PD rating. In all five the enhancing volume fell
+  25-95% since that scan, yet the call was PD, with or without the previous rating as an
+  input.
+* **The call is not systematically early.** After a false alarm, the next scan was PD or a
+  re-operation in 52% of cases, against 49% after a correct non-PD call.
+* **Context.** Accuracy is lower in the first 26 weeks after surgery: AUROC 0.762 at 0-13
+  weeks and 0.795 at 14-26 weeks, against 0.840 later. The intervals overlap.
+* **Segmentation quality.** It is a minor factor. Where the two segmenters agree most on
+  enhancing change, AUROC is 0.848; where they agree least, 0.831. The error rate rises
+  from 21% to 28%.
+* **Spread.** The 92 errors are spread over 55 of 79 patients.
+
+### 4.12 Does the call transfer to another centre? (L)
+
+The test set has 145 calls from 76 patients with glioblastoma: 48 PD, a rate of 0.33.
+
+| score | AUROC [95% CI] |
+| :--- | :---: |
+| frozen call, trained on DeepBraTumIA volumes (primary) | 0.563 [0.467, 0.658] |
+| frozen call, trained on HD-GLIO volumes | 0.586 [0.486, 0.685] |
+| enhancing change vs nadir | 0.559 [0.466, 0.653] |
+| enhancing change vs previous scan | 0.496 [0.408, 0.588] |
+| *exploratory:* same model trained within MU | 0.572 [0.471, 0.677] |
+| *exploratory:* trained within MU, plus time since radiotherapy | 0.658 [0.543, 0.765] |
+
+* **Primary result.** The pre-specified hypothesis failed. The interval includes 0.5, and it
+  excludes LUMIERE's 0.725.
+* **Calibration.** The mean predicted probability was 0.69, against a PD rate of 0.33. At
+  the frozen 80%-specificity threshold, specificity was 0.51 and sensitivity 0.60.
+* **Not a transfer gap that retraining closes.** Trained within MU, the same features score
+  0.572.
+  * Enhancing growth was common before documented progression. The volumetric rule was met
+    by 60% of the earlier scans of patients who progressed, against 62% of progression
+    scans.
+  * It was also met by 44% of the scans of patients who never progressed.
+  * In MU, volumes therefore do not track documented progression. Only time since
+    radiotherapy, which LUMIERE lacks, added signal.
+* **Analysis choices.** No choice rescued the call:
+  * imaging-documented progression only: 0.573;
+  * no re-operation: 0.540;
+  * progression scans on the exact day only: 0.544;
+  * all glioma types: 0.580.
+
+  The volume spreadsheet released with the data gave the same AUROC (0.563, 57 calls). It
+  matched the masks exactly for 344 of 355 scans.
+* **Radiotherapy window.** In the 12 weeks after radiotherapy the call was below chance:
+  0.28 [0.09, 0.51], 29 calls, 5 PD. Growth there was mostly not documented as progression.
+  Later scans scored 0.571.
+* **Survival.** The analysis covers 99 patients and 57 deaths.
+  * Documented progression was strongly prognostic: HR 7.85 [3.52, 27.91], C-index 0.671.
+  * The volumetric rule scored C-index 0.613 [0.529, 0.692], close to its LUMIERE value of
+    0.607. It fell below documented progression: -0.058 [-0.161, +0.039]. The pre-specified
+    outcome is therefore "does not replicate".
+  * The automated call scored 0.598.
 
 ## 5. Discussion
 
@@ -502,27 +750,74 @@ Why there is little left to find:
 * The main driver of change, treatment, is not recorded.
 
 The volume model's value shows most clearly in its uncertainty, not its point forecast:
-calibrated ranges centred on it are 16% sharper than ranges around the last scan.
+calibrated ranges centred on it score 16% better (interval score) than ranges around the
+last scan.
 
 **Assessment.** The automated progression call works because its target is observable. The
 current scan and its predecessors carry the growth, the new lesions and the timing that a
-reader uses. With automated measurements alone, the call reaches AUROC 0.835. For new
-progression it reaches 0.760, the case where carrying the previous rating forward is
-useless (0.523).
+reader uses. With automated measurements and the previous rating, the call reaches AUROC
+0.835; with no expert input, 0.797. For new progression it reaches 0.760, and 0.756 with no
+expert input. This is the case where carrying the previous rating forward is useless
+(0.523). These figures are internal to LUMIERE. At a second centre the call did not hold
+(4.12).
 
-Its remaining errors are the ones expected from volumetry:
-* subtle T2/FLAIR progression;
-* stable scans that a reader called PD for reasons not visible in volumes.
+Its errors are of two kinds (4.11):
+* **Findings that volumes capture poorly:** T2/FLAIR-only progression, non-measurable
+  lesions and small new lesions.
+* **Information the dataset does not record.**
+  * A third of the false alarms are growth that the reader attributed to treatment. That
+    judgment needs radiotherapy dates and fields.
+  * Another third are partial responses, which are too rare in the data to learn.
 
 Monotone constraints make its behavior predictable: more growth never lowers the
 probability. Its bands report their own held-out accuracy.
 
+**Robustness.** Two concerns apply to any model trained on automated measurements:
+* it may learn one segmenter's idiosyncrasies;
+* it may borrow its skill from the expert's previous reading.
+
+Neither holds here (4.10).
+* Swapping DeepBraTumIA for HD-GLIO at test time left AUROC and the operating points
+  essentially unchanged. Yet the two segmenters' growth measurements correlate only
+  0.83-0.88.
+* Removing the previous rating cost 0.04 AUROC overall but nothing for new progression. A
+  fully automated call therefore keeps the clinically useful part, and it can run where no
+  ratings exist.
+* The swap changes only the segmentation algorithm. The external test (4.12) changed site,
+  scanner, segmenter and reference standard at once, and the call did not transfer.
+* The fully automated call has saturated on LUMIERE: it stops improving at about 32
+  training patients. Further gains need information it lacks, such as T2/FLAIR measures
+  beyond the edema volume, radiotherapy timing or more readers. A second dataset would
+  serve mainly for validation.
+
+**External test.** The frozen call failed on MU-Glioma-Post. The exploratory follow-up
+suggests why.
+* MU's labels are the clinically documented first progression, not a reader's call on each
+  scan.
+* Enhancing growth was as common on the scans before that date as on the scan at it.
+* A model trained within MU did no better than the frozen one.
+
+The two datasets therefore measure different things. LUMIERE's reads follow volumetric
+growth closely, and that is what the call learned. MU's documentation lags growth and
+depends on other information, such as time since radiotherapy and the clinical course.
+
+The failure does not show that automated volumetric assessment cannot work elsewhere. It
+does show that LUMIERE alone cannot establish it. A fair test needs per-scan RANO reads and
+treatment dates.
+
 **Survival.** A model trained to reproduce expert readings inherits the expert's
 prognostic value, and here that value is small. The volumetric rule did better, which
 agrees with the report that automated volumetric response assessment is a better survival
-surrogate than RANO reading [2]. If the goal is an endpoint for trials, a progression
-definition built for survival is a better target than imitating the reader. That
-definition could be the volumetric rule itself or a model trained on survival.
+surrogate than RANO reading [2].
+* The advantage survived a change of segmenter and of the relative threshold.
+* It required a minimum absolute growth.
+* It was significant only in the time-dependent analysis.
+
+On MU it did not replicate. Documented progression was the stronger marker there (C-index
+0.671 vs 0.613), while the rule scored about what it had on LUMIERE. LUMIERE's advantage
+therefore reflects a weakly prognostic expert reading in that dataset, not a general
+property of the rule. A progression definition built for survival remains a reasonable
+target for trials, but this study does not support the volumetric rule as one.
 
 **Leakage in annotations.** The `LessThan3Months` flag looked like legitimate clinical
 timing information. It was in fact recorded mostly when it changed the reader's decision.
@@ -532,6 +827,7 @@ Fields in a rating file can encode the rating, and they should be checked before
 1. Report persistence and a tuned blurred-persistence control.
 2. Register the target into the input frame and quantify the residual misalignment.
 3. Report same-scan inter-segmenter agreement without interpreting it as an accuracy bound.
+   Where a dataset provides two segmentations, train on one and test on the other.
 4. Report stratified results (growing, stable and responding tumors), because a growth prior
    looks like skill in pooled metrics.
 5. Before forecasting, check whether the dataset supports a different, observable target.
@@ -540,7 +836,11 @@ Fields in a rating file can encode the rating, and they should be checked before
    label.
 
 **Limitations:**
-* Single centre, 79 patients, and no external validation.
+* Development used a single centre and 79 patients. The external test had 76 patients and
+  145 calls. Its reference standard, clinically documented first progression, differs from
+  LUMIERE's per-scan RANO reads. It therefore cannot separate a failure of the call from a
+  difference in target. No temporal split is possible, because LUMIERE records weeks, not
+  calendar dates.
 * Labels are automated (DeepBraTumIA), apart from the RANO ratings. The progression label
   is one expert reading per scan, and inter-reader variability is not captured.
 * The forecasting models are deliberately conservative (zero-initialised at persistence)
@@ -549,6 +849,8 @@ Fields in a rating file can encode the rating, and they should be checked before
   Its released thresholds come from out-of-fold predictions, not an independent set.
 * The survival analysis assumes LUMIERE's survival times share the scan-week origin. It
   excludes 3 patients, and its landmark analyses are underpowered.
+* The error analysis groups the expert's free-text rationale by keyword rules, which are
+  approximate. Its subgroups are small.
 * Same-segmenter test-retest data would help characterize measurement repeatability.
 
 ## 6. Conclusion
@@ -557,13 +859,23 @@ On LUMIERE, carrying the last scan, mask or rating forward is close to the best 
 next-visit forecast. Paired comparisons do not establish ODE superiority over static
 comparators, and exploratory secondary effects vary by endpoint.
 
-The same data support automated assessment of the current scan. A volumetric progression
-call reaches AUROC 0.835 against the expert reading and is as prognostic as the reading
-itself. A simple volumetric rule is the more prognostic definition of progression and
-merits external validation.
+Within LUMIERE, the same data support automated assessment of the current scan. A
+volumetric progression call reaches AUROC 0.835 against the expert reading and is as
+prognostic as the reading itself.
+* It keeps its accuracy when the segmenter changes.
+* Its skill for new progression does not depend on the expert's previous rating.
+* Most of its errors trace to findings that volumes capture poorly or to information the
+  dataset does not record.
 
-The evaluation protocol, its controls, and the released tools (`scripts/predict.py`;
-PREDICTION.md) are the main contribution.
+It did not transfer to a second centre: AUROC 0.563 against clinically documented
+progression. A simple volumetric rule's survival advantage over the expert did not
+replicate there either. The call reproduces LUMIERE's reading process. Whether automated
+volumetric assessment generalizes needs external data with per-scan RANO reads and
+treatment dates.
+
+The evaluation protocol, its controls and the pre-specified external test are the main
+contribution. The released models (`scripts/predict.py`; PREDICTION.md) remain research
+tools.
 
 ## References
 
@@ -578,11 +890,22 @@ PREDICTION.md) are the main contribution.
    inference for regression. *J Am Stat Assoc.* 2018;113(523):1094-1111.
 5. Gneiting T, Raftery AE. Strictly proper scoring rules, prediction, and estimation.
    *J Am Stat Assoc.* 2007;102(477):359-378.
+6. Siakallis L, Bisdas S. Automated RANO 2.0-aligned response assessment for glioblastoma
+   clinical trials: external evaluation against expert annotations. *Cancers.*
+   2026;18(20):3383.
+7. Matoso A, et al. Towards a deep learning approach for classifying treatment response in
+   glioblastomas. arXiv:2504.18268, 2025.
+8. Mahmoud E, et al. MU-Glioma Post: a comprehensive dataset of automated MR multi-sequence
+   segmentation and clinical features. *Sci Data.* 2025;12:1847.
+9. Yaseen D, et al. University of Missouri Post-operative Glioma Dataset (MU-Glioma-Post),
+   version 1 [data set]. The Cancer Imaging Archive; 2025. doi:10.7937/7K9K-3C83.
 
 ## Data and code availability
 
 * LUMIERE is available from its authors under their data-use terms. It is not
   redistributed; see `DATA_SETUP.md`.
+* MU-Glioma-Post is available from TCIA under CC BY 4.0 [9]. Only derived per-scan
+  volumes are redistributed (`results/mu_validation/mask_volumes.csv`).
 * All code, derived result tables and figures are in this repository. EXPERIMENTS.md gives
   every command.
 * The released models run with `scripts/predict.py` (PREDICTION.md). They are research
@@ -590,7 +913,7 @@ PREDICTION.md) are the main contribution.
 
 ---
 **Status**: draft
-**Updated**: November 4, 2026
+**Updated**: November 17, 2026
 
 ## Release audit (2026-11-03; applies to Part 1 and supersedes unpaired interpretations there)
 

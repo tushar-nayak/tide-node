@@ -1,0 +1,514 @@
+{
+  "rows": 374,
+  "patients": 79,
+  "pd_scans": 236,
+  "models": {
+    "released_volumes_masks": {
+      "threshold_likely_pd": 0.696401,
+      "threshold_pd_less_likely": 0.3611755,
+      "confusion": {
+        "hits": 172,
+        "misses": 64,
+        "false_alarms": 28,
+        "true_negatives": 110
+      },
+      "confident_misses_pd_in_lowest_band": 24,
+      "pd_by_reason": {
+        "T2/FLAIR progression only": {
+          "pd_scans": 18,
+          "misses": 11,
+          "sensitivity": 0.3888888888888889,
+          "in_lowest_band": 0.2222222222222222,
+          "median_new_enhancing_ml": 0.0,
+          "median_enhancing_log_change_vs_nadir": -0.06910524352389785
+        },
+        "measurable lesion growth": {
+          "pd_scans": 83,
+          "misses": 6,
+          "sensitivity": 0.927710843373494,
+          "in_lowest_band": 0.0,
+          "median_new_enhancing_ml": 3.136,
+          "median_enhancing_log_change_vs_nadir": 1.8435609677913183
+        },
+        "new lesion": {
+          "pd_scans": 80,
+          "misses": 24,
+          "sensitivity": 0.7,
+          "in_lowest_band": 0.125,
+          "median_new_enhancing_ml": 0.296,
+          "median_enhancing_log_change_vs_nadir": 0.47891841390302897
+        },
+        "non-measurable / non-target lesion": {
+          "pd_scans": 54,
+          "misses": 23,
+          "sensitivity": 0.5740740740740741,
+          "in_lowest_band": 0.18518518518518517,
+          "median_new_enhancing_ml": 0.028,
+          "median_enhancing_log_change_vs_nadir": 0.24081297035345112
+        },
+        "other or no text": {
+          "pd_scans": 1,
+          "misses": 0,
+          "sensitivity": 1.0,
+          "in_lowest_band": 0.0,
+          "median_new_enhancing_ml": 21.072,
+          "median_enhancing_log_change_vs_nadir": 2.549805067759032
+        }
+      },
+      "misses_share_previous_pd": 0.21875,
+      "hits_share_previous_pd": 0.6046511627906976,
+      "non_pd_by_reason": {
+        "growth attributed to treatment (<3 months / irradiated field)": {
+          "scans": 34,
+          "false_alarm_rate": 0.29411764705882354,
+          "false_alarms": 10,
+          "mean_probability": 0.464627294117647
+        },
+        "no rationale": {
+          "scans": 89,
+          "false_alarm_rate": 0.10112359550561797,
+          "false_alarms": 9,
+          "mean_probability": 0.414488988764045
+        },
+        "other rationale": {
+          "scans": 15,
+          "false_alarm_rate": 0.6,
+          "false_alarms": 9,
+          "mean_probability": 0.6178521333333334
+        }
+      },
+      "non_pd_by_rating": {
+        "SD": {
+          "scans": 92,
+          "false_alarm_rate": 0.16304347826086957
+        },
+        "PR": {
+          "scans": 20,
+          "false_alarm_rate": 0.45
+        },
+        "CR": {
+          "scans": 26,
+          "false_alarm_rate": 0.15384615384615385
+        }
+      },
+      "non_pd_by_previous_rating": {
+        "previous scan PD": {
+          "scans": 18,
+          "false_alarm_rate": 0.3333333333333333,
+          "false_alarms": 6
+        },
+        "previous scan not PD": {
+          "scans": 120,
+          "false_alarm_rate": 0.18333333333333332,
+          "false_alarms": 22
+        }
+      },
+      "false_alarms_after_pd": {
+        "false_alarms": 6,
+        "of_them_pr": 5,
+        "enhancing_fell_since_previous": 5,
+        "no_enhancing_tumor_on_either_scan": 1,
+        "pr_also_called_without_rating": 5,
+        "not_pr_also_called_without_rating": 0,
+        "enhancing_pct_change_since_previous_range": [
+          -94.81049562682216,
+          -25.205361003026372
+        ]
+      },
+      "false_alarms_flagged_less_than_3_months": 8,
+      "next_scan": {
+        "false alarms": {
+          "scans": 28,
+          "with_rated_next_scan": 25,
+          "next_pd_or_reoperation": 13,
+          "share_next_pd_or_reoperation": 0.52,
+          "median_weeks_to_that_scan": 9.0,
+          "counts": {
+            "PD": 12,
+            "re-operation": 1,
+            "not PD": 12,
+            "unrated": 0,
+            "no later scan": 3
+          }
+        },
+        "true negatives": {
+          "scans": 110,
+          "with_rated_next_scan": 99,
+          "next_pd_or_reoperation": 49,
+          "share_next_pd_or_reoperation": 0.494949494949495,
+          "median_weeks_to_that_scan": 13.0,
+          "counts": {
+            "PD": 46,
+            "re-operation": 3,
+            "not PD": 50,
+            "unrated": 3,
+            "no later scan": 8
+          }
+        },
+        "growth attributed to treatment, called": {
+          "scans": 10,
+          "with_rated_next_scan": 9,
+          "next_pd_or_reoperation": 6,
+          "share_next_pd_or_reoperation": 0.6666666666666666,
+          "median_weeks_to_that_scan": 11.5,
+          "counts": {
+            "PD": 5,
+            "re-operation": 1,
+            "not PD": 3,
+            "unrated": 0,
+            "no later scan": 1
+          }
+        },
+        "growth attributed to treatment, not called": {
+          "scans": 24,
+          "with_rated_next_scan": 21,
+          "next_pd_or_reoperation": 18,
+          "share_next_pd_or_reoperation": 0.8571428571428571,
+          "median_weeks_to_that_scan": 12.5,
+          "counts": {
+            "PD": 15,
+            "re-operation": 3,
+            "not PD": 3,
+            "unrated": 0,
+            "no later scan": 3
+          }
+        }
+      },
+      "by_weeks_since_surgery": {
+        "0-13 weeks": {
+          "scans": 46,
+          "pd_rate": 0.45652173913043476,
+          "auroc": 0.7619047619047619,
+          "ci95": [
+            0.5944015151515152,
+            0.8947394527986633
+          ],
+          "false_alarm_rate": 0.2,
+          "sensitivity": 0.6190476190476191
+        },
+        "14-26 weeks": {
+          "scans": 93,
+          "pd_rate": 0.4838709677419355,
+          "auroc": 0.7949074074074074,
+          "ci95": [
+            0.6856657130937481,
+            0.8887831978319783
+          ],
+          "false_alarm_rate": 0.16666666666666666,
+          "sensitivity": 0.5777777777777777
+        },
+        ">26 weeks": {
+          "scans": 235,
+          "pd_rate": 0.723404255319149,
+          "auroc": 0.8404524886877828,
+          "ci95": [
+            0.785395886876018,
+            0.8865946675706912
+          ],
+          "false_alarm_rate": 0.23076923076923078,
+          "sensitivity": 0.7823529411764706
+        }
+      },
+      "concentration": {
+        "errors": 92,
+        "patients_with_an_error": 55,
+        "patients": 79,
+        "share_of_errors_in_top_10_patients": 0.3695652173913043,
+        "error_rate_overall": 0.24598930481283424
+      },
+      "segmentation_quality": {
+        "cutoffs_abs_log_change_difference": [
+          0.07548784396046584,
+          0.34810145264755976
+        ],
+        "rows_with_both": 374,
+        "segmenters agree (lowest third)": {
+          "scans": 125,
+          "pd_rate": 0.6,
+          "auroc": 0.8482666666666666,
+          "ci95": [
+            0.7950707235073539,
+            0.9011804483395391
+          ],
+          "error_rate": 0.208
+        },
+        "middle third": {
+          "scans": 124,
+          "pd_rate": 0.6612903225806451,
+          "auroc": 0.8260743321718932,
+          "ci95": [
+            0.7300627919586252,
+            0.9159895833333332
+          ],
+          "error_rate": 0.25
+        },
+        "segmenters disagree (highest third)": {
+          "scans": 125,
+          "pd_rate": 0.632,
+          "auroc": 0.8307649972482113,
+          "ci95": [
+            0.7549015659777548,
+            0.901120312040813
+          ],
+          "error_rate": 0.28
+        },
+        "median_disagreement_errors": 0.2405012912512022,
+        "median_disagreement_correct": 0.13797679380095
+      }
+    },
+    "released_volumes": {
+      "threshold_likely_pd": 0.7021440000000001,
+      "threshold_pd_less_likely": 0.423922,
+      "confusion": {
+        "hits": 164,
+        "misses": 72,
+        "false_alarms": 28,
+        "true_negatives": 110
+      },
+      "confident_misses_pd_in_lowest_band": 24,
+      "pd_by_reason": {
+        "T2/FLAIR progression only": {
+          "pd_scans": 18,
+          "misses": 13,
+          "sensitivity": 0.2777777777777778,
+          "in_lowest_band": 0.2777777777777778,
+          "median_new_enhancing_ml": 0.0,
+          "median_enhancing_log_change_vs_nadir": -0.06910524352389785
+        },
+        "measurable lesion growth": {
+          "pd_scans": 83,
+          "misses": 9,
+          "sensitivity": 0.891566265060241,
+          "in_lowest_band": 0.012048192771084338,
+          "median_new_enhancing_ml": 3.136,
+          "median_enhancing_log_change_vs_nadir": 1.8435609677913183
+        },
+        "new lesion": {
+          "pd_scans": 80,
+          "misses": 29,
+          "sensitivity": 0.6375,
+          "in_lowest_band": 0.125,
+          "median_new_enhancing_ml": 0.296,
+          "median_enhancing_log_change_vs_nadir": 0.47891841390302897
+        },
+        "non-measurable / non-target lesion": {
+          "pd_scans": 54,
+          "misses": 21,
+          "sensitivity": 0.6111111111111112,
+          "in_lowest_band": 0.14814814814814814,
+          "median_new_enhancing_ml": 0.028,
+          "median_enhancing_log_change_vs_nadir": 0.24081297035345112
+        },
+        "other or no text": {
+          "pd_scans": 1,
+          "misses": 0,
+          "sensitivity": 1.0,
+          "in_lowest_band": 0.0,
+          "median_new_enhancing_ml": 21.072,
+          "median_enhancing_log_change_vs_nadir": 2.549805067759032
+        }
+      },
+      "misses_share_previous_pd": 0.18055555555555555,
+      "hits_share_previous_pd": 0.6402439024390244,
+      "non_pd_by_reason": {
+        "growth attributed to treatment (<3 months / irradiated field)": {
+          "scans": 34,
+          "false_alarm_rate": 0.2647058823529412,
+          "false_alarms": 9,
+          "mean_probability": 0.46437664705882353
+        },
+        "no rationale": {
+          "scans": 89,
+          "false_alarm_rate": 0.1348314606741573,
+          "false_alarms": 12,
+          "mean_probability": 0.44319787640449443
+        },
+        "other rationale": {
+          "scans": 15,
+          "false_alarm_rate": 0.4666666666666667,
+          "false_alarms": 7,
+          "mean_probability": 0.6135703333333334
+        }
+      },
+      "non_pd_by_rating": {
+        "SD": {
+          "scans": 92,
+          "false_alarm_rate": 0.15217391304347827
+        },
+        "PR": {
+          "scans": 20,
+          "false_alarm_rate": 0.4
+        },
+        "CR": {
+          "scans": 26,
+          "false_alarm_rate": 0.23076923076923078
+        }
+      },
+      "non_pd_by_previous_rating": {
+        "previous scan PD": {
+          "scans": 18,
+          "false_alarm_rate": 0.3333333333333333,
+          "false_alarms": 6
+        },
+        "previous scan not PD": {
+          "scans": 120,
+          "false_alarm_rate": 0.18333333333333332,
+          "false_alarms": 22
+        }
+      },
+      "false_alarms_after_pd": {
+        "false_alarms": 6,
+        "of_them_pr": 5,
+        "enhancing_fell_since_previous": 5,
+        "no_enhancing_tumor_on_either_scan": 1,
+        "pr_also_called_without_rating": 5,
+        "not_pr_also_called_without_rating": 0,
+        "enhancing_pct_change_since_previous_range": [
+          -94.81049562682216,
+          -25.205361003026372
+        ]
+      },
+      "false_alarms_flagged_less_than_3_months": 8,
+      "next_scan": {
+        "false alarms": {
+          "scans": 28,
+          "with_rated_next_scan": 27,
+          "next_pd_or_reoperation": 14,
+          "share_next_pd_or_reoperation": 0.5185185185185185,
+          "median_weeks_to_that_scan": 9.5,
+          "counts": {
+            "PD": 13,
+            "re-operation": 1,
+            "not PD": 13,
+            "unrated": 0,
+            "no later scan": 1
+          }
+        },
+        "true negatives": {
+          "scans": 110,
+          "with_rated_next_scan": 97,
+          "next_pd_or_reoperation": 48,
+          "share_next_pd_or_reoperation": 0.4948453608247423,
+          "median_weeks_to_that_scan": 13.0,
+          "counts": {
+            "PD": 45,
+            "re-operation": 3,
+            "not PD": 49,
+            "unrated": 3,
+            "no later scan": 10
+          }
+        },
+        "growth attributed to treatment, called": {
+          "scans": 9,
+          "with_rated_next_scan": 9,
+          "next_pd_or_reoperation": 6,
+          "share_next_pd_or_reoperation": 0.6666666666666666,
+          "median_weeks_to_that_scan": 10.5,
+          "counts": {
+            "PD": 5,
+            "re-operation": 1,
+            "not PD": 3,
+            "unrated": 0,
+            "no later scan": 0
+          }
+        },
+        "growth attributed to treatment, not called": {
+          "scans": 25,
+          "with_rated_next_scan": 21,
+          "next_pd_or_reoperation": 18,
+          "share_next_pd_or_reoperation": 0.8571428571428571,
+          "median_weeks_to_that_scan": 12.5,
+          "counts": {
+            "PD": 15,
+            "re-operation": 3,
+            "not PD": 3,
+            "unrated": 0,
+            "no later scan": 4
+          }
+        }
+      },
+      "by_weeks_since_surgery": {
+        "0-13 weeks": {
+          "scans": 46,
+          "pd_rate": 0.45652173913043476,
+          "auroc": 0.7561904761904762,
+          "ci95": [
+            0.5971780303030303,
+            0.8804918142780459
+          ],
+          "false_alarm_rate": 0.16,
+          "sensitivity": 0.47619047619047616
+        },
+        "14-26 weeks": {
+          "scans": 93,
+          "pd_rate": 0.4838709677419355,
+          "auroc": 0.75,
+          "ci95": [
+            0.6312093745486062,
+            0.8592238469241638
+          ],
+          "false_alarm_rate": 0.20833333333333334,
+          "sensitivity": 0.4888888888888889
+        },
+        ">26 weeks": {
+          "scans": 235,
+          "pd_rate": 0.723404255319149,
+          "auroc": 0.8324886877828054,
+          "ci95": [
+            0.771613903431563,
+            0.8795799696970352
+          ],
+          "false_alarm_rate": 0.2153846153846154,
+          "sensitivity": 0.7764705882352941
+        }
+      },
+      "concentration": {
+        "errors": 100,
+        "patients_with_an_error": 58,
+        "patients": 79,
+        "share_of_errors_in_top_10_patients": 0.34,
+        "error_rate_overall": 0.26737967914438504
+      },
+      "segmentation_quality": {
+        "cutoffs_abs_log_change_difference": [
+          0.07548784396046584,
+          0.34810145264755976
+        ],
+        "rows_with_both": 374,
+        "segmenters agree (lowest third)": {
+          "scans": 125,
+          "pd_rate": 0.6,
+          "auroc": 0.832,
+          "ci95": [
+            0.7713812499999999,
+            0.888441051149424
+          ],
+          "error_rate": 0.232
+        },
+        "middle third": {
+          "scans": 124,
+          "pd_rate": 0.6612903225806451,
+          "auroc": 0.8034262485481998,
+          "ci95": [
+            0.700442163642002,
+            0.8967117823270828
+          ],
+          "error_rate": 0.25806451612903225
+        },
+        "segmenters disagree (highest third)": {
+          "scans": 125,
+          "pd_rate": 0.632,
+          "auroc": 0.8326912493120529,
+          "ci95": [
+            0.7408399551460262,
+            0.907144899019899
+          ],
+          "error_rate": 0.312
+        },
+        "median_disagreement_errors": 0.22326750111602242,
+        "median_disagreement_correct": 0.13797679380095
+      }
+    }
+  },
+  "first_scan_after_surgery_rows": 354
+}

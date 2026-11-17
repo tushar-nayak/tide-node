@@ -1,0 +1,803 @@
+{
+  "rows": 374,
+  "patients": 79,
+  "pd_rate": 0.6310160427807486,
+  "expert_dependence": {
+    "all": {
+      "volumes + rating + clinical (released)": {
+        "auroc": 0.8198538442643085,
+        "ci95": [
+          0.7746745754324896,
+          0.8620272162254278
+        ],
+        "minus_volumes + rating + clinical (released)": 0.0,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "volumes + clinical, no rating": {
+        "auroc": 0.7793232620977647,
+        "ci95": [
+          0.7277189895586228,
+          0.8333687284754596
+        ],
+        "minus_volumes + rating + clinical (released)": -0.040530582166543816,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.060173032149587,
+          -0.021785586560419356
+        ]
+      },
+      "volumes only": {
+        "auroc": 0.7850650945713584,
+        "ci95": [
+          0.7364604771018923,
+          0.8342268677313244
+        ],
+        "minus_volumes + rating + clinical (released)": -0.034788749692950094,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.050057008209182144,
+          -0.01935357920056113
+        ]
+      },
+      "volumes + masks + rating + clinical (released)": {
+        "auroc": 0.8349914026037829,
+        "ci95": [
+          0.7955575528720529,
+          0.8695909114719177
+        ],
+        "minus_volumes + rating + clinical (released)": 0.015137558339474388,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.0015507213327387358,
+          0.031794696839141594
+        ]
+      },
+      "volumes + masks + clinical, no rating": {
+        "auroc": 0.7979918938835667,
+        "ci95": [
+          0.7519375416085943,
+          0.8427616860027898
+        ],
+        "minus_volumes + rating + clinical (released)": -0.02186195038074179,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.045167899631859645,
+          0.0006104497061208768
+        ]
+      },
+      "volumes + masks only": {
+        "auroc": 0.7968558093834439,
+        "ci95": [
+          0.753422899925991,
+          0.8396178217466025
+        ],
+        "minus_volumes + rating + clinical (released)": -0.022998034880864604,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.04404783681927942,
+          -0.0005774499370591761
+        ]
+      }
+    },
+    "previous_not_pd": {
+      "rows": 238,
+      "volumes + rating + clinical (released)": {
+        "auroc": 0.7281073446327684,
+        "ci95": [
+          0.659180893832943,
+          0.7956606907378336
+        ],
+        "minus_volumes + rating + clinical (released)": 0.0,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "volumes + clinical, no rating": {
+        "auroc": 0.7250706214689265,
+        "ci95": [
+          0.6584568676320078,
+          0.7931040888577653
+        ],
+        "minus_volumes + rating + clinical (released)": -0.003036723163841848,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.018869365688113173,
+          0.014275132351715873
+        ]
+      },
+      "volumes only": {
+        "auroc": 0.7341101694915254,
+        "ci95": [
+          0.6656089359427982,
+          0.800155014610793
+        ],
+        "minus_volumes + rating + clinical (released)": 0.006002824858757028,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.009054158598838286,
+          0.021997300870250633
+        ]
+      },
+      "volumes + masks + rating + clinical (released)": {
+        "auroc": 0.7600988700564971,
+        "ci95": [
+          0.6995014284466899,
+          0.8197724717482108
+        ],
+        "minus_volumes + rating + clinical (released)": 0.03199152542372874,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          0.0028513002795885482,
+          0.05918117678894195
+        ]
+      },
+      "volumes + masks + clinical, no rating": {
+        "auroc": 0.7533192090395481,
+        "ci95": [
+          0.6938364654811464,
+          0.8120589931795771
+        ],
+        "minus_volumes + rating + clinical (released)": 0.025211864406779694,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.002218669189025257,
+          0.05518006964072
+        ]
+      },
+      "volumes + masks only": {
+        "auroc": 0.7564971751412429,
+        "ci95": [
+          0.6984451955577016,
+          0.8149534326091635
+        ],
+        "minus_volumes + rating + clinical (released)": 0.028389830508474545,
+        "minus_volumes + rating + clinical (released)_ci95": [
+          -0.002551217961932223,
+          0.059122487363266744
+        ]
+      }
+    },
+    "masks_vs_masks_released": {
+      "volumes + masks + rating + clinical (released)": {
+        "auroc": 0.8349914026037829,
+        "ci95": [
+          0.7962176005336383,
+          0.8705317946146336
+        ],
+        "minus_volumes + masks + rating + clinical (released)": 0.0,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "volumes + masks + clinical, no rating": {
+        "auroc": 0.7979918938835667,
+        "ci95": [
+          0.7520668730652327,
+          0.8435454550017966
+        ],
+        "minus_volumes + masks + rating + clinical (released)": -0.03699950872021618,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          -0.058287661345578,
+          -0.01635452914310577
+        ]
+      },
+      "volumes + masks only": {
+        "auroc": 0.7968558093834439,
+        "ci95": [
+          0.7513632966021342,
+          0.8407426408967696
+        ],
+        "minus_volumes + masks + rating + clinical (released)": -0.03813559322033899,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          -0.05447490016528091,
+          -0.02003148359268394
+        ]
+      }
+    },
+    "masks_vs_masks_released_previous_not_pd": {
+      "volumes + masks + rating + clinical (released)": {
+        "auroc": 0.7600988700564971,
+        "ci95": [
+          0.7007346657633243,
+          0.8181822840000745
+        ],
+        "minus_volumes + masks + rating + clinical (released)": 0.0,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "volumes + masks + clinical, no rating": {
+        "auroc": 0.7533192090395481,
+        "ci95": [
+          0.6980704903283851,
+          0.8127973472476595
+        ],
+        "minus_volumes + masks + rating + clinical (released)": -0.006779661016949046,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          -0.02477283490633927,
+          0.012298278877971205
+        ]
+      },
+      "volumes + masks only": {
+        "auroc": 0.7564971751412429,
+        "ci95": [
+          0.7008513968081577,
+          0.8149339433155913
+        ],
+        "minus_volumes + masks + rating + clinical (released)": -0.0036016949152541944,
+        "minus_volumes + masks + rating + clinical (released)_ci95": [
+          -0.01747002997002992,
+          0.012682936186071036
+        ]
+      }
+    }
+  },
+  "segmenter_swap": {
+    "rows": 374,
+    "patients": 79,
+    "pd_rate": 0.6310160427807486,
+    "excluded_rows_missing_native_segmentation": 0,
+    "feature_correlation": {
+      "dbt_atlas vs dbt_native": {
+        "log1p_ml_enhancing": 0.999982259705916,
+        "log1p_ml_nonenhancing": 0.9999725663903151,
+        "change_vs_previous_enhancing": 0.9999034261701072,
+        "change_vs_nadir_enhancing": 0.9999500683573056,
+        "change_vs_nadir_nonenhancing": 0.9999758844098908
+      },
+      "dbt_native vs hd_native": {
+        "log1p_ml_enhancing": 0.9224914554089253,
+        "log1p_ml_nonenhancing": 0.9043481428531708,
+        "change_vs_previous_enhancing": 0.8796881508959976,
+        "change_vs_nadir_enhancing": 0.8461179045574669,
+        "change_vs_nadir_nonenhancing": 0.8283543042476058
+      },
+      "dbt_atlas vs hd_native": {
+        "log1p_ml_enhancing": 0.9225253027328035,
+        "log1p_ml_nonenhancing": 0.9041696839720167,
+        "change_vs_previous_enhancing": 0.8800068352159761,
+        "change_vs_nadir_enhancing": 0.846184835741306,
+        "change_vs_nadir_nonenhancing": 0.8280118007282485
+      }
+    },
+    "with_rating_clinical": {
+      "auroc": {
+        "dbt_atlas -> dbt_atlas": {
+          "auroc": 0.8258873741095554,
+          "ci95": [
+            0.7787798641783957,
+            0.8669680173241038
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "dbt_atlas -> dbt_native": {
+          "auroc": 0.8249355195283714,
+          "ci95": [
+            0.7780707568096262,
+            0.865772809159396
+          ],
+          "minus_dbt_atlas -> dbt_atlas": -0.000951854581183964,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.0036537832663907253,
+            0.001025788587871259
+          ]
+        },
+        "dbt_atlas -> hd_native": {
+          "auroc": 0.8292649226234341,
+          "ci95": [
+            0.7759904561398476,
+            0.8731988120726057
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0033775485138787253,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.027561680428485842,
+            0.03496273563206054
+          ]
+        },
+        "dbt_native -> dbt_atlas": {
+          "auroc": 0.8290960451977402,
+          "ci95": [
+            0.7818997120024742,
+            0.8703846844211869
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.003208671088184789,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.001530685200776946,
+            0.007818377072160761
+          ]
+        },
+        "dbt_native -> dbt_native": {
+          "auroc": 0.8288197003193318,
+          "ci95": [
+            0.7820513415658281,
+            0.8700013458880307
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.002932326209776459,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.0019458486867368423,
+            0.007737636630845286
+          ]
+        },
+        "hd_native -> dbt_atlas": {
+          "auroc": 0.8193318594939818,
+          "ci95": [
+            0.7686290386828362,
+            0.8661399504554281
+          ],
+          "minus_dbt_atlas -> dbt_atlas": -0.006555514615573577,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.03391859596317951,
+            0.02059040186629127
+          ]
+        },
+        "hd_native -> hd_native": {
+          "auroc": 0.8146647015475313,
+          "ci95": [
+            0.7660474167884894,
+            0.8581600220739336
+          ],
+          "minus_dbt_atlas -> dbt_atlas": -0.011222672562024028,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.035877518811406,
+            0.015607847185929443
+          ]
+        }
+      },
+      "fixed_thresholds": {
+        "dbt_atlas -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6694915254237288,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.4492753623188406,
+          "brier": 0.16660894511415095,
+          "mean_probability": 0.6546725639830512,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.49732620320855614,
+              "scans": 186,
+              "pd_rate": 0.8494623655913979
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2727272727272727,
+              "scans": 102,
+              "pd_rate": 0.5294117647058824
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.22994652406417113,
+              "scans": 86,
+              "pd_rate": 0.27906976744186046
+            }
+          }
+        },
+        "dbt_atlas -> dbt_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7898550724637681,
+          "sensitivity_at_80pct_specificity_threshold": 0.6652542372881356,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.4492753623188406,
+          "brier": 0.1671017051627846,
+          "mean_probability": 0.654755171761442,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.49732620320855614,
+              "scans": 186,
+              "pd_rate": 0.8440860215053764
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2727272727272727,
+              "scans": 102,
+              "pd_rate": 0.5392156862745098
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.22994652406417113,
+              "scans": 86,
+              "pd_rate": 0.27906976744186046
+            }
+          }
+        },
+        "dbt_atlas -> hd_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7898550724637681,
+          "sensitivity_at_80pct_specificity_threshold": 0.6949152542372882,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.885593220338983,
+          "specificity_at_90pct_sensitivity_threshold": 0.5144927536231884,
+          "brier": 0.16509878035031364,
+          "mean_probability": 0.650305573784442,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.516042780748663,
+              "scans": 193,
+              "pd_rate": 0.8497409326424871
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.22192513368983957,
+              "scans": 83,
+              "pd_rate": 0.5421686746987951
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.2620320855614973,
+              "scans": 98,
+              "pd_rate": 0.2755102040816326
+            }
+          }
+        },
+        "dbt_native -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.673728813559322,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.463768115942029,
+          "brier": 0.16455771205199743,
+          "mean_probability": 0.6548844098303312,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.5,
+              "scans": 187,
+              "pd_rate": 0.8502673796791443
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2647058823529412,
+              "scans": 99,
+              "pd_rate": 0.5353535353535354
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.23529411764705882,
+              "scans": 88,
+              "pd_rate": 0.2727272727272727
+            }
+          }
+        },
+        "dbt_native -> dbt_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6694915254237288,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.463768115942029,
+          "brier": 0.16458801399088013,
+          "mean_probability": 0.6546026691252378,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.49732620320855614,
+              "scans": 186,
+              "pd_rate": 0.8494623655913979
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.26737967914438504,
+              "scans": 100,
+              "pd_rate": 0.54
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.23529411764705882,
+              "scans": 88,
+              "pd_rate": 0.2727272727272727
+            }
+          }
+        },
+        "hd_native -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7681159420289855,
+          "sensitivity_at_80pct_specificity_threshold": 0.711864406779661,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.902542372881356,
+          "specificity_at_90pct_sensitivity_threshold": 0.4420289855072464,
+          "brier": 0.1694667741752308,
+          "mean_probability": 0.669286041738527,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.5347593582887701,
+              "scans": 200,
+              "pd_rate": 0.84
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.24064171122994651,
+              "scans": 90,
+              "pd_rate": 0.5
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.22459893048128343,
+              "scans": 84,
+              "pd_rate": 0.27380952380952384
+            }
+          }
+        },
+        "hd_native -> hd_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6822033898305084,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.43478260869565216,
+          "brier": 0.1700281513895589,
+          "mean_probability": 0.6562597768912183,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.5053475935828877,
+              "scans": 189,
+              "pd_rate": 0.8518518518518519
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2700534759358289,
+              "scans": 101,
+              "pd_rate": 0.504950495049505
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.22459893048128343,
+              "scans": 84,
+              "pd_rate": 0.2857142857142857
+            }
+          }
+        }
+      }
+    },
+    "volumes_only": {
+      "auroc": {
+        "dbt_atlas -> dbt_atlas": {
+          "auroc": 0.7852186195038074,
+          "ci95": [
+            0.7283881997780961,
+            0.8350162636912691
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "dbt_atlas -> dbt_native": {
+          "auroc": 0.7852186195038074,
+          "ci95": [
+            0.7282860966070649,
+            0.8347554885355541
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.0016007768524871596,
+            0.0019289378577361032
+          ]
+        },
+        "dbt_atlas -> hd_native": {
+          "auroc": 0.7971014492753623,
+          "ci95": [
+            0.7356845171219725,
+            0.8483622858957429
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.01188282977155486,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.024289277728830393,
+            0.04707002053695046
+          ]
+        },
+        "dbt_native -> dbt_atlas": {
+          "auroc": 0.7868459837877672,
+          "ci95": [
+            0.7317214754037564,
+            0.8355045568943864
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0016273642839597091,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.001381664125788648,
+            0.004958983134684102
+          ]
+        },
+        "dbt_native -> dbt_native": {
+          "auroc": 0.7865389339228691,
+          "ci95": [
+            0.7306973597268849,
+            0.8352815517590594
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.0013203144190616634,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.0022406810045822816,
+            0.005437551661403522
+          ]
+        },
+        "hd_native -> dbt_atlas": {
+          "auroc": 0.7871223286661754,
+          "ci95": [
+            0.7307055186021719,
+            0.8420683923844198
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.001903709162367928,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.027469183107015828,
+            0.03141725513058216
+          ]
+        },
+        "hd_native -> hd_native": {
+          "auroc": 0.7896401375583395,
+          "ci95": [
+            0.732494720273216,
+            0.841210123301657
+          ],
+          "minus_dbt_atlas -> dbt_atlas": 0.004421518054532059,
+          "minus_dbt_atlas -> dbt_atlas_ci95": [
+            -0.02513553034060844,
+            0.03498541025077277
+          ]
+        }
+      },
+      "fixed_thresholds": {
+        "dbt_atlas -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6398305084745762,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.37681159420289856,
+          "brier": 0.1848731952713422,
+          "mean_probability": 0.6436606766506274,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4786096256684492,
+              "scans": 179,
+              "pd_rate": 0.8435754189944135
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.3181818181818182,
+              "scans": 119,
+              "pd_rate": 0.5126050420168067
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.20320855614973263,
+              "scans": 76,
+              "pd_rate": 0.3157894736842105
+            }
+          }
+        },
+        "dbt_atlas -> dbt_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6398305084745762,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.37681159420289856,
+          "brier": 0.18491006404976726,
+          "mean_probability": 0.6432770902569336,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4786096256684492,
+              "scans": 179,
+              "pd_rate": 0.8435754189944135
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.3181818181818182,
+              "scans": 119,
+              "pd_rate": 0.5126050420168067
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.20320855614973263,
+              "scans": 76,
+              "pd_rate": 0.3157894736842105
+            }
+          }
+        },
+        "dbt_atlas -> hd_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6567796610169492,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8940677966101694,
+          "specificity_at_90pct_sensitivity_threshold": 0.391304347826087,
+          "brier": 0.18002503792672025,
+          "mean_probability": 0.6410724073695236,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4893048128342246,
+              "scans": 183,
+              "pd_rate": 0.8469945355191257
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2994652406417112,
+              "scans": 112,
+              "pd_rate": 0.5
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.21122994652406418,
+              "scans": 79,
+              "pd_rate": 0.31645569620253167
+            }
+          }
+        },
+        "dbt_native -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6398305084745762,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.36231884057971014,
+          "brier": 0.18407461794290378,
+          "mean_probability": 0.6433325311129197,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4786096256684492,
+              "scans": 179,
+              "pd_rate": 0.8435754189944135
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.3235294117647059,
+              "scans": 121,
+              "pd_rate": 0.5041322314049587
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.19786096256684493,
+              "scans": 74,
+              "pd_rate": 0.32432432432432434
+            }
+          }
+        },
+        "dbt_native -> dbt_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6398305084745762,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.36231884057971014,
+          "brier": 0.18405990826961127,
+          "mean_probability": 0.6427670819094446,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4786096256684492,
+              "scans": 179,
+              "pd_rate": 0.8435754189944135
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.3235294117647059,
+              "scans": 121,
+              "pd_rate": 0.5041322314049587
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.19786096256684493,
+              "scans": 74,
+              "pd_rate": 0.32432432432432434
+            }
+          }
+        },
+        "hd_native -> dbt_atlas": {
+          "specificity_at_80pct_specificity_threshold": 0.7391304347826086,
+          "sensitivity_at_80pct_specificity_threshold": 0.6822033898305084,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.9152542372881356,
+          "specificity_at_90pct_sensitivity_threshold": 0.35507246376811596,
+          "brier": 0.1821985463813556,
+          "mean_probability": 0.6595600625678513,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.5267379679144385,
+              "scans": 197,
+              "pd_rate": 0.817258883248731
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.2887700534759358,
+              "scans": 108,
+              "pd_rate": 0.5092592592592593
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.18449197860962566,
+              "scans": 69,
+              "pd_rate": 0.2898550724637681
+            }
+          }
+        },
+        "hd_native -> hd_native": {
+          "specificity_at_80pct_specificity_threshold": 0.7971014492753623,
+          "sensitivity_at_80pct_specificity_threshold": 0.6483050847457628,
+          "sensitivity_at_90pct_sensitivity_threshold": 0.8983050847457628,
+          "specificity_at_90pct_sensitivity_threshold": 0.38405797101449274,
+          "brier": 0.17934954161560007,
+          "mean_probability": 0.6487484991782623,
+          "bands": {
+            "likely PD": {
+              "fraction_of_scans": 0.4839572192513369,
+              "scans": 181,
+              "pd_rate": 0.8453038674033149
+            },
+            "uncertain": {
+              "fraction_of_scans": 0.31016042780748665,
+              "scans": 116,
+              "pd_rate": 0.5086206896551724
+            },
+            "PD less likely": {
+              "fraction_of_scans": 0.20588235294117646,
+              "scans": 77,
+              "pd_rate": 0.3116883116883117
+            }
+          }
+        }
+      }
+    },
+    "released_three_compartment_auroc_same_rows": {
+      "auroc": 0.8198538442643085,
+      "ci95": [
+        0.7728859168206694,
+        0.8609438606000855
+      ],
+      "minus_released": 0.0,
+      "minus_released_ci95": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

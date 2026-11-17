@@ -9,7 +9,26 @@ These research estimates are not diagnoses or evidence of clinical readiness.
 The prior forecasting project is preserved at
 `archive/tide-forecasting-2026-11-09`, commit `1ca3176`; see
 [LEGACY_README.md](LEGACY_README.md). Its results, data, caches, models and manuscript
-remain unchanged. The old manuscript does not validate this assessment workflow.
+remain unchanged at that commit.
+
+On 2026-11-16, four analyses of the legacy progression call were added on `main`:
+* a segmenter swap with a check of its dependence on the previous rating;
+* an error analysis;
+* a robustness check of the volume rule's survival result;
+* a learning curve.
+
+They are in EXPERIMENTS.md §12d-12g and MANUSCRIPT.md §4.9-4.11. They concern the legacy
+model, not this workflow. The old manuscript does not validate this assessment workflow.
+
+On 2026-11-17 a pre-specified external test of the legacy fully automated call was added.
+It was run on MU-Glioma-Post (TCIA), with the frozen model and plan in
+`results/mu_validation/`; see EXPERIMENTS.md §12h and MANUSCRIPT.md §4.12.
+* **Result:** it did not transfer. AUROC was 0.563 [0.467, 0.658] against clinically
+  documented progression.
+* **Explanation:** an MU-trained model did no better (0.572), so MU's labels are a different
+  target.
+* **Implication for this workflow:** volume-based PD estimates should not be expected to
+  carry over to sites whose reference standard is clinical documentation.
 
 ## Completed baseline
 

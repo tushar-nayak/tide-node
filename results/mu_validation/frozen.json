@@ -1,0 +1,293 @@
+{
+  "created": "2026-11-17T10:31:25",
+  "plan_sha256": "055a7f33ec90474d65f5088b0bf09b7bb814a097d56e3c226c048980272749b9",
+  "features": [
+    "log1p_ml_enhancing",
+    "log1p_ml_nonenhancing",
+    "change_vs_previous_enhancing",
+    "change_vs_previous_nonenhancing",
+    "change_vs_nadir_enhancing",
+    "change_vs_nadir_nonenhancing",
+    "total_log1p_ml",
+    "total_change_vs_previous",
+    "total_change_vs_nadir",
+    "interval_years",
+    "history_count",
+    "years_since_segment_start"
+  ],
+  "monotone": [
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0
+  ],
+  "params": {
+    "max_depth": 2,
+    "learning_rate": 0.05,
+    "max_iter": 150,
+    "min_samples_leaf": 15,
+    "random_state": 0,
+    "monotonic_cst": [
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "primary": "dbt_atlas",
+  "versions": {
+    "sklearn": "1.9.1",
+    "numpy": "2.5.4"
+  },
+  "training": {
+    "rows": 374,
+    "patients": 79,
+    "pd_rate": 0.6310160427807486,
+    "previous_not_pd_rows": 238,
+    "previous_not_pd_pd_rate": 0.4957983193277311
+  },
+  "sources": {
+    "dbt_atlas": {
+      "held_out_auroc_all": {
+        "model": {
+          "auroc": 0.7852186195038074,
+          "ci95": [
+            0.7308525892518268,
+            0.8390437086574952
+          ],
+          "minus_model": 0.0,
+          "minus_model_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.7111428395971505,
+          "ci95": [
+            0.650343813300526,
+            0.7733121571374645
+          ],
+          "minus_model": -0.07407577990665692,
+          "minus_model_ci95": [
+            -0.13898208440397505,
+            -0.011770787605851095
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.6808216654384672,
+          "ci95": [
+            0.624028987902038,
+            0.7381138253086234
+          ],
+          "minus_model": -0.10439695406534022,
+          "minus_model_ci95": [
+            -0.1703990146863781,
+            -0.04049085458648444
+          ]
+        }
+      },
+      "held_out_auroc_previous_not_pd": {
+        "model": {
+          "auroc": 0.7253531073446328,
+          "ci95": [
+            0.6553527565955715,
+            0.7933226389018395
+          ],
+          "minus_model": 0.0,
+          "minus_model_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.6485522598870056,
+          "ci95": [
+            0.571644829774957,
+            0.72575311022804
+          ],
+          "minus_model": -0.07680084745762716,
+          "minus_model_ci95": [
+            -0.15993585597662763,
+            0.0004670947277652619
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.6403248587570621,
+          "ci95": [
+            0.5618627404303942,
+            0.72151487463426
+          ],
+          "minus_model": -0.08502824858757063,
+          "minus_model_ci95": [
+            -0.16615930810397558,
+            -0.011262727907807583
+          ]
+        }
+      },
+      "thresholds_previous_not_pd": {
+        "specificity_80": {
+          "threshold": 0.729658466911427,
+          "held_out_sensitivity": 0.5084745762711864,
+          "held_out_specificity": 0.8
+        },
+        "sensitivity_90": {
+          "threshold": 0.30596803514359494,
+          "held_out_sensitivity": 0.8983050847457628,
+          "held_out_specificity": 0.30833333333333335
+        }
+      },
+      "thresholds_all": {
+        "specificity_80": {
+          "threshold": 0.7310905095907178,
+          "held_out_sensitivity": 0.6398305084745762,
+          "held_out_specificity": 0.7971014492753623
+        },
+        "sensitivity_90": {
+          "threshold": 0.36008442427359755,
+          "held_out_sensitivity": 0.8983050847457628,
+          "held_out_specificity": 0.37681159420289856
+        }
+      },
+      "volume_rule_all": {
+        "sensitivity": 0.6016949152542372,
+        "specificity": 0.717391304347826,
+        "called": 181
+      },
+      "volume_rule_previous_not_pd": {
+        "sensitivity": 0.5338983050847458,
+        "specificity": 0.7,
+        "called": 99
+      }
+    },
+    "hd_native": {
+      "held_out_auroc_all": {
+        "model": {
+          "auroc": 0.7896401375583395,
+          "ci95": [
+            0.7312929928904855,
+            0.8421045996751412
+          ],
+          "minus_model": 0.0,
+          "minus_model_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.729274134119381,
+          "ci95": [
+            0.6631607494157631,
+            0.7887277313522238
+          ],
+          "minus_model": -0.06036600343895848,
+          "minus_model_ci95": [
+            -0.11371601856735741,
+            -0.016110915458413734
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.6730840088430361,
+          "ci95": [
+            0.6137684653847133,
+            0.7292926927887254
+          ],
+          "minus_model": -0.11655612871530341,
+          "minus_model_ci95": [
+            -0.18461484976225653,
+            -0.05522177223788763
+          ]
+        }
+      },
+      "held_out_auroc_previous_not_pd": {
+        "model": {
+          "auroc": 0.7272598870056497,
+          "ci95": [
+            0.6564540598097389,
+            0.7947935395554102
+          ],
+          "minus_model": 0.0,
+          "minus_model_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.6727401129943503,
+          "ci95": [
+            0.5956779363689186,
+            0.7442107136868588
+          ],
+          "minus_model": -0.05451977401129937,
+          "minus_model_ci95": [
+            -0.1251781911670504,
+            0.007001446564965542
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.6413841807909605,
+          "ci95": [
+            0.5627181554083219,
+            0.7166302297109955
+          ],
+          "minus_model": -0.08587570621468921,
+          "minus_model_ci95": [
+            -0.16752695997519185,
+            -0.010158421826837212
+          ]
+        }
+      },
+      "thresholds_previous_not_pd": {
+        "specificity_80": {
+          "threshold": 0.6662387661219767,
+          "held_out_sensitivity": 0.559322033898305,
+          "held_out_specificity": 0.8
+        },
+        "sensitivity_90": {
+          "threshold": 0.3390426874013475,
+          "held_out_sensitivity": 0.8983050847457628,
+          "held_out_specificity": 0.3416666666666667
+        }
+      },
+      "thresholds_all": {
+        "specificity_80": {
+          "threshold": 0.6900791499700879,
+          "held_out_sensitivity": 0.6483050847457628,
+          "held_out_specificity": 0.7971014492753623
+        },
+        "sensitivity_90": {
+          "threshold": 0.3858148290361565,
+          "held_out_sensitivity": 0.8983050847457628,
+          "held_out_specificity": 0.38405797101449274
+        }
+      },
+      "volume_rule_all": {
+        "sensitivity": 0.5635593220338984,
+        "specificity": 0.782608695652174,
+        "called": 163
+      },
+      "volume_rule_previous_not_pd": {
+        "sensitivity": 0.4915254237288136,
+        "specificity": 0.7833333333333333,
+        "called": 84
+      }
+    }
+  },
+  "model_file": "runs/mu_validation/frozen_models.pkl",
+  "model_sha256": "2287f4d770d5fd23b4c6d943f45471995d1db58fec5e8eb701d43ccb0ea2ed9e"
+}

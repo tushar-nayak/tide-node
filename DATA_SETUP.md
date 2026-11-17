@@ -141,3 +141,20 @@ regardless of what else changes about the experiment.
 The one exception: if LUMIERE ever releases more patients or more weeks for existing
 patients, those new pairs would need registering -- but that's incremental work (the
 script skips everything already cached), not a redo of the whole cohort.
+
+## External test data: MU-Glioma-Post (optional)
+
+Used only by `scripts/mu_validation.py` (EXPERIMENTS.md 12h). TCIA, CC BY 4.0; cite
+doi:10.7937/7K9K-3C83. Everything goes in `data/mu_glioma_post/`, which git ignores.
+
+* **Clinical table and volume spreadsheet** (~400 KB, direct links from
+  https://www.cancerimagingarchive.net/collection/mu-glioma-post/):
+  `MU-Glioma-Post_ClinicalData-July2025.xlsx` and `MU-Glioma-Post_Segmentation_Volumes.xlsx`.
+  These two files and the committed `results/mu_validation/mask_volumes.csv` are enough to
+  rerun the analysis.
+* **Images and masks** (11 GB, needed only to rebuild `mask_volumes.csv`). They come as an
+  Aspera package linked from the same page. The browser route needs IBM's Aspera plugin.
+  The command-line route used here was the `aspera-cli` Ruby gem: `gem install aspera-cli`,
+  then `ascli config ascp install`, which puts IBM's transfer binary in `~/.aspera`. Then:
+  `ascli faspex5 packages receive --url='<package link>' --to-folder=data/mu_glioma_post/package`.
+  It takes about 10 min, so run it in tmux.

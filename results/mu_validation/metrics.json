@@ -1,0 +1,501 @@
+{
+  "cohort": {
+    "patients_in_table": 203,
+    "gbm_patients": 157,
+    "gbm_with_two_scans": 113,
+    "gbm_progressed_without_day": 2
+  },
+  "discrimination": {
+    "calls": 145,
+    "pd": 48,
+    "patients": 76,
+    "auroc": {
+      "model trained on DeepBraTumIA volumes (primary)": {
+        "auroc": 0.563036941580756,
+        "ci95": [
+          0.4674603123370811,
+          0.6578284970238094
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "model trained on HD-GLIO volumes": {
+        "auroc": 0.5856958762886598,
+        "ci95": [
+          0.4855046042979469,
+          0.6850424683029478
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": 0.02265893470790381,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          -0.03455989163897328,
+          0.07989020528614607
+        ]
+      },
+      "enhancing change vs nadir": {
+        "auroc": 0.5593857388316151,
+        "ci95": [
+          0.4664339304517876,
+          0.6526105651105649
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": -0.0036512027491408805,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          -0.09452536377823435,
+          0.0873857097186701
+        ]
+      },
+      "enhancing change vs previous": {
+        "auroc": 0.4955970790378007,
+        "ci95": [
+          0.407544145246838,
+          0.587966860917529
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": -0.06743986254295531,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          -0.17854485905743922,
+          0.04070968785190205
+        ]
+      }
+    }
+  },
+  "operating_points": {
+    "model trained on DeepBraTumIA volumes (primary)": {
+      "threshold_80pct_specificity": 0.729658466911427,
+      "specificity_there": 0.5051546391752577,
+      "sensitivity_there": 0.6041666666666666,
+      "threshold_90pct_sensitivity": 0.30596803514359494,
+      "sensitivity_at_90pct_threshold": 0.9166666666666666,
+      "specificity_at_90pct_threshold": 0.1134020618556701,
+      "brier": 0.38435221135917674,
+      "mean_probability": 0.6909838833310036
+    },
+    "model trained on HD-GLIO volumes": {
+      "threshold_80pct_specificity": 0.6662387661219767,
+      "specificity_there": 0.4536082474226804,
+      "sensitivity_there": 0.6875,
+      "threshold_90pct_sensitivity": 0.3390426874013475,
+      "sensitivity_at_90pct_threshold": 0.9583333333333334,
+      "specificity_at_90pct_threshold": 0.1134020618556701,
+      "brier": 0.3543480396936104,
+      "mean_probability": 0.6731974121681208
+    },
+    "volume rule (>= 40% and >= 1 mL above nadir)": {
+      "sensitivity": 0.625,
+      "specificity": 0.4948453608247423
+    },
+    "pd_rate": 0.3310344827586207
+  },
+  "sensitivity_analyses": {
+    "imaging-documented progression only (types 1, 3)": {
+      "calls": 137,
+      "pd": 44,
+      "patients": 70,
+      "auroc": {
+        "model trained on DeepBraTumIA volumes (primary)": {
+          "auroc": 0.5729472140762464,
+          "ci95": [
+            0.47086721652814856,
+            0.6735962251881543
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "model trained on HD-GLIO volumes": {
+          "auroc": 0.5984848484848485,
+          "ci95": [
+            0.49565628036929055,
+            0.700887323783796
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.025537634408602128,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.03586706349206344,
+            0.08888233574221477
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.5780791788856305,
+          "ci95": [
+            0.4784120159587666,
+            0.6733174903653043
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.00513196480938416,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.09829516045548653,
+            0.10397434044624021
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.5179618768328446,
+          "ci95": [
+            0.4264847052081095,
+            0.6136669493494934
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.05498533724340182,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.17720637196009903,
+            0.062035596360785636
+          ]
+        }
+      }
+    },
+    "no re-operation": {
+      "calls": 98,
+      "pd": 31,
+      "patients": 51,
+      "auroc": {
+        "model trained on DeepBraTumIA volumes (primary)": {
+          "auroc": 0.5404429465575349,
+          "ci95": [
+            0.4283111540427943,
+            0.6526189939093164
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "model trained on HD-GLIO volumes": {
+          "auroc": 0.6037554164660568,
+          "ci95": [
+            0.4848292702497666,
+            0.7146198089035977
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0633124699085219,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.0012580185317177686,
+            0.12904978796113298
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.5274434280211844,
+          "ci95": [
+            0.4072382716841509,
+            0.6505306312059185
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.012999518536350507,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.12272989891264585,
+            0.09225572559931494
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.4648531535869042,
+          "ci95": [
+            0.351307596632893,
+            0.5925438251953528
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.07558979297063068,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.20484085499227997,
+            0.059259811651369974
+          ]
+        }
+      }
+    },
+    "PD scans on the exact progression day only": {
+      "calls": 139,
+      "pd": 42,
+      "patients": 72,
+      "auroc": {
+        "model trained on DeepBraTumIA volumes (primary)": {
+          "auroc": 0.5443053510063819,
+          "ci95": [
+            0.4426179410866911,
+            0.6441830834939045
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "model trained on HD-GLIO volumes": {
+          "auroc": 0.5736377025036818,
+          "ci95": [
+            0.47017185489245333,
+            0.6707099402801808
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.029332351497299958,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.035955553664467,
+            0.09301314537781041
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.5467599410898379,
+          "ci95": [
+            0.45051971726190476,
+            0.6417563445766086
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.002454590083456054,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.09099516930928771,
+            0.10258397932816532
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.48195876288659795,
+          "ci95": [
+            0.38726211121056164,
+            0.5792534920392418
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.06234658811978394,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.17284665743725383,
+            0.050086318538740515
+          ]
+        }
+      }
+    },
+    "all glioma types": {
+      "calls": 218,
+      "pd": 61,
+      "patients": 109,
+      "auroc": {
+        "model trained on DeepBraTumIA volumes (primary)": {
+          "auroc": 0.5795656259789078,
+          "ci95": [
+            0.49119718481392255,
+            0.6636115787794807
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "model trained on HD-GLIO volumes": {
+          "auroc": 0.6290592043437402,
+          "ci95": [
+            0.5449216463455193,
+            0.7052726216583123
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.04949357836483237,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.00392756481367356,
+            0.09415284758111672
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.5705335700114859,
+          "ci95": [
+            0.48960701496167325,
+            0.6474758690025718
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.00903205596742196,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.08334528524175885,
+            0.06534298319404006
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.49796387177613033,
+          "ci95": [
+            0.4168234204727834,
+            0.5812127246816152
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.08160175420277749,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.17506820530222608,
+            0.014860429263450058
+          ]
+        }
+      }
+    }
+  },
+  "radiotherapy_window": {
+    "within 12 weeks after radiotherapy": {
+      "calls": 29,
+      "pd": 5,
+      "specificity_at_80pct_threshold": 0.4583333333333333,
+      "sensitivity_at_80pct_threshold": 0.2,
+      "auroc": {
+        "auroc": 0.2833333333333333,
+        "ci95": [
+          0.09324074074074075,
+          0.506969246031746
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "later": {
+      "calls": 94,
+      "pd": 42,
+      "specificity_at_80pct_threshold": 0.4807692307692308,
+      "sensitivity_at_80pct_threshold": 0.6666666666666666,
+      "auroc": {
+        "auroc": 0.5707417582417582,
+        "ci95": [
+          0.4541661585365854,
+          0.680881361644759
+        ],
+        "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+        "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "no_radiotherapy_dates": 22
+  },
+  "survival": {
+    "patients": 99,
+    "deaths": 57,
+    "excluded_inconsistent_or_no_follow_up": 14,
+    "median_follow_up_days_censored": 283.5,
+    "definitions": {
+      "documented progression (at scans)": {
+        "progressed": 76,
+        "median_days_entry_to_call": 102.0,
+        "hr": 7.850868133989283,
+        "hr_ci95": [
+          3.518931898682525,
+          27.909210733973808
+        ],
+        "c_index": 0.6708942390369733,
+        "c_index_ci95": [
+          0.5992947041985786,
+          0.7408608685551865
+        ],
+        "c_minus_documented": 0.0,
+        "c_minus_documented_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "volume rule": {
+        "progressed": 71,
+        "median_days_entry_to_call": 78.0,
+        "hr": 3.0723672922166467,
+        "hr_ci95": [
+          1.6187623304441954,
+          6.802953266923147
+        ],
+        "c_index": 0.6132846087704213,
+        "c_index_ci95": [
+          0.529160955178416,
+          0.6922951840798004
+        ],
+        "c_minus_documented": -0.05760963026655197,
+        "c_minus_documented_ci95": [
+          -0.16070619899144048,
+          0.03887703520031768
+        ]
+      },
+      "automated call (P >= 0.5)": {
+        "progressed": 90,
+        "median_days_entry_to_call": 77.0,
+        "hr": 5.489606666419855,
+        "hr_ci95": [
+          2.1728588842992127,
+          25.157627446756134
+        ],
+        "c_index": 0.5984522785898538,
+        "c_index_ci95": [
+          0.5438903520623487,
+          0.6547039586919106
+        ],
+        "c_minus_documented": -0.07244196044711948,
+        "c_minus_documented_ci95": [
+          -0.1489645501681501,
+          0.006664014431290273
+        ]
+      },
+      "documented progression (recorded day)": {
+        "progressed": 90,
+        "median_days_entry_to_call": 91.0,
+        "hr": 9.74140371956183,
+        "hr_ci95": [
+          4.161058754323462,
+          54.171395337530925
+        ],
+        "c_index": 0.6685296646603611,
+        "c_index_ci95": [
+          0.6074797007307736,
+          0.7263857332494934
+        ],
+        "c_minus_documented": -0.002364574376612194,
+        "c_minus_documented_ci95": [
+          -0.04886010381483599,
+          0.05279735299050101
+        ]
+      }
+    }
+  },
+  "volume_source": "masks",
+  "volume_source_check": {
+    "mapping": {
+      "explicit": 58,
+      "in_order": 82,
+      "skipped_ambiguous": 63,
+      "skipped_mixed": 0
+    },
+    "compared_scans": 355,
+    "exact_match_scans": 344,
+    "discrimination": {
+      "calls": 57,
+      "pd": 18,
+      "patients": 32,
+      "auroc": {
+        "model trained on DeepBraTumIA volumes (primary)": {
+          "auroc": 0.5626780626780626,
+          "ci95": [
+            0.4008522190968814,
+            0.7125135869565217
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.0,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "model trained on HD-GLIO volumes": {
+          "auroc": 0.6068376068376068,
+          "ci95": [
+            0.44890381591232986,
+            0.744565638040113
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.04415954415954415,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.04654955792357504,
+            0.12988424618859393
+          ]
+        },
+        "enhancing change vs nadir": {
+          "auroc": 0.5655270655270656,
+          "ci95": [
+            0.41271951219512193,
+            0.7090031746031745
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": 0.002849002849002913,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.13502944789709495,
+            0.15040196078431334
+          ]
+        },
+        "enhancing change vs previous": {
+          "auroc": 0.47150997150997154,
+          "ci95": [
+            0.3105205108359133,
+            0.630792582990643
+          ],
+          "minus_model trained on DeepBraTumIA volumes (primary)": -0.0911680911680911,
+          "minus_model trained on DeepBraTumIA volumes (primary)_ci95": [
+            -0.2777882205513784,
+            0.10299464747139164
+          ]
+        }
+      }
+    }
+  }
+}

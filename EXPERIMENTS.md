@@ -674,6 +674,273 @@ Reading:
     precedes their last scan are excluded.
   * The landmark analyses are underpowered (70 and 53 patients).
 
+### 12d. Robustness: a second segmenter, and the expert's previous rating — `scripts/progression_robustness.py`
+
+The script takes a few minutes on CPU, run in tmux (`prog_robust`). It writes `results/progression_robustness/`, which includes the
+native-grid volume cache `native_volumes.csv`.
+
+**Segmenter swap, the closest LUMIERE gets to external validation.** LUMIERE ships a second
+automatic segmentation of every scan, HD-GLIO-AUTO. A model is trained on one segmenter's
+volumes and tested on the other's volumes of the same held-out patients' scans. The
+thresholds stay fixed at the values set on the training segmenter.
+* HD-GLIO has no necrosis label, so every swap model uses two compartments: enhancing, and
+  non-enhancing (DeepBraTumIA necrosis + edema).
+* The two segmenters agree only moderately on the inputs. Correlation is r = 0.92 for
+  enhancing volume and 0.85 for enhancing change since the nadir.
+
+| train → test (with rating and clinical factors) | AUROC [95% CI] | minus DBT → DBT | specificity at the fixed 80%-spec threshold | sensitivity there |
+| :--- | :---: | :---: | ---: | ---: |
+| DeepBraTumIA → DeepBraTumIA | 0.826 [0.779, 0.867] | - | 0.80 | 0.67 |
+| DeepBraTumIA → HD-GLIO | 0.829 [0.776, 0.873] | +0.003 [-0.028, +0.035] | 0.79 | 0.69 |
+| HD-GLIO → HD-GLIO | 0.815 [0.766, 0.858] | -0.011 [-0.036, +0.016] | 0.80 | 0.68 |
+| HD-GLIO → DeepBraTumIA | 0.819 [0.769, 0.866] | -0.007 [-0.034, +0.021] | 0.77 | 0.71 |
+
+The fully automated (volumes-only) version behaves the same: DeepBraTumIA → HD-GLIO scores
+0.797 against 0.785. Changing the measurement space (atlas against native grid) changes
+nothing (Δ ≤ 0.003).
+
+**Dependence on the expert.** The released model was refitted without the previous rating.
+
+| inputs | AUROC, all scans | minus released | AUROC, previous scan not PD | minus released |
+| :--- | :---: | :---: | :---: | :---: |
+| volumes + rating + clinical (released) | 0.820 [0.775, 0.862] | - | 0.728 [0.659, 0.796] | - |
+| volumes + clinical | 0.779 [0.728, 0.833] | -0.041 [-0.060, -0.022] | 0.725 [0.658, 0.793] | -0.003 [-0.019, +0.014] |
+| volumes only | 0.785 [0.736, 0.834] | -0.035 [-0.050, -0.019] | 0.734 [0.666, 0.800] | +0.006 [-0.009, +0.022] |
+| volumes + masks + rating + clinical (released) | 0.835 [0.796, 0.870] | - | 0.760 [0.700, 0.820] | - |
+| volumes + masks only | 0.797 [0.753, 0.840] | -0.038 [-0.054, -0.020] | 0.756 [0.698, 0.815] | -0.004 [-0.017, +0.013] |
+
+Rows with masks are compared with the released mask model, the others with the released
+volumes model.
+
+Reading:
+* **The call survives a change of segmenter**, even though the two segmenters' growth
+  measurements correlate only 0.83-0.88. The model has not just learned one segmenter's
+  style.
+  * Trained on DeepBraTumIA and tested on HD-GLIO, AUROC changes by +0.003 (+0.012 for
+    volumes only).
+  * The fixed thresholds keep their specificity (0.79-0.80) and sensitivity (0.66-0.69).
+  * In the reverse direction, specificity slips to 0.77 (0.74 for volumes only): thresholds
+    set on HD-GLIO are slightly too permissive on DeepBraTumIA inputs.
+  * This covers only the segmentation algorithm: same scans, same hospital, same expert.
+    It is not a substitute for external data.
+* **Detecting new progression owes nothing to the expert.**
+  * Dropping the previous rating costs 0.035-0.041 AUROC overall.
+  * It costs nothing on scans whose previous rating was not PD: -0.007 to +0.006 across the
+    four models without it, and every CI includes 0.
+  * The rating helps only to recognise that an existing PD persists. So a fully automated
+    model, which needs no rating, keeps the useful part and can run on datasets that have
+    no ratings.
+
+### 12e. Where the call disagrees with the expert — `scripts/progression_errors.py`
+
+The script takes under a minute and writes `results/progression_errors/`. Every error is listed in `errors.csv`, with
+the expert's rationale. The analysis uses the released masks model's held-out
+probabilities at the "likely PD" threshold (80% specificity): 172 hits, 64 misses, 28 false
+alarms and 110 true negatives. The expert's written rationale, the LessThan3Months flag and
+the next scan are used only to explain errors, never as inputs.
+
+**Misses by the expert's reason for PD**
+
+| expert's reason | PD scans | misses | found | median enhancing log-change vs nadir |
+| :--- | ---: | ---: | ---: | ---: |
+| measurable lesion growth | 83 | 6 | 93% | +1.84 |
+| new lesion | 80 | 24 | 70% | +0.48 |
+| non-measurable / non-target lesion | 54 | 23 | 57% | +0.24 |
+| T2/FLAIR progression only | 18 | 11 | 39% | -0.07 |
+
+**False alarms by the expert's reason for not calling PD** (non-PD scans in "likely PD")
+
+| expert's reason | non-PD scans | false-alarm rate |
+| :--- | ---: | ---: |
+| growth attributed to treatment (rationale says < 3 months, or within the irradiated / high-dose field) | 34 | 29% (10) |
+| another rationale | 15 | 60% (9) |
+| no rationale written | 89 | 10% (9) |
+
+These groups overlap with two others:
+* **PR scans:** 20 scans, 45% false alarms (9).
+* **Scans after a PD rating:** 18 non-PD scans, 33% false alarms (6).
+
+Accuracy by context:
+* **Time since surgery:** AUROC 0.76 at 0-13 weeks and 0.80 at 14-26 weeks, against 0.84
+  after 26 weeks.
+* **Segmenter agreement** (DeepBraTumIA vs HD-GLIO enhancing change, in thirds): AUROC 0.848
+  where they agree, 0.826 in the middle third and 0.831 where they disagree. The error rate
+  rises from 21% to 28%.
+
+Reading:
+* **Misses are mostly findings that volumes capture poorly.** Measurable enhancing growth is
+  found 93% of the time. The other 58 of the 64 misses fall in:
+  * T2/FLAIR-only progression, where the enhancing volume did not grow (median log-change
+    vs nadir −0.07);
+  * non-measurable or non-target lesions;
+  * new lesions, which are often small (median 0.3 mL of new enhancing tumor).
+* **A third of false alarms are growth the expert saw but chose not to call PD.** The
+  expert attributed it to treatment: it fell within three months of radiotherapy or inside
+  the irradiated field, where RANO does not count it as progression. Applying that rule
+  needs the radiotherapy dates and fields, which LUMIERE lacks.
+  * Most such scans progressed anyway: 24 of 30 with a known next scan were PD or
+    re-operated at the next visit.
+  * The model's call did not tell these cases apart: 6 of 9 called vs 18 of 21 not called.
+* **Another third are scans rated PR.**
+  * Five of them follow a PD call. In all five the enhancing volume fell 25-95% since that
+    scan, yet the model still called PD.
+  * The fully automated model, which never sees the rating, calls the same five, so the
+    previous rating is not the cause.
+  * Responses after progression are rare: only 18 non-PD scans follow a PD rating. The model
+    has little to learn them from.
+* **The model is not systematically "early."** The next scan after a false alarm was PD or
+  a re-operation in 52% of cases, against 49% after a true negative.
+* **Segmentation quality is a minor factor.** Accuracy barely changes with how much the two
+  segmenters agree.
+* **Errors are spread across patients:** 92 errors in 55 of 79 patients.
+* **What might help, none of it in LUMIERE:**
+  * the radiotherapy dates and fields, to apply the post-radiotherapy rule;
+  * a T2/FLAIR change measure that does not depend on the edema segmentation;
+  * more examples of response after progression.
+
+### 12f. Is the volume rule's survival advantage robust? — `scripts/volume_rule_robustness.py`
+
+The script runs in tmux (`vol_rule`), takes about 2 min and writes `results/volume_rule_robustness/`. It needs the native-grid
+volume cache from 12d.
+
+It uses the same 73 patients, time origin, Cox model and C-index as 12c. Its bootstrap
+draws differ, so its CIs differ slightly from 12c's.
+
+**Segmenter.** The rule (≥ 40% and ≥ 1 mL above the nadir) computed from three volume sources:
+
+| rule computed from | C-index [95% CI] | C minus expert [95% CI] | HR [95% CI] | Spearman PFS–OS | minus expert [95% CI] |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| expert (reference) | 0.539 [0.486, 0.593] | - | 2.14 [0.84, 9.23] | 0.210 | - |
+| DeepBraTumIA, atlas (12c) | 0.607 [0.548, 0.663] | +0.068 [+0.009, +0.130] | 3.91 [1.78, 13.00] | 0.309 | +0.099 [-0.123, +0.315] |
+| DeepBraTumIA, native grid | identical calls | | | | |
+| HD-GLIO, native grid | 0.597 [0.538, 0.651] | +0.058 [+0.000, +0.114] | 3.09 [1.39, 9.74] | 0.241 | +0.031 [-0.188, +0.241] |
+
+* The DeepBraTumIA and HD-GLIO rules call progression on the same scan in 53 of the 64
+  patients that both call.
+* PFS–OS is the patient-level Spearman correlation between progression-free survival
+  (progression or death) and overall survival.
+
+**Thresholds** (C minus expert, DeepBraTumIA; HD-GLIO in brackets):
+
+| above nadir | ≥ 0 mL | ≥ 0.5 mL | ≥ 1 mL | ≥ 2 mL |
+| :--- | :---: | :---: | :---: | :---: |
+| 25% | +0.008 (-0.015) | +0.065 (+0.059) | +0.068 (+0.058) | +0.069 (+0.063) |
+| 40% | +0.008 (-0.015) | +0.065 (+0.059) | +0.068 (+0.058) | +0.069 (+0.063) |
+| 65% | +0.007 (-0.012) | +0.063 (+0.061) | +0.066 (+0.058) | +0.069 (+0.063) |
+| 100% | -0.002 (-0.024) | +0.050 (+0.048) | +0.053 (+0.045) | +0.056 (+0.063) |
+
+CIs are in `results/volume_rule_robustness/metrics.md`. Every cell with a floor of 0.5 mL or
+more has a lower bound between -0.006 and +0.009.
+
+**Landmarks.** Here the rule does no better than the expert:
+* at 26 weeks, HR 1.10 against 1.06 (HD-GLIO rule 1.02);
+* at 52 weeks, HR 1.44 against 1.82.
+
+All CIs include 1.
+
+Reading:
+* **The advantage does not depend on the segmenter.** HD-GLIO gives +0.058 against +0.068,
+  in the same direction and of similar size, with a lower bound at 0.
+* **It does not depend on the relative threshold, but it does need an absolute floor.**
+  * Anywhere from 25% to 65% above the nadir gives the same result.
+  * Without a minimum growth in mL, the advantage disappears (+0.008, HD-GLIO -0.015).
+    Presumably small tumors cross a relative threshold through measurement noise alone.
+  * In effect, the prognostic signal is "at least about 0.5-2 mL of new enhancing growth
+    above the nadir."
+* **Only one of three measures shows it significantly.**
+  * The time-dependent C-index does.
+  * The PFS–OS correlation points the same way (0.31 vs 0.21) but its CI is wide.
+  * The landmark analyses show no advantage.
+
+  Treat it as a consistent but unconfirmed lead, not a finding.
+
+### 12g. Would more patients help? Learning curve — `scripts/progression_learning_curve.py`
+
+The script runs in tmux (`prog_lc`), takes about 6 min and writes `results/progression_learning_curve/`. Each outer fold
+trains on a random 25 / 50 / 75 / 100% of its training patients (10 subsets per fraction)
+and is scored on the whole held-out fold.
+
+| model (held-out AUROC, all scans) | 16 training patients | 32 | 47 | 63 (all) |
+| :--- | :---: | :---: | :---: | :---: |
+| released: V+R+S | 0.767 | 0.805 | 0.812 | 0.820 |
+| released: V+R+S+M | 0.781 | 0.816 | 0.828 | 0.835 |
+| fully automated: V | 0.754 | 0.785 | 0.781 | 0.785 |
+| fully automated: V+M | 0.772 | 0.797 | 0.797 | 0.797 |
+
+For new progression (previous scan not PD), the released mask model goes 0.719 → 0.745 →
+0.752 → 0.760, and the fully automated mask model goes 0.725 → 0.753 → 0.753 → 0.756. SDs
+across subsets are 0.004-0.022.
+
+Reading:
+* **The fully automated call has saturated.** It is flat from about 32 training patients
+  on. More scans of the same kind will not raise it. Gains have to come from information
+  it does not have: T2/FLAIR measures beyond the edema volume, radiotherapy timing, or more
+  than one reader.
+* **The models that read the previous rating are still rising slowly**, by about +0.007
+  per 16 more patients.
+* **So a second dataset is mainly for validation, not training.**
+
+**Temporal split: not possible.** LUMIERE gives only weeks relative to each patient's first
+scan, with no calendar dates. A train-early / test-late split cannot be built.
+
+### 12h. External test on MU-Glioma-Post — `scripts/mu_freeze_model.py`, `scripts/mu_validation.py`
+
+The analysis was pre-specified in `results/mu_validation/PLAN.md`, written and hashed before
+any model touched MU data. Data: MU-Glioma-Post (TCIA, CC BY 4.0). It covers 203 glioma
+patients with up to six post-treatment MRIs each, neuroradiologist-refined masks, and the
+days from diagnosis to each MRI, surgery, radiotherapy, first progression and death. Getting
+the data is described in DATA_SETUP.md.
+
+Setup:
+* **Model.** `mu_freeze_model.py` trains the fully automated two-compartment model of 12d on
+  all of LUMIERE. The primary copy uses DeepBraTumIA volumes; an HD-GLIO copy is secondary.
+  * Thresholds come from LUMIERE held-out scores on follow-ups whose previous scan was not PD.
+  * It writes `frozen.json` and `runs/mu_validation/frozen_models.pkl`, with their hashes.
+* **Run.** `mu_validation.py` checks both hashes and reads the masks once into
+  `mask_volumes.csv`. It writes `metrics.{md,json}` and `predictions.csv`. It runs in tmux
+  (`mu_val`) in about 1 min.
+* **Labels.** PD is the scan within 14 days of the documented first progression. Non-PD is
+  earlier scans, plus every scan of patients without progression.
+
+Results: 145 calls from 76 patients with glioblastoma, 48 PD.
+
+| score | AUROC [95% CI] |
+| :--- | :---: |
+| frozen call, DeepBraTumIA-trained (primary) | 0.563 [0.467, 0.658] |
+| frozen call, HD-GLIO-trained | 0.586 [0.486, 0.685] |
+| enhancing change vs nadir | 0.559 [0.466, 0.653] |
+| LUMIERE benchmark, same model, previous scan not PD | 0.725 [0.655, 0.793] |
+
+* **The call does not transfer.** The primary hypothesis (lower bound > 0.5) fails, and the
+  interval excludes the LUMIERE benchmark.
+* **Calibration and operating points.** The mean P(PD) is 0.69 against a PD rate of 0.33.
+  At the frozen 80%-specificity threshold, specificity is 0.51 and sensitivity 0.60.
+* **No sensitivity analysis rescues it.** AUROC 0.540-0.580, whether restricted to
+  imaging-documented progression, no re-operation, exact-day progression scans, or extended
+  to all glioma types.
+* **Radiotherapy window.** In the 12 weeks after radiotherapy the call is below chance
+  (0.28, 29 calls, 5 PD); later scans score 0.571.
+* **Survival.** 99 patients, 57 deaths; a censoring-aware time-dependent C-index.
+  * Documented progression: 0.671.
+  * Volume rule: 0.613, so -0.058 [-0.161, +0.039] against documented progression.
+  * The pre-specified verdict is "does not replicate". The rule's C-index is close to its
+    LUMIERE value (0.607). What changed is the comparator: documented progression in MU is
+    far more prognostic than LUMIERE's expert reads (0.539).
+* **Volume source check.** The TCIA volume spreadsheet matches the masks exactly for 344 of
+  355 scans, and gives the same AUROC (0.563, 57 calls).
+
+**Exploratory follow-up** — `scripts/mu_validation_explore.py`, written after the result;
+writes `exploratory.{md,json}`:
+* **Growth comes before documented progression.** The volume rule is met by 60% of earlier
+  scans of patients who progressed, against 62% of progression scans and 44% of scans of
+  patients who never progressed.
+* **Volumes cannot predict MU's labels even when trained on MU.** The same GBM, trained
+  within MU with patient-level CV, scores 0.572 [0.471, 0.677]. Adding time since
+  radiotherapy raises it to 0.658 [0.543, 0.765].
+* **Reading.** MU's documented progression is a different target from LUMIERE's per-scan
+  RANO reads. The failure says LUMIERE alone cannot establish a transferable call. It does
+  not say that one cannot exist. A fair test needs per-scan RANO reads and treatment dates.
+
 ### Figures (`results/figures/`)
 
 * `step1_volume_vs_persistence.png`: error of each method relative to persistence, 95% CI.

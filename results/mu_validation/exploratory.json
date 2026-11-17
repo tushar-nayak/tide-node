@@ -1,0 +1,63 @@
+{
+  "calls": 145,
+  "pd": 48,
+  "patients": 76,
+  "groups": {
+    "progression scans": {
+      "scans": 48,
+      "volume_rule_positive": 0.625,
+      "median_enhancing_change_vs_nadir": 0.515810381085087,
+      "median_probability": 0.8350715073907198
+    },
+    "earlier scans of patients who progressed": {
+      "scans": 42,
+      "volume_rule_positive": 0.5952380952380952,
+      "median_enhancing_change_vs_nadir": 0.4165375157461093,
+      "median_probability": 0.7122898027772397
+    },
+    "scans of patients who never progressed": {
+      "scans": 55,
+      "volume_rule_positive": 0.43636363636363634,
+      "median_enhancing_change_vs_nadir": 0.16296882827813966,
+      "median_probability": 0.7334744288188886
+    }
+  },
+  "within_mu": {
+    "frozen LUMIERE model": {
+      "auroc": 0.563036941580756,
+      "ci95": [
+        0.46695162608053975,
+        0.6642267173182813
+      ],
+      "minus_frozen LUMIERE model": 0.0,
+      "minus_frozen LUMIERE model_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "MU-trained, same features": {
+      "auroc": 0.5723797250859106,
+      "ci95": [
+        0.4709897058823529,
+        0.6773056184707783
+      ],
+      "minus_frozen LUMIERE model": 0.009342783505154606,
+      "minus_frozen LUMIERE model_ci95": [
+        -0.09089503546099287,
+        0.10819486914009316
+      ]
+    },
+    "MU-trained, + time since radiotherapy": {
+      "auroc": 0.6582903780068728,
+      "ci95": [
+        0.5431398406557981,
+        0.7651147916188372
+      ],
+      "minus_frozen LUMIERE model": 0.09525343642611683,
+      "minus_frozen LUMIERE model_ci95": [
+        -0.018182163994910672,
+        0.20661545421566802
+      ]
+    }
+  }
+}
