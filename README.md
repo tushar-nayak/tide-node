@@ -17,12 +17,12 @@ On 2026-11-16, four analyses of the legacy progression call were added on `main`
 * a robustness check of the volume rule's survival result;
 * a learning curve.
 
-They are in EXPERIMENTS.md §12d-12g and MANUSCRIPT.md §4.9-4.11. They concern the legacy
+They are in EXPERIMENTS.md §12d-12g and MANUSCRIPT.md §4.4-4.5 (details in Supplementary S4-S6). They concern the legacy
 model, not this workflow. The old manuscript does not validate this assessment workflow.
 
 On 2026-11-17 a pre-specified external test of the legacy fully automated call was added.
 It was run on MU-Glioma-Post (TCIA), with the frozen model and plan in
-`results/mu_validation/`; see EXPERIMENTS.md §12h and MANUSCRIPT.md §4.12.
+`results/mu_validation/`; see EXPERIMENTS.md §12h and MANUSCRIPT.md §4.6.
 * **Result:** it did not transfer. AUROC was 0.563 [0.467, 0.658] against clinically
   documented progression.
 * **Explanation:** an MU-trained model did no better (0.572), so MU's labels are a different

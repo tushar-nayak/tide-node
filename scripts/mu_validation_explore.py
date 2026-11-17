@@ -33,10 +33,14 @@ from mu_validation import CLINICAL_SHEET, build_patients, eligible, evaluable_ca
 from xlsx_stdlib import records  # noqa: E402
 
 
-def main() -> None:
+OUT_DIR = REPO / "results/mu_validation"
+
+
+def compute() -> tuple[dict, np.ndarray, dict]:
+    """Results dict, MU labels, and per-call scores (frozen and within-MU), in call order."""
     from sklearn.ensemble import HistGradientBoostingClassifier
 
-    out_dir = REPO / "results/mu_validation"
+    out_dir = OUT_DIR
     frozen = json.loads((out_dir / "frozen.json").read_text())
     model_file = REPO / frozen["model_file"]
     assert sha256(model_file) == frozen["model_sha256"]
@@ -77,6 +81,12 @@ def main() -> None:
               "MU-trained, same features": cv(x, mono),
               "MU-trained, + time since radiotherapy": cv(xr, mono + [0])}
     res["within_mu"] = auroc_boot(scores, y, pid, np.random.default_rng(20261118), "frozen LUMIERE model")
+    return res, y, scores
+
+
+def main() -> None:
+    res, _, _ = compute()
+    out_dir = OUT_DIR
     out_dir.joinpath("exploratory.json").write_text(json.dumps(res, indent=2, allow_nan=False) + "\n")
 
     L = ["# MU-Glioma-Post validation: exploratory follow-up", "",

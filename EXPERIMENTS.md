@@ -937,6 +937,8 @@ writes `exploratory.{md,json}`:
 * **Volumes cannot predict MU's labels even when trained on MU.** The same GBM, trained
   within MU with patient-level CV, scores 0.572 [0.471, 0.677]. Adding time since
   radiotherapy raises it to 0.658 [0.543, 0.765].
+* **Figure.** `results/figures/mu_validation.png` (`scripts/plot_mu_validation.py`, about 30 s;
+  it recomputes the held-out and within-MU scores and checks their AUROCs).
 * **Reading.** MU's documented progression is a different target from LUMIERE's per-scan
   RANO reads. The failure says LUMIERE alone cannot establish a transferable call. It does
   not say that one cannot exist. A fair test needs per-scan RANO reads and treatment dates.
@@ -952,6 +954,8 @@ writes `exploratory.{md,json}`:
   scans and on scans whose previous rating was not PD (section 12b).
 * `progression_survival_landmark.png`: survival after a 26-week landmark by progression
   status, expert vs automated call (section 12c).
+* `mu_validation.png`: the external test. ROC of the frozen call on held-out LUMIERE vs
+  MU-Glioma-Post, and the share of scans meeting the volume rule by label group (section 12h).
 * `step2_forecast_<variant>_fold<k>_<weights>.png`: the visual forecast. Per held-out
   transition: last scan with its tumor outline, the real next scan, the predicted outline
   over the real one, and a change map (change predicted correctly / missed / predicted but

@@ -47,9 +47,9 @@ the scans are aligned and trivial controls are included, carrying the last scan 
 close to the best next-visit forecast. This holds for intensity, the 3D tumor mask and the
 next RANO rating. No Neural ODE model beats the best simple baseline for its target. The
 volume forecast gains a modest 5-7%, now with calibrated ranges. Full details, numbers and
-commands are in [EXPERIMENTS.md](EXPERIMENTS.md). The draft paper
-[MANUSCRIPT.md](MANUSCRIPT.md) covers both parts: forecasting, and assessment with the
-survival check.
+commands are in [EXPERIMENTS.md](EXPERIMENTS.md). The paper
+[MANUSCRIPT.md](MANUSCRIPT.md) covers forecasting, assessment with the survival check, and
+the pre-registered external test (Section 4.6), with details in its supplement.
 
 ## Findings
 
@@ -174,7 +174,7 @@ Three data issues found along the way are documented in EXPERIMENTS.md:
 | progression call: where it disagrees with the expert | `scripts/progression_errors.py` | `results/progression_errors/` |
 | volume rule vs survival: segmenter, thresholds, surrogacy | `scripts/volume_rule_robustness.py` | `results/volume_rule_robustness/` |
 | progression call: learning curve | `scripts/progression_learning_curve.py` | `results/progression_learning_curve/` |
-| external test on MU-Glioma-Post (plan, freeze, run, exploratory) | `scripts/mu_freeze_model.py`, `scripts/mu_validation.py`, `scripts/mu_validation_explore.py` | `results/mu_validation/`, `runs/mu_validation/` |
+| external test on MU-Glioma-Post (plan, freeze, run, exploratory) | `scripts/mu_freeze_model.py`, `scripts/mu_validation.py`, `scripts/mu_validation_explore.py`, `scripts/plot_mu_validation.py` | `results/mu_validation/`, `runs/mu_validation/`, `results/figures/mu_validation.png` |
 | CLI (packaged models) | `scripts/predict.py`, `scripts/prediction.py`, `scripts/package_models.py` | user-chosen output directory |
 | figures | `scripts/plot_step_results.py`, `scripts/visualize_mask_forecasts.py` | `results/figures/` |
 
@@ -205,6 +205,7 @@ tmux new -d -s prog_lc '.venv/bin/python scripts/progression_learning_curve.py >
 # external test: the freeze already exists and refuses to overwrite; mu_validation.py reads results/mu_validation/mask_volumes.csv
 tmux new -d -s mu_val '.venv/bin/python scripts/mu_validation.py > runs/logs/mu_validation.log 2>&1'   # ~1 min
 .venv/bin/python scripts/mu_validation_explore.py                  # exploratory follow-up, < 1 min
+.venv/bin/python scripts/plot_mu_validation.py                     # external-test figure, ~30 s
 .venv/bin/python scripts/plot_step_results.py
 ```
 
